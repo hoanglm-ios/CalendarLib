@@ -1,0 +1,513 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E2CEB31320CA8C100036C8E2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB31220CA8C100036C8E2 /* AppDelegate.m */; };
+		E2CEB31620CA8C100036C8E2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB31520CA8C100036C8E2 /* ViewController.m */; };
+		E2CEB31920CA8C100036C8E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB31720CA8C100036C8E2 /* Main.storyboard */; };
+		E2CEB31B20CA8C100036C8E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB31A20CA8C100036C8E2 /* Assets.xcassets */; };
+		E2CEB31E20CA8C100036C8E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB31C20CA8C100036C8E2 /* LaunchScreen.storyboard */; };
+		E2CEB32120CA8C100036C8E2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB32020CA8C100036C8E2 /* main.m */; };
+		E2CEB32B20CA8CA20036C8E2 /* HeaderDayColumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB32820CA8CA10036C8E2 /* HeaderDayColumCell.xib */; };
+		E2CEB32C20CA8CA20036C8E2 /* HeaderDayColumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB32920CA8CA20036C8E2 /* HeaderDayColumCell.m */; };
+		E2CEB33920CA8D000036C8E2 /* NSAttributedString+MGCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB32F20CA8CFF0036C8E2 /* NSAttributedString+MGCAdditions.m */; };
+		E2CEB33A20CA8D000036C8E2 /* NSCalendar+MGCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB33220CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.m */; };
+		E2CEB33B20CA8D000036C8E2 /* MGCAlignedGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB33420CA8CFF0036C8E2 /* MGCAlignedGeometry.m */; };
+		E2CEB33C20CA8D000036C8E2 /* MGCDateRange.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB33520CA8CFF0036C8E2 /* MGCDateRange.m */; };
+		E2CEB33D20CA8D000036C8E2 /* MGCReusableObjectQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB33820CA8D000036C8E2 /* MGCReusableObjectQueue.m */; };
+		E2CEB34320CA8D3B0036C8E2 /* MGCStandardEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34020CA8D3B0036C8E2 /* MGCStandardEventView.m */; };
+		E2CEB34420CA8D3B0036C8E2 /* MGCEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34120CA8D3B0036C8E2 /* MGCEventView.m */; };
+		E2CEB34720CA8D560036C8E2 /* MGCDayPlannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34620CA8D550036C8E2 /* MGCDayPlannerView.m */; };
+		E2CEB35120CA8DBF0036C8E2 /* MGCInteractiveEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34B20CA8DBE0036C8E2 /* MGCInteractiveEventView.m */; };
+		E2CEB35220CA8DBF0036C8E2 /* MGCTimeRowsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34C20CA8DBE0036C8E2 /* MGCTimeRowsView.m */; };
+		E2CEB35320CA8DBF0036C8E2 /* MGCDayColumnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34E20CA8DBF0036C8E2 /* MGCDayColumnCell.m */; };
+		E2CEB35420CA8DBF0036C8E2 /* MGCEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35020CA8DBF0036C8E2 /* MGCEventCell.m */; };
+		E2CEB35A20CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35720CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m */; };
+		E2CEB35B20CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35920CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m */; };
+		E2CEB36520CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB36320CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m */; };
+		E2CEB36A20CA973C0036C8E2 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB36920CA973C0036C8E2 /* OrderedDictionary.m */; };
+		E2CEB36D20CA97460036C8E2 /* OSCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB36B20CA97460036C8E2 /* OSCache.m */; };
+		E2CEB37320CAB3530036C8E2 /* MGCEventKitSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB37120CAB3530036C8E2 /* MGCEventKitSupport.m */; };
+		E2CEB37820CAB4930036C8E2 /* MGCDayPlannerEKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB37520CAB4930036C8E2 /* MGCDayPlannerEKViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E2CEB30E20CA8C100036C8E2 /* CalendarForProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarForProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2CEB31120CA8C100036C8E2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E2CEB31220CA8C100036C8E2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E2CEB31420CA8C100036C8E2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E2CEB31520CA8C100036C8E2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E2CEB31820CA8C100036C8E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E2CEB31A20CA8C100036C8E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E2CEB31D20CA8C100036C8E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E2CEB31F20CA8C100036C8E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2CEB32020CA8C100036C8E2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E2CEB32820CA8CA10036C8E2 /* HeaderDayColumCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderDayColumCell.xib; sourceTree = "<group>"; };
+		E2CEB32920CA8CA20036C8E2 /* HeaderDayColumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderDayColumCell.m; sourceTree = "<group>"; };
+		E2CEB32A20CA8CA20036C8E2 /* HeaderDayColumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderDayColumCell.h; sourceTree = "<group>"; };
+		E2CEB32F20CA8CFF0036C8E2 /* NSAttributedString+MGCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MGCAdditions.m"; sourceTree = "<group>"; };
+		E2CEB33020CA8CFF0036C8E2 /* MGCDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCDateRange.h; sourceTree = "<group>"; };
+		E2CEB33120CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+MGCAdditions.h"; sourceTree = "<group>"; };
+		E2CEB33220CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+MGCAdditions.m"; sourceTree = "<group>"; };
+		E2CEB33320CA8CFF0036C8E2 /* MGCAlignedGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCAlignedGeometry.h; sourceTree = "<group>"; };
+		E2CEB33420CA8CFF0036C8E2 /* MGCAlignedGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCAlignedGeometry.m; sourceTree = "<group>"; };
+		E2CEB33520CA8CFF0036C8E2 /* MGCDateRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCDateRange.m; sourceTree = "<group>"; };
+		E2CEB33620CA8CFF0036C8E2 /* MGCReusableObjectQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCReusableObjectQueue.h; sourceTree = "<group>"; };
+		E2CEB33720CA8D000036C8E2 /* NSAttributedString+MGCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MGCAdditions.h"; sourceTree = "<group>"; };
+		E2CEB33820CA8D000036C8E2 /* MGCReusableObjectQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCReusableObjectQueue.m; sourceTree = "<group>"; };
+		E2CEB33F20CA8D3B0036C8E2 /* MGCEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCEventView.h; sourceTree = "<group>"; };
+		E2CEB34020CA8D3B0036C8E2 /* MGCStandardEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCStandardEventView.m; sourceTree = "<group>"; };
+		E2CEB34120CA8D3B0036C8E2 /* MGCEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCEventView.m; sourceTree = "<group>"; };
+		E2CEB34220CA8D3B0036C8E2 /* MGCStandardEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCStandardEventView.h; sourceTree = "<group>"; };
+		E2CEB34520CA8D550036C8E2 /* MGCDayPlannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCDayPlannerView.h; sourceTree = "<group>"; };
+		E2CEB34620CA8D550036C8E2 /* MGCDayPlannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCDayPlannerView.m; sourceTree = "<group>"; };
+		E2CEB34920CA8DBE0036C8E2 /* MGCDayColumnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCDayColumnCell.h; sourceTree = "<group>"; };
+		E2CEB34A20CA8DBE0036C8E2 /* MGCEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCEventCell.h; sourceTree = "<group>"; };
+		E2CEB34B20CA8DBE0036C8E2 /* MGCInteractiveEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCInteractiveEventView.m; sourceTree = "<group>"; };
+		E2CEB34C20CA8DBE0036C8E2 /* MGCTimeRowsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCTimeRowsView.m; sourceTree = "<group>"; };
+		E2CEB34D20CA8DBF0036C8E2 /* MGCTimeRowsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCTimeRowsView.h; sourceTree = "<group>"; };
+		E2CEB34E20CA8DBF0036C8E2 /* MGCDayColumnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCDayColumnCell.m; sourceTree = "<group>"; };
+		E2CEB34F20CA8DBF0036C8E2 /* MGCInteractiveEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCInteractiveEventView.h; sourceTree = "<group>"; };
+		E2CEB35020CA8DBF0036C8E2 /* MGCEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCEventCell.m; sourceTree = "<group>"; };
+		E2CEB35620CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCEventCellLayoutAttributes.h; sourceTree = "<group>"; };
+		E2CEB35720CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCEventCellLayoutAttributes.m; sourceTree = "<group>"; };
+		E2CEB35820CA8DF50036C8E2 /* MGCTimedEventsViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCTimedEventsViewLayout.h; sourceTree = "<group>"; };
+		E2CEB35920CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCTimedEventsViewLayout.m; sourceTree = "<group>"; };
+		E2CEB36220CA92B70036C8E2 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		E2CEB36320CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCAllDayEventsViewLayout.m; sourceTree = "<group>"; };
+		E2CEB36420CA96A70036C8E2 /* MGCAllDayEventsViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCAllDayEventsViewLayout.h; sourceTree = "<group>"; };
+		E2CEB36820CA973C0036C8E2 /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
+		E2CEB36920CA973C0036C8E2 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
+		E2CEB36B20CA97460036C8E2 /* OSCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCache.m; sourceTree = "<group>"; };
+		E2CEB36C20CA97460036C8E2 /* OSCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCache.h; sourceTree = "<group>"; };
+		E2CEB37120CAB3530036C8E2 /* MGCEventKitSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCEventKitSupport.m; sourceTree = "<group>"; };
+		E2CEB37220CAB3530036C8E2 /* MGCEventKitSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCEventKitSupport.h; sourceTree = "<group>"; };
+		E2CEB37420CAB4930036C8E2 /* MGCDayPlannerEKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCDayPlannerEKViewController.h; sourceTree = "<group>"; };
+		E2CEB37520CAB4930036C8E2 /* MGCDayPlannerEKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCDayPlannerEKViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E2CEB30B20CA8C100036C8E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E2CEB30520CA8C100036C8E2 = {
+			isa = PBXGroup;
+			children = (
+				E2CEB31020CA8C100036C8E2 /* CalendarForProject */,
+				E2CEB30F20CA8C100036C8E2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E2CEB30F20CA8C100036C8E2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB30E20CA8C100036C8E2 /* CalendarForProject.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E2CEB31020CA8C100036C8E2 /* CalendarForProject */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB36720CA972D0036C8E2 /* OSCache */,
+				E2CEB36620CA97090036C8E2 /* OrderedDictionary */,
+				E2CEB32720CA8C730036C8E2 /* lib */,
+				E2CEB31120CA8C100036C8E2 /* AppDelegate.h */,
+				E2CEB37420CAB4930036C8E2 /* MGCDayPlannerEKViewController.h */,
+				E2CEB37520CAB4930036C8E2 /* MGCDayPlannerEKViewController.m */,
+				E2CEB31220CA8C100036C8E2 /* AppDelegate.m */,
+				E2CEB31420CA8C100036C8E2 /* ViewController.h */,
+				E2CEB31520CA8C100036C8E2 /* ViewController.m */,
+				E2CEB31720CA8C100036C8E2 /* Main.storyboard */,
+				E2CEB31A20CA8C100036C8E2 /* Assets.xcassets */,
+				E2CEB31C20CA8C100036C8E2 /* LaunchScreen.storyboard */,
+				E2CEB31F20CA8C100036C8E2 /* Info.plist */,
+				E2CEB32020CA8C100036C8E2 /* main.m */,
+			);
+			path = CalendarForProject;
+			sourceTree = "<group>";
+		};
+		E2CEB32720CA8C730036C8E2 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB37220CAB3530036C8E2 /* MGCEventKitSupport.h */,
+				E2CEB37120CAB3530036C8E2 /* MGCEventKitSupport.m */,
+				E2CEB36220CA92B70036C8E2 /* Constant.h */,
+				E2CEB33E20CA8D1D0036C8E2 /* EventSchedulePlanner */,
+				E2CEB33320CA8CFF0036C8E2 /* MGCAlignedGeometry.h */,
+				E2CEB33420CA8CFF0036C8E2 /* MGCAlignedGeometry.m */,
+				E2CEB33020CA8CFF0036C8E2 /* MGCDateRange.h */,
+				E2CEB33520CA8CFF0036C8E2 /* MGCDateRange.m */,
+				E2CEB33620CA8CFF0036C8E2 /* MGCReusableObjectQueue.h */,
+				E2CEB33820CA8D000036C8E2 /* MGCReusableObjectQueue.m */,
+				E2CEB33720CA8D000036C8E2 /* NSAttributedString+MGCAdditions.h */,
+				E2CEB32F20CA8CFF0036C8E2 /* NSAttributedString+MGCAdditions.m */,
+				E2CEB33120CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.h */,
+				E2CEB33220CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.m */,
+				E2CEB32D20CA8CBB0036C8E2 /* SchedulePlanner */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		E2CEB32D20CA8CBB0036C8E2 /* SchedulePlanner */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB35520CA8DE00036C8E2 /* CollectionViewLayout */,
+				E2CEB34820CA8D880036C8E2 /* CollectionView */,
+				E2CEB34520CA8D550036C8E2 /* MGCDayPlannerView.h */,
+				E2CEB34620CA8D550036C8E2 /* MGCDayPlannerView.m */,
+			);
+			path = SchedulePlanner;
+			sourceTree = "<group>";
+		};
+		E2CEB33E20CA8D1D0036C8E2 /* EventSchedulePlanner */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB33F20CA8D3B0036C8E2 /* MGCEventView.h */,
+				E2CEB34120CA8D3B0036C8E2 /* MGCEventView.m */,
+				E2CEB34220CA8D3B0036C8E2 /* MGCStandardEventView.h */,
+				E2CEB34020CA8D3B0036C8E2 /* MGCStandardEventView.m */,
+			);
+			path = EventSchedulePlanner;
+			sourceTree = "<group>";
+		};
+		E2CEB34820CA8D880036C8E2 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB34920CA8DBE0036C8E2 /* MGCDayColumnCell.h */,
+				E2CEB34E20CA8DBF0036C8E2 /* MGCDayColumnCell.m */,
+				E2CEB34A20CA8DBE0036C8E2 /* MGCEventCell.h */,
+				E2CEB35020CA8DBF0036C8E2 /* MGCEventCell.m */,
+				E2CEB34F20CA8DBF0036C8E2 /* MGCInteractiveEventView.h */,
+				E2CEB34B20CA8DBE0036C8E2 /* MGCInteractiveEventView.m */,
+				E2CEB34D20CA8DBF0036C8E2 /* MGCTimeRowsView.h */,
+				E2CEB34C20CA8DBE0036C8E2 /* MGCTimeRowsView.m */,
+				E2CEB32A20CA8CA20036C8E2 /* HeaderDayColumCell.h */,
+				E2CEB32920CA8CA20036C8E2 /* HeaderDayColumCell.m */,
+				E2CEB32820CA8CA10036C8E2 /* HeaderDayColumCell.xib */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		E2CEB35520CA8DE00036C8E2 /* CollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB36420CA96A70036C8E2 /* MGCAllDayEventsViewLayout.h */,
+				E2CEB36320CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m */,
+				E2CEB35620CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.h */,
+				E2CEB35720CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m */,
+				E2CEB35820CA8DF50036C8E2 /* MGCTimedEventsViewLayout.h */,
+				E2CEB35920CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m */,
+			);
+			path = CollectionViewLayout;
+			sourceTree = "<group>";
+		};
+		E2CEB36620CA97090036C8E2 /* OrderedDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB36820CA973C0036C8E2 /* OrderedDictionary.h */,
+				E2CEB36920CA973C0036C8E2 /* OrderedDictionary.m */,
+			);
+			path = OrderedDictionary;
+			sourceTree = "<group>";
+		};
+		E2CEB36720CA972D0036C8E2 /* OSCache */ = {
+			isa = PBXGroup;
+			children = (
+				E2CEB36C20CA97460036C8E2 /* OSCache.h */,
+				E2CEB36B20CA97460036C8E2 /* OSCache.m */,
+			);
+			path = OSCache;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E2CEB30D20CA8C100036C8E2 /* CalendarForProject */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2CEB32420CA8C100036C8E2 /* Build configuration list for PBXNativeTarget "CalendarForProject" */;
+			buildPhases = (
+				E2CEB30A20CA8C100036C8E2 /* Sources */,
+				E2CEB30B20CA8C100036C8E2 /* Frameworks */,
+				E2CEB30C20CA8C100036C8E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CalendarForProject;
+			productName = CalendarForProject;
+			productReference = E2CEB30E20CA8C100036C8E2 /* CalendarForProject.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E2CEB30620CA8C100036C8E2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = LEMINHO;
+				TargetAttributes = {
+					E2CEB30D20CA8C100036C8E2 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = E2CEB30920CA8C100036C8E2 /* Build configuration list for PBXProject "CalendarForProject" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E2CEB30520CA8C100036C8E2;
+			productRefGroup = E2CEB30F20CA8C100036C8E2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E2CEB30D20CA8C100036C8E2 /* CalendarForProject */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E2CEB30C20CA8C100036C8E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2CEB31E20CA8C100036C8E2 /* LaunchScreen.storyboard in Resources */,
+				E2CEB31B20CA8C100036C8E2 /* Assets.xcassets in Resources */,
+				E2CEB32B20CA8CA20036C8E2 /* HeaderDayColumCell.xib in Resources */,
+				E2CEB31920CA8C100036C8E2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E2CEB30A20CA8C100036C8E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2CEB35120CA8DBF0036C8E2 /* MGCInteractiveEventView.m in Sources */,
+				E2CEB35B20CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m in Sources */,
+				E2CEB34320CA8D3B0036C8E2 /* MGCStandardEventView.m in Sources */,
+				E2CEB35420CA8DBF0036C8E2 /* MGCEventCell.m in Sources */,
+				E2CEB35320CA8DBF0036C8E2 /* MGCDayColumnCell.m in Sources */,
+				E2CEB31620CA8C100036C8E2 /* ViewController.m in Sources */,
+				E2CEB37320CAB3530036C8E2 /* MGCEventKitSupport.m in Sources */,
+				E2CEB36520CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m in Sources */,
+				E2CEB32120CA8C100036C8E2 /* main.m in Sources */,
+				E2CEB33920CA8D000036C8E2 /* NSAttributedString+MGCAdditions.m in Sources */,
+				E2CEB33C20CA8D000036C8E2 /* MGCDateRange.m in Sources */,
+				E2CEB37820CAB4930036C8E2 /* MGCDayPlannerEKViewController.m in Sources */,
+				E2CEB36D20CA97460036C8E2 /* OSCache.m in Sources */,
+				E2CEB32C20CA8CA20036C8E2 /* HeaderDayColumCell.m in Sources */,
+				E2CEB34720CA8D560036C8E2 /* MGCDayPlannerView.m in Sources */,
+				E2CEB34420CA8D3B0036C8E2 /* MGCEventView.m in Sources */,
+				E2CEB33A20CA8D000036C8E2 /* NSCalendar+MGCAdditions.m in Sources */,
+				E2CEB33B20CA8D000036C8E2 /* MGCAlignedGeometry.m in Sources */,
+				E2CEB33D20CA8D000036C8E2 /* MGCReusableObjectQueue.m in Sources */,
+				E2CEB35220CA8DBF0036C8E2 /* MGCTimeRowsView.m in Sources */,
+				E2CEB36A20CA973C0036C8E2 /* OrderedDictionary.m in Sources */,
+				E2CEB35A20CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m in Sources */,
+				E2CEB31320CA8C100036C8E2 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E2CEB31720CA8C100036C8E2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2CEB31820CA8C100036C8E2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E2CEB31C20CA8C100036C8E2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2CEB31D20CA8C100036C8E2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E2CEB32220CA8C100036C8E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E2CEB32320CA8C100036C8E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E2CEB32520CA8C100036C8E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CB7NDRZY49;
+				INFOPLIST_FILE = CalendarForProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pikalong.CalendarForProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E2CEB32620CA8C100036C8E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CB7NDRZY49;
+				INFOPLIST_FILE = CalendarForProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pikalong.CalendarForProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E2CEB30920CA8C100036C8E2 /* Build configuration list for PBXProject "CalendarForProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2CEB32220CA8C100036C8E2 /* Debug */,
+				E2CEB32320CA8C100036C8E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2CEB32420CA8C100036C8E2 /* Build configuration list for PBXNativeTarget "CalendarForProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2CEB32520CA8C100036C8E2 /* Debug */,
+				E2CEB32620CA8C100036C8E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E2CEB30620CA8C100036C8E2 /* Project object */;
+}
