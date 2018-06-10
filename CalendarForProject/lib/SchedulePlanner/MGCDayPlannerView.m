@@ -98,19 +98,17 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @end
 
 
-@interface MGCDayPlannerView () <UICollectionViewDataSource, MGCTimedEventsViewLayoutDelegate, MGCAllDayEventsViewLayoutDelegate, UICollectionViewDelegateFlowLayout, MGCTimeRowsViewDelegate>
+@interface MGCDayPlannerView () <UICollectionViewDataSource, MGCTimedEventsViewLayoutDelegate,  UICollectionViewDelegateFlowLayout, MGCTimeRowsViewDelegate>
 
 // subviews
 @property (nonatomic, readonly) UICollectionView *timedEventsView;
-@property (nonatomic, readonly) UICollectionView *allDayEventsView;
-@property (nonatomic, readonly) UIView *allDayEventsBackgroundView;
 @property (nonatomic, readonly) UICollectionView *dayColumnsView;
 @property (nonatomic, readonly) UIScrollView *timeScrollView;
 @property (nonatomic, readonly) MGCTimeRowsView *timeRowsView;
 
+
 // collection view layouts
 @property (nonatomic, readonly) MGCTimedEventsViewLayout *timedEventsViewLayout;
-@property (nonatomic, readonly) MGCAllDayEventsViewLayout *allDayEventsViewLayout;
 
 @property (nonatomic) MGCReusableObjectQueue *reuseQueue;		// reuse queue for event views (MGCEventView)
 
@@ -124,7 +122,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 @property (nonatomic, readonly) NSDate *firstVisibleDate;		// first fully visible day (!= visibleDays.start)
 
-@property (nonatomic) CGFloat allDayEventCellHeight;			// height of an event cell in the all-day event view
 @property (nonatomic) CGFloat eventsViewInnerMargin;			// distance between top and first time line and between last line and bottom
 
 @property (nonatomic) UIScrollView *controllingScrollView;		// the collection view which initiated scrolling - used for proper synchronization between the different collection views
@@ -154,6 +151,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 @property (nonatomic) OSCache *dimmedTimeRangesCache;          // cache for dimmed time ranges (indexed by date)
 
+
+@property (nonatomic) NSDate *indexDate;
 @end
 
 
@@ -161,13 +160,10 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 // readonly properties whose getter's defined are not auto-synthesized
 @synthesize timedEventsView = _timedEventsView;
-@synthesize allDayEventsView = _allDayEventsView;
 @synthesize dayColumnsView = _dayColumnsView;
 //@synthesize backgroundView = _backgroundView;
 @synthesize timeScrollView = _timeScrollView;
-@synthesize allDayEventsBackgroundView = _allDayEventsBackgroundView;
 @synthesize timedEventsViewLayout = _timedEventsViewLayout;
-@synthesize allDayEventsViewLayout = _allDayEventsViewLayout;
 @synthesize startDate = _startDate;
 
 #pragma mark - Initialization
@@ -175,36 +171,29 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 - (void)setup
 {
 	_numberOfVisibleDays = 3;
-	_hourSlotHeight = 50.;
-	_hourRange = NSMakeRange(0, 48);
-	_timeColumnWidth = 100.;
+	_hourSlotHeight = 30.;
+	_timeColumnWidth = 80;
     _daySeparatorsColor = [UIColor lightGrayColor];
     _timeSeparatorsColor = [UIColor lightGrayColor];
     _currentTimeColor = [UIColor redColor];
-	_showsAllDayEvents = NO;
-    _eventsViewInnerMargin = 15.;
-	_allDayEventCellHeight = 20;
+    _eventsViewInnerMargin = 0;
     _dayHeaderHeight = 30.;
-    _dimmingColor = [UIColor colorWithWhite:.9 alpha:.5];
 	_pagingEnabled = YES;
-	_zoomingEnabled = NO;
-	_canCreateEvents = NO;
-	_canMoveEvents = NO;
 	_allowsSelection = YES;
     _eventCoveringType = TimedEventCoveringTypeClassic;
-	
+	 _dimmingColor = [UIColor colorWithWhite:.9 alpha:.5];
 	_reuseQueue = [[MGCReusableObjectQueue alloc] init];
 	_loadingDays = [NSMutableOrderedSet orderedSetWithCapacity:14];
 	
     _dimmedTimeRangesCache = [[OSCache alloc]init];
     _dimmedTimeRangesCache.countLimit = 200;
     
-    _durationForNewTimedEvent = 60 * 60;
-    
-    _fontSizeNameHeaderDay = 14;
+    _fontSizeNameHeaderDay = 12;
     _heightHeaderDayCell = 28;
     _maxCellVisible = 2;
+    _sizeEventInSection = 48;
     _dayHeaderHeight = _maxCellVisible*_heightHeaderDayCell + _fontSizeNameHeaderDay+2+10;
+    _indexDate = [self.calendar mgc_startOfDayForDate:[NSDate date]];
     
 	self.backgroundColor = [UIColor whiteColor];
 	self.autoresizesSubviews = NO;
@@ -248,8 +237,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     self.timedEventsView.panGestureRecognizer.enabled = NO;
     self.timedEventsView.panGestureRecognizer.enabled = YES;
     
-    self.allDayEventsView.panGestureRecognizer.enabled = NO;
-    self.allDayEventsView.panGestureRecognizer.enabled = YES;
 }
 
 #pragma mark - Layout
@@ -299,28 +286,13 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 // public
 - (CGSize)dayColumnSize
 {
- 	CGFloat height = self.hourSlotHeight * self.hourRange.length + 2 * self.eventsViewInnerMargin;
+ 	CGFloat height = self.hourSlotHeight * _sizeEventInSection + 2 * self.eventsViewInnerMargin;
 	
 	// if the number of days in dateRange is less than numberOfVisibleDays, spread the days over the view
 	NSUInteger numberOfDays = MIN(self.numberOfVisibleDays, self.numberOfLoadedDays);
     CGFloat width = (self.bounds.size.width - self.timeColumnWidth) / numberOfDays;
 	
 	return MGCAlignedSizeMake(width, height);
-}
-
-// public
-- (void)setShowsAllDayEvents:(BOOL)showsAllDayEvents
-{
-	if (_showsAllDayEvents != showsAllDayEvents) {
-		_showsAllDayEvents = showsAllDayEvents;
-	
-        [self.allDayEventsView reloadData];
-        [self.dayColumnsView reloadData];   // for dots indicating events
-        
-        [self.dayColumnsView performBatchUpdates:^{} completion:^(BOOL finished){
-            [self setupSubviews];
-        }];
-	}
 }
 
 // public
@@ -392,32 +364,30 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 - (NSTimeInterval)firstVisibleTime
 {
     NSTimeInterval ti = [self timeFromOffset:self.timedEventsView.contentOffset.y rounding:0];
-    return fmax(self.hourRange.location * 3600., ti);
+    return fmax(self.sizeEventInSection * 3600., ti);
 }
 
 // public
 - (NSTimeInterval)lastVisibleTime
 {
     NSTimeInterval ti = [self timeFromOffset:CGRectGetMaxY(self.timedEventsView.bounds) rounding:0];
-    return fmin(NSMaxRange(self.hourRange) * 3600., ti);
+    return fmin(self.sizeEventInSection * 3600., ti);
 }
 
 // public
-- (void)setHourRange:(NSRange)hourRange
+- (void)setSizeEventInSection:(NSUInteger)sizeEventInSection
 {
-//    NSAssert(hourRange.length >= 1 && NSMaxRange(hourRange) <= 24, @"Invalid hour range %@", NSStringFromRange(hourRange));
     
-    CGFloat yCenterOffset = self.timeScrollView.contentOffset.y + self.timeScrollView.bounds.size.height / 2.;
-    NSTimeInterval ti = [self timeFromOffset:yCenterOffset rounding:0];
-    
-    _hourRange = hourRange;
+//    CGFloat yCenterOffset = self.timeScrollView.contentOffset.y + self.timeScrollView.bounds.size.height / 2.;
+//    NSTimeInterval ti = [self timeFromOffset:yCenterOffset rounding:0];
+    NSTimeInterval ti = 0;
     
     [self.dimmedTimeRangesCache removeAllObjects];
     
     self.timedEventsViewLayout.dayColumnSize = self.dayColumnSize;
     [self.timedEventsViewLayout invalidateLayout];
 
-    self.timeRowsView.hourRange = hourRange;
+    self.timeRowsView.numColumn = self.sizeEventInSection;
     self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height);
     self.timeRowsView.frame = CGRectMake(0, 0, self.timeScrollView.contentSize.width, self.timeScrollView.contentSize.height);
     
@@ -583,7 +553,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 {
 	rounding = MAX(rounding % 60, 1);
     
-    CGFloat hour = fmax(0, (yOffset - self.eventsViewInnerMargin) / self.hourSlotHeight) + self.hourRange.location;
+    CGFloat hour = fmax(0, (yOffset - self.eventsViewInnerMargin) / self.hourSlotHeight);
    	NSTimeInterval ti = roundf((hour * 3600) / (rounding * 60)) * (rounding * 60);
     
  	return ti;
@@ -595,17 +565,14 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 {
 	rounding = MAX(rounding % 60, 1);
 	ti = roundf(ti / (rounding * 60)) * (rounding * 60);
-	CGFloat hour = ti / 3600. - self.hourRange.location;
+	CGFloat hour = ti / 3600.;
 	return MGCAlignedFloat(hour * self.hourSlotHeight + self.eventsViewInnerMargin);
 }
 
 - (CGFloat)offsetFromDate:(NSDate*)date
 {
     NSDateComponents *comp = [self.calendar components:(NSCalendarUnitHour|NSCalendarUnitMinute) fromDate:date];
-    CGFloat y = roundf((comp.hour + comp.minute / 60. - self.hourRange.location) * self.hourSlotHeight + self.eventsViewInnerMargin);
-    // when the following line is commented, event cells and dimming views are not constrained to the visible hour range
-    // (ie cells can show past the edge of content)
-    //y = fmax(self.eventsViewInnerMargin, fmin(self.dayColumnSize.height - self.eventsViewInnerMargin, y));
+      CGFloat y = roundf((comp.hour + comp.minute / 60.) * self.hourSlotHeight);
     return MGCAlignedFloat(y);
 }
 
@@ -613,24 +580,10 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 - (CGPoint)offsetFromDate:(NSDate*)date eventType:(MGCEventType)type
 {
     CGFloat x = [self xOffsetFromDayOffset:[self dayOffsetFromDate:date]];
-    if(type == MGCAllDayEventType) {
-        CGPoint pt = CGPointMake(x, 0);
-        return [self convertPoint:pt fromView:self.allDayEventsView];
-    }
-    else {
-        NSTimeInterval ti = [date timeIntervalSinceDate:[self.calendar mgc_startOfDayForDate:date]];
-        CGFloat y = [self offsetFromTime:ti rounding:1];
-        CGPoint pt = CGPointMake(x, y);
-        return [self convertPoint:pt fromView:self.timedEventsView];
-    }
-}
-
-// returns the scrollable time range for the day at date, depending on hourRange
-- (MGCDateRange*)scrollableTimeRangeForDate:(NSDate*)date
-{
-    NSDate *dayRangeStart = [self.calendar dateBySettingHour:self.hourRange.location minute:0 second:0 ofDate:date options:0];
-    NSDate *dayRangeEnd = [self.calendar dateBySettingHour:NSMaxRange(self.hourRange) - 1 minute:59 second:0 ofDate:date options:0];
-    return [MGCDateRange dateRangeWithStart:dayRangeStart end:dayRangeEnd];
+    NSTimeInterval ti = [date timeIntervalSinceDate:[self.calendar mgc_startOfDayForDate:date]];
+    CGFloat y = [self offsetFromTime:ti rounding:1];
+    CGPoint pt = CGPointMake(x, y);
+    return [self convertPoint:pt fromView:self.timedEventsView];
 }
 
 #pragma mark - Locating days and events
@@ -663,7 +616,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 - (MGCEventView*)eventViewAtPoint:(CGPoint)point type:(MGCEventType*)type index:(NSUInteger*)index date:(NSDate**)date
 {
 	CGPoint ptTimedEventsView = [self convertPoint:point toView:self.timedEventsView];
-	CGPoint ptAllDayEventsView = [self convertPoint:point toView:self.allDayEventsView];
 	
 	if ([self.timedEventsView pointInside:ptTimedEventsView withEvent:nil]) {
 		NSIndexPath *path = [self.timedEventsView indexPathForItemAtPoint:ptTimedEventsView];
@@ -675,17 +627,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 			return cell.eventView;
 		}
 	}
-	else if ([self.allDayEventsView pointInside:ptAllDayEventsView withEvent:nil]) {
-		NSIndexPath *path = [self.allDayEventsView indexPathForItemAtPoint:ptAllDayEventsView];
-		if (path) {
-			MGCEventCell *cell = (MGCEventCell*)[self.allDayEventsView cellForItemAtIndexPath:path];
-			if (type) *type = MGCAllDayEventType;
-			if (index) *index = path.item;
-			if (date) *date = [self dateFromDayOffset:path.section];
-			return cell.eventView;
-		}
-	}
-	
 	return nil;
 }
 
@@ -867,48 +808,12 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		
 		[_timedEventsView registerClass:MGCEventCell.class forCellWithReuseIdentifier:EventCellReuseIdentifier];
         [_timedEventsView registerClass:UICollectionReusableView.class forSupplementaryViewOfKind:DimmingViewKind withReuseIdentifier:DimmingViewReuseIdentifier];
-		UILongPressGestureRecognizer *longPress = [UILongPressGestureRecognizer new];
-		[longPress addTarget:self action:@selector(handleLongPress:)];
-		[_timedEventsView addGestureRecognizer:longPress];
 		
 		UITapGestureRecognizer *tap = [UITapGestureRecognizer new];
 		[tap addTarget:self action:@selector(handleTap:)];
 		[_timedEventsView addGestureRecognizer:tap];
-		
-		UIPinchGestureRecognizer *pinch = [UIPinchGestureRecognizer new];
-		[pinch addTarget:self action:@selector(handlePinch:)];
-		[_timedEventsView addGestureRecognizer:pinch];
 	}
 	return _timedEventsView;
-}
-
-- (UICollectionView*)allDayEventsView
-{
-	if (!_allDayEventsView && self.showsAllDayEvents) {
-		_allDayEventsView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.allDayEventsViewLayout];
-		_allDayEventsView.backgroundColor = [UIColor clearColor];
-		_allDayEventsView.dataSource = self;
-		_allDayEventsView.delegate = self;
-		_allDayEventsView.showsVerticalScrollIndicator = YES;
-		_allDayEventsView.showsHorizontalScrollIndicator = NO;
-		_allDayEventsView.decelerationRate = UIScrollViewDecelerationRateFast;
-		_allDayEventsView.allowsSelection = NO;
-		_allDayEventsView.directionalLockEnabled = YES;
-		
-		[_allDayEventsView registerClass:MGCEventCell.class forCellWithReuseIdentifier:EventCellReuseIdentifier];
-		
-		//[_allDayEventsView registerClass:UICollectionReusableView.class forSupplementaryViewOfKind:MoreEventsViewKind withReuseIdentifier:MoreEventsViewReuseIdentifier];  // test
-		
-		UILongPressGestureRecognizer *longPress = [UILongPressGestureRecognizer new];
-		[longPress addTarget:self action:@selector(handleLongPress:)];
-		[_allDayEventsView addGestureRecognizer:longPress];
-		
-		UITapGestureRecognizer *tap = [UITapGestureRecognizer new];
-		[tap addTarget:self action:@selector(handleTap:)];
-		[_allDayEventsView addGestureRecognizer:tap];
-
-	}
-	return _allDayEventsView;
 }
 
 - (UICollectionView*)dayColumnsView
@@ -948,7 +853,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         _timeRowsView.timeColor = self.timeSeparatorsColor;
         _timeRowsView.currentTimeColor = self.currentTimeColor;
 		_timeRowsView.hourSlotHeight = self.hourSlotHeight;
-        _timeRowsView.hourRange = self.hourRange;
+        _timeRowsView.numColumn = self.sizeEventInSection;
 		_timeRowsView.insetsHeight = self.eventsViewInnerMargin;
 		_timeRowsView.timeColumnWidth = self.timeColumnWidth;
 		_timeRowsView.contentMode = UIViewContentModeRedraw;
@@ -956,19 +861,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	}
 	return _timeScrollView;
 }
-
-- (UIView*)allDayEventsBackgroundView
-{
-	if (!_allDayEventsBackgroundView) {
-		_allDayEventsBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-		_allDayEventsBackgroundView.backgroundColor = [UIColor colorWithRed:.8 green:.8 blue:.83 alpha:1.];
-		_allDayEventsBackgroundView.clipsToBounds = YES;
-		_allDayEventsBackgroundView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-		_allDayEventsBackgroundView.layer.borderWidth = 1;
-	}
-	return _allDayEventsBackgroundView;
-}
-
 
 #pragma mark - Layouts
 
@@ -983,18 +875,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	return _timedEventsViewLayout;
 }
 
-- (MGCAllDayEventsViewLayout*)allDayEventsViewLayout
-{
-	if (!_allDayEventsViewLayout && self.showsAllDayEvents) {
-		_allDayEventsViewLayout = [MGCAllDayEventsViewLayout new];
-		_allDayEventsViewLayout.delegate = self;
-		_allDayEventsViewLayout.dayColumnWidth = self.dayColumnSize.width;
-		_allDayEventsViewLayout.eventCellHeight = self.allDayEventCellHeight;
-		//_allDayEventsViewLayout.maxContentHeight = 45; // test
-	}
-	return _allDayEventsViewLayout;
-}
-
 #pragma mark - Event view manipulation
 
 - (void)registerClass:(Class)viewClass forEventViewWithReuseIdentifier:(NSString*)identifier
@@ -1005,30 +885,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 - (MGCEventView*)dequeueReusableViewWithIdentifier:(NSString*)identifier forEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date
 {
 	return (MGCEventView*)[self.reuseQueue dequeueReusableObjectWithReuseIdentifier:identifier];
-}
-
-#pragma mark - Zooming
-
-- (void)handlePinch:(UIPinchGestureRecognizer*)gesture
-{
-	if (!self.zoomingEnabled) return;
-	
-	if (gesture.state == UIGestureRecognizerStateBegan) {
-		self.hourSlotHeightForGesture = self.hourSlotHeight;
-	}
-	else if (gesture.state == UIGestureRecognizerStateChanged) {
-		if (gesture.numberOfTouches > 1) {
-			CGFloat hourSlotHeight = self.hourSlotHeightForGesture * gesture.scale;
-			
-			if (hourSlotHeight != self.hourSlotHeight) {
-				self.hourSlotHeight = hourSlotHeight;
-
-                if ([self.delegate respondsToSelector:@selector(dayPlannerViewDidZoom:)]) {
-					[self.delegate dayPlannerViewDidZoom:self];
-				}
-			}
-		}
-	}
 }
 
 #pragma mark - Selection
@@ -1046,7 +902,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		if (path)  // a cell was touched
 		{
 			NSDate *date = [self dateFromDayOffset:path.section];
-			MGCEventType type = (view == self.timedEventsView) ? MGCTimedEventType : MGCAllDayEventType;
+            MGCEventType type = MGCTimedEventType;
 			
 			[self selectEventWithDelegate:YES type:type atIndex:path.item date:date];
 		}
@@ -1140,339 +996,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	}];
 }
 
-- (CGRect)rectForNewEventOfType:(MGCEventType)type atDate:(NSDate*)date
-{
-	NSUInteger section = [self dayOffsetFromDate:date];
-	CGFloat x = section * self.dayColumnSize.width;
-	
-	if (type == MGCTimedEventType) {
-        CGFloat y =  [self offsetFromTime:self.durationForNewTimedEvent rounding:0];
- 		CGRect rect = CGRectMake(x, y, self.dayColumnSize.width, self.interactiveCellTimedEventHeight);
-		return [self convertRect:rect fromView:self.timedEventsView];
-	}
-	else if (type == MGCAllDayEventType) {
-		CGRect rect = CGRectMake(x, 0, self.dayColumnSize.width, self.allDayEventCellHeight);
-		return [self convertRect:rect fromView:self.allDayEventsView];
-	}
-	
-	return CGRectNull;
-}
-
-- (void)handleLongPress:(UILongPressGestureRecognizer*)gesture
-{
-	CGPoint ptSelf = [gesture locationInView:self];
-
-	// long press on a cell or an empty space in the view
-	if (gesture.state == UIGestureRecognizerStateBegan)
-	{
-		[self endInteraction]; // in case previous interaction did not end properly
-		
-		[self setUserInteractionEnabled:NO];
-		
-		// where did the gesture start ?
-		UICollectionView *view = (UICollectionView*)gesture.view;
-		MGCEventType type = (view == self.timedEventsView) ? MGCTimedEventType : MGCAllDayEventType;
-		NSIndexPath *path = [view indexPathForItemAtPoint:[gesture locationInView:view]];
-		
-		if (path) {	// a cell was touched
-			if (![self beginMovingEventOfType:type atIndexPath:path]) {
-				gesture.enabled = NO;
-				gesture.enabled = YES;
-			}
-			else {
-				self.interactiveCellTouchPoint = [gesture locationInView:self.interactiveCell];
-			}
-		}
-		else {		// an empty space was touched
-            CGFloat createEventSlotHeight = floor(self.durationForNewTimedEvent * self.hourSlotHeight / 60.0f / 60.0f);
-			NSDate *date = [self dateAtPoint:CGPointMake(ptSelf.x, ptSelf.y - createEventSlotHeight / 2) rounded:YES];
-						
-			if (![self beginCreateEventOfType:type atDate:date]) {
-				gesture.enabled = NO;
-				gesture.enabled = YES;
-			}
-		}
-	}
-	// interactive cell was moved
-	else if (gesture.state == UIGestureRecognizerStateChanged)
-	{
-		[self moveInteractiveCellAtPoint:[gesture locationInView:self]];
-	}
-	// finger was lifted
-	else if (gesture.state == UIGestureRecognizerStateEnded)
-	{
-		[self.dragTimer invalidate];
-		self.dragTimer = nil;
-		//[self scrollViewDidEndScrolling:self.controllingScrollView];
-		
-		NSDate *date = [self dateAtPoint:self.interactiveCell.frame.origin rounded:YES];
-        
-		if (!self.isInteractiveCellForNewEvent) // existing event
-		{
-			if (!self.acceptsTarget) {
-				[self endInteraction];
-			}
-			else if (date && [self.dataSource respondsToSelector:@selector(dayPlannerView:moveEventOfType:atIndex:date:toType:date:)]) {
-				[self.dataSource dayPlannerView:self moveEventOfType:self.movingEventType atIndex:self.movingEventIndex date:self.movingEventDate toType:self.interactiveCellType date:date];
-			}
-		}
-		else  // new event
-		{
-			if (!self.acceptsTarget) {
-				[self endInteraction];
-			}
-			else if (date && [self.dataSource respondsToSelector:@selector(dayPlannerView:createNewEventOfType:atDate:)]) {
-				[self.dataSource dayPlannerView:self createNewEventOfType:self.interactiveCellType atDate:date];
-			}
-		}
-		
-		[self setUserInteractionEnabled:YES];
-		//[self endInteraction];
-	}
-	else if (gesture.state == UIGestureRecognizerStateCancelled)
-	{
-		[self setUserInteractionEnabled:YES];
-	}
-}
-
-- (BOOL)beginCreateEventOfType:(MGCEventType)type atDate:(NSDate*)date
-{
-	NSAssert([self.visibleDays containsDate:date], @"beginCreateEventOfType:atDate for non visible date");
-
-	if (!self.canCreateEvents) return NO;
-	
-    self.interactiveCellTimedEventHeight = floor(self.durationForNewTimedEvent * self.hourSlotHeight / 60.0f / 60.0f);
-    
-	self.isInteractiveCellForNewEvent = YES;
-	self.interactiveCellType = type;
-	self.interactiveCellTouchPoint = CGPointMake(0, self.interactiveCellTimedEventHeight / 2);
-	self.interactiveCellDate = date;
-	
-	self.interactiveCell = [[MGCInteractiveEventView alloc]initWithFrame:CGRectZero];
-
-	if ([self.dataSource respondsToSelector:@selector(dayPlannerView:viewForNewEventOfType:atDate:)]) {
-		self.interactiveCell.eventView = [self.dataSource dayPlannerView:self viewForNewEventOfType:type atDate:date];
-		NSAssert(self.interactiveCell, @"dayPlannerView:viewForNewEventOfType:atDate can't return nil");
-	}
-	else {
-        MGCStandardEventView *eventView = [[MGCStandardEventView alloc]initWithFrame:CGRectZero];
-        eventView.title = NSLocalizedString(@"New Event", nil);
-        self.interactiveCell.eventView = eventView;
-	}
-	
-	self.acceptsTarget = YES;
-	if ([self.dataSource respondsToSelector:@selector(dayPlannerView:canCreateNewEventOfType:atDate:)]) {
-		if (![self.dataSource dayPlannerView:self canCreateNewEventOfType:type atDate:date]) {
-			self.interactiveCell.forbiddenSignVisible = YES;
-			self.acceptsTarget = NO;
-		}
-	}
-	
-    CGRect rect = [self rectForNewEventOfType:type atDate:date];
-	self.interactiveCell.frame = rect;
-	[self addSubview:self.interactiveCell];
-	self.interactiveCell.hidden = NO;
-	
-	return YES;
-}
-
-- (BOOL)beginMovingEventOfType:(MGCEventType)type atIndexPath:(NSIndexPath*)path
-{
-	if (!self.canMoveEvents) return NO;
-	
-	UICollectionView *view = (type == MGCTimedEventType) ? self.timedEventsView : self.allDayEventsView;
-	NSDate *date = [self dateFromDayOffset:path.section];
-	
-	if ([self.dataSource respondsToSelector:@selector(dayPlannerView:shouldStartMovingEventOfType:atIndex:date:)]) {
-		if (![self.dataSource dayPlannerView:self shouldStartMovingEventOfType:type atIndex:path.item date:date]) {
-			
-			MGCEventCell *cell = (MGCEventCell*)[view cellForItemAtIndexPath:path];
-			[self bounceAnimateCell:cell];
-			return NO;
-		}
-	}
-	
-	self.movingEventType = type;
-	self.movingEventIndex = path.item;
-	
-	self.isInteractiveCellForNewEvent = NO;
-	self.interactiveCellType = type;
-	
-	MGCEventCell *cell = (MGCEventCell*)[view cellForItemAtIndexPath:path];
-	MGCEventView *eventView = cell.eventView;
-	
-	// copy the cell
-	self.interactiveCell = [[MGCInteractiveEventView alloc]initWithFrame:CGRectZero];
-	self.interactiveCell.eventView = [eventView copy];
-	
-	// adjust the frame
-	CGRect frame = [self convertRect:cell.frame fromView:view];
-	if (type == MGCTimedEventType) {
-		frame.size.width = self.dayColumnSize.width;
-	}
-	//frame.size.width = cell.frame.size.width; // TODO: this is wrong for all day events
-	self.interactiveCell.frame = frame;
-	
-    self.interactiveCellDate = [self dateAtPoint:self.interactiveCell.frame.origin rounded:YES];
-    self.movingEventDate = self.interactiveCellDate;
-    
-	// record the height of the cell (this is necessary when we move back from AllDayEventType to TimedEventType
-	self.interactiveCellTimedEventHeight = (type == MGCTimedEventType ? frame.size.height : self.hourSlotHeight);
-	
-	self.acceptsTarget = YES;
-	//[self.interactiveCell didTransitionToEventType:type];  // TODO: fix
-	
-	//self.interactiveCell.selected = YES;
-	[self addSubview:self.interactiveCell];
-	self.interactiveCell.hidden = NO;
-	
-	return YES;
-}
-
-- (void)updateMovingCellAtPoint:(CGPoint)point
-{
-	CGPoint ptDayColumnsView = [self convertPoint:point toView:self.dayColumnsView];
-	CGPoint ptEventsView = [self.timedEventsView convertPoint:point fromView:self];
-	
-	NSUInteger section = ptDayColumnsView.x / self.dayColumnSize.width;
-	CGPoint origin = CGPointMake(section * self.dayColumnSize.width, ptDayColumnsView.y);
-	origin = [self convertPoint:origin fromView:self.dayColumnsView];
-	
-	CGSize size = self.interactiveCell.frame.size; // cell size
-	
-	MGCEventType type = MGCTimedEventType;
-	if (self.showsAllDayEvents && point.y < CGRectGetMinY(self.timedEventsView.frame)) {
-		type = MGCAllDayEventType;
-	}
-	
-	BOOL didTransition = type != self.interactiveCellType;
-	
-	self.interactiveCellType = type;
-	
-	self.acceptsTarget = YES;
-	
-	NSDate *date = [self dateAtPoint:self.interactiveCell.frame.origin rounded:YES];
-	self.interactiveCellDate = date;
-	
-	if (self.isInteractiveCellForNewEvent) {
-		if ([self.dataSource respondsToSelector:@selector(dayPlannerView:canCreateNewEventOfType:atDate:)]) {
-			if (date && ![self.dataSource dayPlannerView:self canCreateNewEventOfType:type atDate:date]) {
-				self.acceptsTarget = NO;
-			}
-		}
-	}
-	else {
-		if ([self.dataSource respondsToSelector:@selector(dayPlannerView:canMoveEventOfType:atIndex:date:toType:date:)]) {
-			if (date && ![self.dataSource dayPlannerView:self canMoveEventOfType:self.movingEventType atIndex:self.movingEventIndex date:self.movingEventDate toType:type date:date]) {
-				self.acceptsTarget = NO;
-			}
-		}
-	}
-	
-	self.interactiveCell.forbiddenSignVisible = !self.acceptsTarget;
-	
-	if (self.interactiveCellType == MGCTimedEventType) {
-		size.height = self.interactiveCellTimedEventHeight;
-			
-		// constraint position
-		ptEventsView.y -= self.interactiveCellTouchPoint.y;
-		ptEventsView.y = fmaxf(ptEventsView.y, self.eventsViewInnerMargin);
-		ptEventsView.y = fminf(ptEventsView.y, self.timedEventsView.contentSize.height - self.eventsViewInnerMargin);
-			
-		origin.y = [self convertPoint:ptEventsView fromView:self.timedEventsView].y;
-		origin.y = fmaxf(origin.y, self.timedEventsView.frame.origin.y);
-		
-        self.timeRowsView.timeMark = [self timeFromOffset:ptEventsView.y rounding:0];;
-	}
-	else {
-		size.height = self.allDayEventCellHeight;
-		origin.y = self.allDayEventsView.frame.origin.y; // top of the view
-	}
-	
-	CGRect cellFrame = self.interactiveCell.frame;
-	
-	NSTimeInterval animationDur = (origin.x != cellFrame.origin.x) ? .02 : .15;
-	
-	cellFrame.origin = origin;
-	cellFrame.size = size;
-	[UIView animateWithDuration:animationDur delay:0 options:/*UIViewAnimationOptionBeginFromCurrentState|*/UIViewAnimationOptionCurveEaseIn animations:^{
-		self.interactiveCell.frame = cellFrame;
-	} completion:^(BOOL finished) {
-		if (didTransition) {
-			[self.interactiveCell.eventView didTransitionToEventType:self.interactiveCellType];
-		}
-	}];
-}
-
-// point in self coordinates
-- (void)moveInteractiveCellAtPoint:(CGPoint)point
-{
-	CGRect rightScrollRect = CGRectMake(CGRectGetMaxX(self.bounds) - 30, 0, 30, self.bounds.size.height);
-	CGRect leftScrollRect = CGRectMake(0, 0, self.timeColumnWidth + 20, self.bounds.size.height);
-	CGRect downScrollRect = CGRectMake(self.timeColumnWidth, CGRectGetMaxY(self.bounds) - 30, self.bounds.size.width, 30);
-	CGRect upScrollRect = CGRectMake(self.timeColumnWidth, self.timedEventsView.frame.origin.y, self.bounds.size.width, 30);
-	
-	if (self.dragTimer) {
-		[self.dragTimer invalidate];
-		self.dragTimer = nil;
-	}
-	
-	// speed depends on day column width
-	NSTimeInterval ti = (self.dayColumnSize.width / 100.) * 0.05;
-	
-	if (CGRectContainsPoint(rightScrollRect, point)) {
-		// progressive speed
-		ti /= (point.x - rightScrollRect.origin.x) / 30;
-		self.dragTimer = [NSTimer scheduledTimerWithTimeInterval:ti target:self selector:@selector(dragTimerDidFire:) userInfo:@{@"direction": @(ScrollDirectionLeft)} repeats:YES];
-	}
-	else if (CGRectContainsPoint(leftScrollRect, point)) {
-		ti /= (CGRectGetMaxX(leftScrollRect) - point.x) / 30;
-		self.dragTimer = [NSTimer scheduledTimerWithTimeInterval:ti target:self selector:@selector(dragTimerDidFire:) userInfo:@{@"direction": @(ScrollDirectionRight)} repeats:YES];
-	}
-	else if (CGRectContainsPoint(downScrollRect, point)) {
-		self.dragTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(dragTimerDidFire:) userInfo:@{@"direction": @(ScrollDirectionDown)} repeats:YES];
-	}
-	else if (CGRectContainsPoint(upScrollRect, point)) {
-		self.dragTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(dragTimerDidFire:) userInfo:@{@"direction": @(ScrollDirectionUp)} repeats:YES];
-	}
-	
-	[self updateMovingCellAtPoint:point];
-}
-
-- (void)dragTimerDidFire:(NSTimer*)timer
-{
-	//NSLog(@"dragTimerDidFire");
-	
-	ScrollDirection direction = [[timer.userInfo objectForKey:@"direction"] unsignedIntegerValue];
-	
-	CGPoint offset = self.timedEventsView.contentOffset;
-	if (direction == ScrollDirectionLeft) {
-		offset.x += self.dayColumnSize.width;
-		offset.x = fminf(offset.x, self.timedEventsView.contentSize.width - self.timedEventsView.bounds.size.width);
-	}
-	else if (direction == ScrollDirectionRight) {
-		offset.x -= self.dayColumnSize.width;
-		offset.x = fmaxf(offset.x, 0);
-	}
-	else if (direction == ScrollDirectionDown) {
-		offset.y += 20;
-		offset.y = fminf(offset.y, self.timedEventsView.contentSize.height - self.timedEventsView.bounds.size.height);
-	}
-	else if (direction == ScrollDirectionUp) {
-		offset.y -= 20;
-		offset.y = fmaxf(offset.y, 0);
-	}
-	
-	// This test is important, because if we can't move (at the start or end of content),
-	// setContentOffset will have no effect, and will not send scrollViewDidEndScrollingAnimation:
-	// so we won't get any chance to reset everything
-	if (!CGPointEqualToPoint(self.timedEventsView.contentOffset, offset)) {
-		[self setTimedEventsViewContentOffset:offset animated:NO completion:nil];
-		
-		// scrolling will be enabled again in scrollViewDidEndScrolling:
-	}
-}
-
 - (void)endInteraction
 {
 	if (self.interactiveCell) {
@@ -1500,12 +1023,9 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     CGSize dayColumnSize = self.dayColumnSize;
     
     self.timedEventsViewLayout.dayColumnSize = dayColumnSize;
-    self.allDayEventsViewLayout.dayColumnWidth = dayColumnSize.width;
-    self.allDayEventsViewLayout.eventCellHeight = self.allDayEventCellHeight;
     
     [self.dayColumnsView reloadData];
 	[self.timedEventsView reloadData];
-    [self.allDayEventsView reloadData];
 
     if (!self.controllingScrollView) {  // only if we're not scrolling
        dispatch_async(dispatch_get_main_queue(), ^{ [self setupSubviews]; });
@@ -1518,8 +1038,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	//NSLog(@"reloadAllEvents");
 	
 	[self deselectEventWithDelegate:YES];
-	
-	[self.allDayEventsView reloadData];
 	[self.timedEventsView reloadData];
 	
 	if (!self.controllingScrollView) {
@@ -1537,7 +1055,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	NSIndexPath *path = [NSIndexPath indexPathForItem:0 inSection:section];
 	MGCDayColumnCell *cell = (MGCDayColumnCell*)[self.dayColumnsView cellForItemAtIndexPath:path];
 	if (cell) {
-		NSUInteger count = [self numberOfAllDayEventsAtDate:date] + [self numberOfTimedEventsAtDate:date];
+		NSUInteger count = [self numberOfTimedEventsAtDate:date];
 		if (count > 0) {
 			cell.accessoryTypes |= MGCDayColumnCellAccessoryDot;
 		}
@@ -1555,10 +1073,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	[self deselectEventWithDelegate:YES];
 	
 	if ([self.loadedDaysRange containsDate:date]) {
-	
-        // we have to reload everything for the all-day events view because some events might span several days
-		[self.allDayEventsView reloadData];
-        
 		if (!self.controllingScrollView) {
 			// only if we're not scrolling
 			[self setupSubviews];
@@ -1589,31 +1103,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     [self.timedEventsView.collectionViewLayout invalidateLayoutWithContext:context];
 }
 
-// public
-- (void)insertEventOfType:(MGCEventType)type withDateRange:(MGCDateRange*)range
-{
-	NSInteger start = MAX([self dayOffsetFromDate:range.start], 0);
-	NSInteger end = MIN([self dayOffsetFromDate:range.end], self.numberOfLoadedDays);
-	
-	NSMutableArray *indexPaths = [NSMutableArray array];
-	for (NSInteger section = start; section <= end; section++) {
-		NSDate *date = [self dateFromDayOffset:section];
-		NSInteger num = [self.dataSource dayPlannerView:self numberOfEventsOfType:type atDate:date];
-		NSIndexPath *path = [NSIndexPath indexPathForItem:num inSection:section];
-		
-		[indexPaths addObject:path];
-	}
-	
-	
-	if (type == MGCAllDayEventType) {
-		//[self.allDayEventsView reloadSections:[NSIndexSet indexSetWithIndex:section]];
-		[self.allDayEventsView insertItemsAtIndexPaths:indexPaths];
-	}
-	else if (type == MGCTimedEventType) {
-		//[self.timedEventsView reloadSections:[NSIndexSet indexSetWithIndex:section]];
-		[self.timedEventsView insertItemsAtIndexPaths:indexPaths];
-	}
-}
 
 // public
 - (BOOL)setActivityIndicatorVisible:(BOOL)visible forDate:(NSDate*)date
@@ -1636,13 +1125,15 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	return NO;
 }
 
+- (void)changeClick:(NSInteger) currentIndex withDate:(NSDate*) date{
+    [self.timeRowsView setCurrentIndex:currentIndex];
+    _indexDate = [self.calendar mgc_startOfDayForDate:date];
+    [self.dayColumnsView reloadData];
+}
+
 - (void)setupSubviews
 {
     CGFloat allDayEventsViewHeight = 2;
-	if (self.showsAllDayEvents) {
-		allDayEventsViewHeight = fmaxf(self.allDayEventCellHeight + 4, self.allDayEventsView.contentSize.height);
-		allDayEventsViewHeight = fminf(allDayEventsViewHeight, self.allDayEventCellHeight * 2.5 + 6);
-	}
 	CGFloat timedEventViewTop = self.dayHeaderHeight + allDayEventsViewHeight;
 	CGFloat timedEventsViewWidth = self.bounds.size.width - self.timeColumnWidth;
 	CGFloat timedEventsViewHeight = self.bounds.size.height - (self.dayHeaderHeight + allDayEventsViewHeight);
@@ -1653,29 +1144,15 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	if (!self.backgroundView.superview) {
 		[self addSubview:self.backgroundView];
 	}
-	
-	// x pos and width are adjusted in order to "hide" left and rigth borders
-	self.allDayEventsBackgroundView.frame = CGRectMake(-1, self.dayHeaderHeight, self.bounds.size.width + 2, allDayEventsViewHeight);
-	if (!self.allDayEventsBackgroundView.superview) {
-		[self addSubview:self.allDayEventsBackgroundView];
-	}
-	
-//	self.dayColumnsView.frame = CGRectMake(self.timeColumnWidth, 0, timedEventsViewWidth, self.bounds.size.height);
-//	if (!self.dayColumnsView.superview) {
-//		[self addSubview:self.dayColumnsView];
-//	}
-    
+	// add speratorHozi
+    UIView *speratorHoziView = [[UIView alloc] initWithFrame:CGRectMake(0, self.dayHeaderHeight, self.bounds.size.width, 1)];
+    speratorHoziView.backgroundColor = [UIColor lightGrayColor];
+    [self addSubview:speratorHoziView];
 	// add speratorVetical
     UIView *speratorVeticalView = [[UIView alloc] initWithFrame:CGRectMake(self.timeColumnWidth, 0, 1, self.dayHeaderHeight)];
     speratorVeticalView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:speratorVeticalView];
     
-    
-	self.allDayEventsView.frame = CGRectMake(self.timeColumnWidth, self.dayHeaderHeight, timedEventsViewWidth, allDayEventsViewHeight);
-	if (!self.allDayEventsView.superview) {
-		[self addSubview:self.allDayEventsView];
-	}
-	
     self.timedEventsView.frame = CGRectMake(self.timeColumnWidth, timedEventViewTop, timedEventsViewWidth, timedEventsViewHeight);
     if (!self.timedEventsView.superview) {
         [self addSubview:self.timedEventsView];
@@ -1700,15 +1177,10 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     }
 
     self.dayColumnsView.userInteractionEnabled = NO;
-//	self.timedEventsView.frame = CGRectMake(self.timeColumnWidth, timedEventViewTop, timedEventsViewWidth, timedEventsViewHeight);
-//	if (!self.timedEventsView.superview) {
-//		[self addSubview:self.timedEventsView];
-//	}
 
     // make sure collection views are synchronized
     self.dayColumnsView.contentOffset = CGPointMake(self.timedEventsView.contentOffset.x, 0);
     self.timeScrollView.contentOffset = CGPointMake(0, self.timedEventsView.contentOffset.y);
-    self.allDayEventsView.contentOffset = CGPointMake(self.timedEventsView.contentOffset.x, self.allDayEventsView.contentOffset.y);
 
 	if (self.dragTimer == nil && self.interactiveCell && self.interactiveCellDate) {
 		CGRect frame = self.interactiveCell.frame;
@@ -1717,8 +1189,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		self.interactiveCell.frame = frame;
         self.interactiveCell.hidden = (self.interactiveCellType == MGCTimedEventType && !CGRectIntersectsRect(self.timedEventsView.frame, frame));
 	}
-	
-	[self.allDayEventsView flashScrollIndicators];
 }
 
 #pragma mark - UIView
@@ -1736,26 +1206,23 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     self.timeRowsView.insetsHeight = self.eventsViewInnerMargin;
     
     self.timedEventsViewLayout.dayColumnSize = dayColumnSize;
-    self.allDayEventsViewLayout.dayColumnWidth = dayColumnSize.width;
-    self.allDayEventsViewLayout.eventCellHeight = self.allDayEventCellHeight;
+//    self.allDayEventsViewLayout.eventCellHeight = self.allDayEventCellHeight;
     
 	[self setupSubviews];
 	[self updateVisibleDaysRange];
 }
 
 #pragma mark - MGCTimeRowsViewDelegate
-- (NSAttributedString*)timeRowsViewAttributedStringBagde:(MGCTimeRowsView*)view{
-    
-    if ([self.delegate respondsToSelector:@selector(dayPlannerViewAttribuedStringBagde:)]) {
-        return [self.delegate dayPlannerViewAttribuedStringBagde:self ];
+- (NSAttributedString*) timeRowsViewAttributedStringBagde:(MGCTimeRowsView *)view withIndex:(NSInteger)index{
+    if ([self.delegate respondsToSelector:@selector(dayPlannerViewAttribuedStringBagde:withIndex:)]) {
+        return [self.delegate dayPlannerViewAttribuedStringBagde:self withIndex:index ];
     }
     return nil;
 }
 
-- (NSAttributedString*)timeRowsViewAttributedStringMark:(MGCTimeRowsView*)view{
-    
-    if ([self.delegate respondsToSelector:@selector(dayPlannerViewAttributedStringMark:)]) {
-        return [self.delegate dayPlannerViewAttributedStringMark:self];
+-(NSAttributedString*) timeRowsViewAttributedStringMark:(MGCTimeRowsView *)view withIndex:(NSInteger)index{
+    if ([self.delegate respondsToSelector:@selector(dayPlannerViewAttributedStringMark:withIndex:)]) {
+        return [self.delegate dayPlannerViewAttributedStringMark:self withIndex:index];
     }
     return nil;
 }
@@ -1775,26 +1242,11 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 }
 
 // public
-- (NSInteger)numberOfAllDayEventsAtDate:(NSDate*)date
-{
-    if (!self.showsAllDayEvents) return 0;
-	
-	NSInteger section = [self dayOffsetFromDate:date];
-	return [self.allDayEventsView numberOfItemsInSection:section];
-}
-
-// public
 - (NSArray*)visibleEventViewsOfType:(MGCEventType)type
 {
 	NSMutableArray *views = [NSMutableArray array];
 	if (type == MGCTimedEventType) {
 		NSArray *visibleCells = [self.timedEventsView visibleCells];
-		for (MGCEventCell *cell in visibleCells) {
-			[views addObject:cell.eventView];
-		}
-	}
-	else if (type == MGCAllDayEventType) {
-		NSArray *visibleCells = [self.allDayEventsView visibleCells];
 		for (MGCEventCell *cell in visibleCells) {
 			[views addObject:cell.eventView];
 		}
@@ -1808,22 +1260,13 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	if (type == MGCTimedEventType) {
 		cell = (MGCEventCell*)[self.timedEventsView cellForItemAtIndexPath:indexPath];
 	}
-	else if (type == MGCAllDayEventType) {
-		cell = (MGCEventCell*)[self.allDayEventsView cellForItemAtIndexPath:indexPath];
-	}
 	return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
 	if (collectionView == self.timedEventsView) {
-		NSDate *date = [self dateFromDayOffset:section];
-		return [self.dataSource dayPlannerView:self numberOfEventsOfType:MGCTimedEventType atDate:date];
-	}
-	else if (collectionView == self.allDayEventsView) {
-        if (!self.showsAllDayEvents) return 0;
-		NSDate *date = [self dateFromDayOffset:section];
-		return [self.dataSource dayPlannerView:self numberOfEventsOfType:MGCAllDayEventType atDate:date];
+        return _sizeEventInSection;
 	}
 	return 1; // for dayColumnView
 }
@@ -1836,6 +1279,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     dayCell.heightHeaderDayCell = self.heightHeaderDayCell;
     dayCell.fontSizeNameDay = self.fontSizeNameHeaderDay;
     dayCell.maxCellVisible = self.maxCellVisible;
+    dayCell.indexDate = _indexDate;
     
     NSDate *date = [self dateFromDayOffset:indexPath.section];
     dayCell.currentDate = date;
@@ -1867,9 +1311,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	if (type == MGCTimedEventType) {
 		cvCell = (MGCEventCell*)[self.timedEventsView dequeueReusableCellWithReuseIdentifier:EventCellReuseIdentifier forIndexPath:indexPath];
 	}
-	else if (type == MGCAllDayEventType) {
-		cvCell = (MGCEventCell*)[self.allDayEventsView dequeueReusableCellWithReuseIdentifier:EventCellReuseIdentifier forIndexPath:indexPath];
-	}
 	
 	cvCell.eventView = cell;
 	if ([self.selectedCellIndexPath isEqual:indexPath] && self.selectedCellType == type) {
@@ -1883,9 +1324,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 {
 	if (collectionView == self.timedEventsView) {
 		return [self dequeueCellForEventOfType:MGCTimedEventType atIndexPath:indexPath];
-	}
-	else if (collectionView == self.allDayEventsView) {
-		return [self dequeueCellForEventOfType:MGCAllDayEventType atIndexPath:indexPath];
 	}
 	else if (collectionView == self.dayColumnsView) {
 		return [self dayColumnCellAtIndexPath:indexPath];
@@ -1901,64 +1339,32 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         
         return view;
     }
-    ///// test
-    else if ([kind isEqualToString:MoreEventsViewKind]) {
-        UICollectionReusableView *view = [self.allDayEventsView dequeueReusableSupplementaryViewOfKind:MoreEventsViewKind withReuseIdentifier:MoreEventsViewReuseIdentifier forIndexPath:indexPath];
-        
-        view.autoresizesSubviews = YES;
-        
-        NSUInteger hiddenCount = [self.allDayEventsViewLayout numberOfHiddenEventsInSection:indexPath.section];
-        UILabel *label = [[UILabel alloc]initWithFrame:view.bounds];
-        label.text = [NSString stringWithFormat:NSLocalizedString(@"%d more...", nil), hiddenCount];
-        label.textColor = [UIColor blackColor];
-        label.font = [UIFont systemFontOfSize:11];
-        label.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-        
-        [view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [view addSubview:label];
-        
-        return view;
-    }
     return nil;
 }
 
 #pragma mark - MGCTimedEventsViewLayoutDelegate
 
-- (CGRect)collectionView:(UICollectionView *)collectionView layout:(MGCTimedEventsViewLayout *)layout rectForEventAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDate *date = [self dateFromDayOffset:indexPath.section];
-    
-    MGCDateRange *dayRange = [self scrollableTimeRangeForDate:date];
-    
-    MGCDateRange* eventRange = [self.dataSource dayPlannerView:self dateRangeForEventOfType:MGCTimedEventType atIndex:indexPath.item date:date];
-    NSAssert(eventRange, @"[AllDayEventsViewLayoutDelegate dayPlannerView:dateRangeForEventOfType:atIndex:date:] cannot return nil!");
-    
-    [eventRange intersectDateRange:dayRange];
-    
-    if (!eventRange.isEmpty) {
-        CGFloat y1 = [self offsetFromDate:eventRange.start];
-        CGFloat y2 = [self offsetFromDate:eventRange.end];
-        
-        return CGRectMake(0, y1, 0, y2 - y1);
-    }
-    return CGRectNull;
+- (CGRect)collectionView:(UICollectionView *)collectionView layout:(MGCTimedEventsViewLayout *)layout rectForEventAtIndexPath:(NSIndexPath *)indexPath{
+    CGFloat y1 = MGCAlignedFloat(indexPath.item*self.hourSlotHeight);
+    CGFloat y2 = MGCAlignedFloat((indexPath.item + 1)*self.hourSlotHeight);
+    return CGRectMake(0, y1, 0, y2 - y1);
 }
 
 - (NSArray*)dimmedTimeRangesAtDate:(NSDate*)date
 {
     NSMutableArray *ranges = [NSMutableArray array];
-        
+
     if ([self.delegate respondsToSelector:@selector(dayPlannerView:numberOfDimmedTimeRangesAtDate:)]) {
         NSInteger count = [self.delegate dayPlannerView:self numberOfDimmedTimeRangesAtDate:date];
-        
+
         if (count > 0 && [self.delegate respondsToSelector:@selector(dayPlannerView:dimmedTimeRangeAtIndex:date:)]) {
-            MGCDateRange *dayRange = [self scrollableTimeRangeForDate:date];
+//            MGCDateRange *dayRange = [self scrollableTimeRangeForDate:date];
 
             for (NSUInteger i = 0; i < count; i++) {
                 MGCDateRange *range = [self.delegate dayPlannerView:self dimmedTimeRangeAtIndex:i date:date];
-                
-                [range intersectDateRange:dayRange];
-                    
+
+//                [range intersectDateRange:dayRange];
+
                 if (!range.isEmpty) {
                     [ranges addObject:range];
                 }
@@ -1977,43 +1383,20 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         ranges = [self dimmedTimeRangesAtDate:date];
         [self.dimmedTimeRangesCache setObject:ranges forKey:date];
     }
-     
+
     NSMutableArray *rects = [NSMutableArray arrayWithCapacity:ranges.count];
 
     for (MGCDateRange *range in ranges) {
         if (!range.isEmpty) {
             CGFloat y1 = [self offsetFromDate:range.start];
             CGFloat y2 = [self offsetFromDate:range.end];
-            
+
             [rects addObject:[NSValue valueWithCGRect:CGRectMake(0, y1, 0, y2 - y1)]];
         }
     }
     return rects;
 }
 
-
-#pragma mark - MGCAllDayEventsViewLayoutDelegate
-
-- (NSRange)collectionView:(UICollectionView*)view layout:(MGCAllDayEventsViewLayout*)layout dayRangeForEventAtIndexPath:(NSIndexPath*)indexPath
-{
-	NSDate *date = [self dateFromDayOffset:indexPath.section];
-	MGCDateRange *dateRange = [self.dataSource dayPlannerView:self dateRangeForEventOfType:MGCAllDayEventType atIndex:indexPath.item date:date];
-	NSAssert(dateRange, @"[AllDayEventsViewLayoutDelegate dayPlannerView:dateRangeForEventOfType:atIndex:date:] cannot return nil!");
-	
-	if ([dateRange.start compare:self.startDate] == NSOrderedAscending)
-		dateRange.start = self.startDate;
-	
-	NSUInteger startSection = [self dayOffsetFromDate:dateRange.start];
-	NSUInteger length = [dateRange components:NSCalendarUnitDay forCalendar:self.calendar].day;
-	
-	return NSMakeRange(startSection, length);
-}
-
-// TODO: implement
-- (AllDayEventInset)collectionView:(UICollectionView*)view layout:(MGCAllDayEventsViewLayout*)layout insetsForEventAtIndexPath:(NSIndexPath*)indexPath
-{
-	return AllDayEventInsetNone;
-}
 
 #pragma mark - UICollectionViewDelegate
 
@@ -2049,7 +1432,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 // If direction is ScrollDirectionUnknown, it will be determined on first scrollViewDidScroll: received
 - (void)scrollViewWillStartScrolling:(UIScrollView*)scrollView direction:(ScrollDirection)direction
 {
-    NSAssert(scrollView == self.timedEventsView || scrollView == self.allDayEventsView, @"For synchronizing purposes, only timedEventsView or allDayEventsView are allowed to scroll");
+    NSAssert(scrollView == self.timedEventsView, @"For synchronizing purposes, only timedEventsView or allDayEventsView are allowed to scroll");
 	
 	if (self.controllingScrollView) {
 		NSAssert(scrollView == self.controllingScrollView, @"Scrolling on two different views at the same time is not allowed");
@@ -2066,10 +1449,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		// we have to restrict dragging to one view at a time
 		// until the whole scroll operation finishes.
 		
-		if (scrollView == self.timedEventsView) {
-			self.allDayEventsView.scrollEnabled = NO;
-		}
-		else if (scrollView == self.allDayEventsView) {
+		if (scrollView != self.timedEventsView) {
 			self.timedEventsView.scrollEnabled = NO;
 		}
 		
@@ -2171,16 +1551,17 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	
 	CGPoint contentOffset = self.controllingScrollView.contentOffset;
 	
-	if (self.controllingScrollView == self.allDayEventsView && self.scrollDirection & ScrollDirectionHorizontal) {
-		
-		self.dayColumnsView.contentOffset = CGPointMake(contentOffset.x, 0);
-		self.timedEventsView.contentOffset = CGPointMake(contentOffset.x, self.timedEventsView.contentOffset.y);
-	}
-	else if (self.controllingScrollView == self.timedEventsView) {
+//    if (self.controllingScrollView == self.allDayEventsView && self.scrollDirection & ScrollDirectionHorizontal) {
+//
+//        self.dayColumnsView.contentOffset = CGPointMake(contentOffset.x, 0);
+//        self.timedEventsView.contentOffset = CGPointMake(contentOffset.x, self.timedEventsView.contentOffset.y);
+//    }
+//    else
+        if (self.controllingScrollView == self.timedEventsView) {
 		
 		if (self.scrollDirection & ScrollDirectionHorizontal) {
 			self.dayColumnsView.contentOffset = CGPointMake(contentOffset.x, 0);
-			self.allDayEventsView.contentOffset = CGPointMake(contentOffset.x, self.allDayEventsView.contentOffset.y);
+//            self.allDayEventsView.contentOffset = CGPointMake(contentOffset.x, self.allDayEventsView.contentOffset.y);
 		}
 		else {
 			self.timeScrollView.contentOffset = CGPointMake(0, contentOffset.y);
@@ -2199,7 +1580,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		
 		self.scrollDirection = ScrollDirectionUnknown;
 		self.timedEventsView.scrollEnabled = YES;
-		self.allDayEventsView.scrollEnabled = YES;
 		self.controllingScrollView = nil;
 		
 		if (self.scrollViewAnimationCompletionBlock) {

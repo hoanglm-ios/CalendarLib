@@ -48,6 +48,7 @@ typedef enum : NSUInteger
 // can be set visible while events are loading (see MGCDayPlannerView setActivityIndicatorVisible:forDate:)
 @interface MGCDayColumnCell : UICollectionViewCell
 
+@property (nonatomic, readonly) UIView *viewShowClick;
 @property (nonatomic, readonly) UITableView *tableView;
 @property (nonatomic, readonly) UIStackView *stackView;
 @property (nonatomic, readonly) UILabel *dayLabel;						// label displaying dates
@@ -60,7 +61,9 @@ typedef enum : NSUInteger
 @property (nonatomic) NSDictionary* listHeaderCell;
 @property (nonatomic) NSInteger maxCellVisible;
 @property (nonatomic) NSDate *currentDate;
-
+@property (nonatomic) NSDate *indexDate;
+@property (nonatomic) UIColor *indexColor;
+@property (nonatomic) UIColor *normalColor;
 - (void)setActivityIndicatorVisible:(BOOL)visible;
 
 @end

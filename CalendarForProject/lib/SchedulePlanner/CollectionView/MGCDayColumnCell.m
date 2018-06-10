@@ -53,6 +53,11 @@
         _maxCellVisible = 2;
         _listHeaderCell = [[NSDictionary alloc] init];
         _headerHeight = _maxCellVisible*_heightHeaderDayCell + _fontSizeNameDay+2+10; // 10 is height UIStackView
+        _indexColor = [UIColor greenColor];
+        _normalColor = [UIColor whiteColor];
+        
+        _viewShowClick  = [[UIView alloc] init];
+        [self.contentView addSubview:_viewShowClick];
         
 		_dayLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		_dayLabel.numberOfLines = 0;
@@ -141,6 +146,13 @@
     _headerHeight = _maxCellVisible*_heightHeaderDayCell + _fontSizeNameDay+2+10;
 	if (self.headerHeight != 0) {
 		CGSize headerSize = CGSizeMake(self.contentView.bounds.size.width, self.headerHeight);
+        self.viewShowClick.frame =  CGRectMake(0, 0, headerSize.width, self.headerHeight - 10);
+        if([_currentDate isEqual:self.indexDate]){
+            self.viewShowClick.backgroundColor = self.indexColor;
+        }else{
+             self.viewShowClick.backgroundColor = self.normalColor;
+        }
+        
 		CGSize labelSize = CGSizeMake(headerSize.width, _fontSizeNameDay+2);
 		self.dayLabel.frame = (CGRect) { 0, 0, labelSize };
         //table view

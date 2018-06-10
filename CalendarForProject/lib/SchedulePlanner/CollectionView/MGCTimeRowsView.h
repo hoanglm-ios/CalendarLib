@@ -46,11 +46,13 @@
 @property (nonatomic) NSTimeInterval timeMark;			// time from start of day for the mark that appears when an event is moved around - set to 0 to hide it
 @property (nonatomic) BOOL showsCurrentTime;			// YES if shows red line for current time
 @property (nonatomic, readonly) BOOL showsHalfHourLines; // returns YES if hourSlotHeight > 100
-@property (nonatomic) NSRange hourRange;                // range of displayed hours
+//@property (nonatomic) NSRange hourRange;                // range of displayed hours
 @property (nonatomic) UIFont *font;
 @property (nonatomic) NSInteger *fontSizeMark;    // font used for time marks
 @property (nonatomic) UIColor *timeColor;				// color used for time marks and lines
-@property (nonatomic) UIColor *currentTimeColor;		// color used for current time mark and line
+@property (nonatomic) UIColor *currentTimeColor;// color used for current time mark and line
+@property (nonatomic) NSInteger numColumn;
+@property (nonatomic) NSInteger currentIndex;
 @property (nonatomic, weak) id<MGCTimeRowsViewDelegate> delegate;
 @end
 
@@ -61,8 +63,8 @@
 
 - (NSAttributedString*)timeRowsView:(MGCTimeRowsView*)view attributedStringForTimeMark:(MGCDayPlannerTimeMark)mark time:(NSTimeInterval)ti;
 
-- (NSAttributedString*)timeRowsViewAttributedStringBagde:(MGCTimeRowsView*)view;
+- (NSAttributedString*)timeRowsViewAttributedStringBagde:(MGCTimeRowsView*)view withIndex:(NSInteger) index;
 
-- (NSAttributedString*)timeRowsViewAttributedStringMark:(MGCTimeRowsView*)view;
+- (NSAttributedString*)timeRowsViewAttributedStringMark:(MGCTimeRowsView*)view withIndex:(NSInteger) index;
 
 @end

@@ -32,7 +32,6 @@
 
 static CGFloat kSpace = 2;
 
-
 @interface MGCStandardEventView ()
 
 @property (nonatomic) UIView *leftBorderView;
@@ -49,57 +48,19 @@ static CGFloat kSpace = 2;
     if (self = [super initWithFrame:frame]) {
 		self.contentMode = UIViewContentModeRedraw;
 		
-		_color = [UIColor blackColor];
-		_style = MGCStandardEventViewStylePlain|MGCStandardEventViewStyleSubtitle;
-		_font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
+		_color1 = [UIColor orangeColor];
+        _color2 = [UIColor blueColor];
+        _color3 = [UIColor greenColor];
+        
+        _title1 = @"kk";
+        _title2 = @"aa";
+        _title3 = @"hh";
+        _style = (int)MGCStandardScheduleDefault;
 		_leftBorderView = [[UIView alloc]initWithFrame:CGRectZero];
 		[self addSubview:_leftBorderView];
 	}
     return self;
 }
-
-- (void)redrawStringInRect:(CGRect)rect
-{
-	// attributed string can't be created with nil string
-	NSMutableString *s = [NSMutableString stringWithString:@""];
-	
-	if (self.style & MGCStandardEventViewStyleDot) {
-		[s appendString:@"\u2022 "]; // 25CF // 2219 // 30FB
-	}
-	
-	if (self.title) {
-		[s appendString:self.title];
-	}
-	
-	UIFont *boldFont = [UIFont fontWithDescriptor:[[self.font fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:self.font.pointSize];
-	NSMutableAttributedString *as = [[NSMutableAttributedString alloc]initWithString:s attributes:@{NSFontAttributeName: boldFont ?: self.font }];
-	
-	if (self.subtitle && self.subtitle.length > 0 && self.style & MGCStandardEventViewStyleSubtitle) {
-		NSMutableString *s  = [NSMutableString stringWithFormat:@"\n%@", self.subtitle];
-		NSMutableAttributedString *subtitle = [[NSMutableAttributedString alloc]initWithString:s attributes:@{NSFontAttributeName:self.font}];
-		[as appendAttributedString:subtitle];
-	}
-	
-	if (self.detail && self.detail.length > 0 && self.style & MGCStandardEventViewStyleDetail) {
-		UIFont *smallFont = [UIFont fontWithDescriptor:[self.font fontDescriptor] size:self.font.pointSize - 2];
-		NSMutableString *s = [NSMutableString stringWithFormat:@"\t%@", self.detail];
-		NSMutableAttributedString *detail = [[NSMutableAttributedString alloc]initWithString:s attributes:@{NSFontAttributeName:smallFont}];
-		[as appendAttributedString:detail];
-	}
-	
-	NSTextTab *t = [[NSTextTab alloc]initWithTextAlignment:NSTextAlignmentRight location:rect.size.width options:[[NSDictionary alloc] init]];
-	NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-	style.tabStops = @[t];
-	//style.hyphenationFactor = .4;
-	//style.lineBreakMode = NSLineBreakByTruncatingMiddle;
-	[as addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, as.length)];
-	
-	UIColor *color = self.selected ? [UIColor whiteColor] : self.color;
-	[as addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, as.length)];
-	
-	self.attrString = as;
-}
-
 
 - (void)layoutSubviews
 {
@@ -108,37 +69,10 @@ static CGFloat kSpace = 2;
 	[self setNeedsDisplay];
 }
 
-- (void)setColor:(UIColor*)color
-{
-	_color = color;
-	[self resetColors];
-}
-
-- (void)setStyle:(MGCStandardEventViewStyle)style
-{
-	_style = style;
-	self.leftBorderView.hidden = !(_style & MGCStandardEventViewStyleBorder);
-	[self resetColors];
-}
-
-- (void)resetColors
-{
-	self.leftBorderView.backgroundColor = self.color;
-	
-	if (self.selected)
-		self.backgroundColor = self.selected ? self.color : [self.color colorWithAlphaComponent:.3];
-	else if (self.style & MGCStandardEventViewStylePlain)
-		self.backgroundColor = [self.color colorWithAlphaComponent:.3];
-	else
-		self.backgroundColor = [UIColor clearColor];
-	
-	[self setNeedsDisplay];
-}
-
 - (void)setSelected:(BOOL)selected
 {
 	[super setSelected:selected];
-	[self resetColors];
+    // update khi click
 }
 
 - (void)setVisibleHeight:(CGFloat)visibleHeight
@@ -153,38 +87,113 @@ static CGFloat kSpace = 2;
 	[self setNeedsDisplay];
 }
 
+-(BOOL) checkAllTitleNil{
+    if(_title1 == nil && _title2 == nil && _title3 == nil)
+        return true;
+    return false;
+}
+
+-(BOOL) checkAllTitleNotNil{
+    if(_title1 != nil && _title2 != nil && _title3 != nil)
+        return true;
+    return false;
+}
+
 - (void)drawRect:(CGRect)rect
 {
-	CGRect drawRect = CGRectInset(rect, kSpace, 0);
-	if (self.style & MGCStandardEventViewStyleBorder) {
-		drawRect.origin.x += kSpace;
-		drawRect.size.width -= kSpace;
-	}
-	
-	[self redrawStringInRect:drawRect];
-	
-	CGRect boundingRect = [self.attrString boundingRectWithSize:CGSizeMake(drawRect.size.width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-	drawRect.size.height = fminf(drawRect.size.height, self.visibleHeight);
-	
-	if (boundingRect.size.height > drawRect.size.height) {
-		[self.attrString.mutableString replaceOccurrencesOfString:@"\n" withString:@"  " options:NSCaseInsensitiveSearch range:NSMakeRange(0, self.attrString.length)];
-	}
-
-	[self.attrString drawWithRect:drawRect options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesLineFragmentOrigin context:nil];
+    // draw
+    CGFloat rectheight = rect.size.height;
+    CGFloat rectWidth = rect.size.width;
+    CGFloat rectChild = rectWidth / 3;
+   
+    if((int)_style == (int)MGCStandardScheduleAll){
+        UIBezierPath *path1 = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, rectWidth, rectheight)];
+        [self.color1 setFill];
+        [path1 fill];
+        NSAttributedString *attrStr1 = [[NSAttributedString alloc]initWithString:_title1 attributes:@{ NSFontAttributeName: [UIFont boldSystemFontOfSize:10] }];
+        [attrStr1 drawInRect:CGRectMake(rectWidth/2 - 5, rectheight/2 - 5, rectWidth, rectheight)];
+    }
+    
+    if((int)_style == (int)MGCStandardScheduleOne){
+        // cot 1 duoc gap doi
+        UIBezierPath *path1 = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, rectChild*2, rectheight)];
+        [self.color1 setFill];
+        [path1 fill];
+        
+        NSAttributedString *attrStr1 = [[NSAttributedString alloc]initWithString:_title1 attributes:@{ NSFontAttributeName: [UIFont boldSystemFontOfSize:10] }];
+        [attrStr1 drawInRect:CGRectMake(rectChild/2 + 5, rectheight/2 - 5, rectChild, rectheight)];
+        
+        if(_title2 != nil){
+            UIBezierPath *path2 = [UIBezierPath bezierPathWithRect:CGRectMake(rectChild*2, 0, rectChild, rectheight)];
+            [self.color2 setFill];
+            [path2 fill];
+            
+            NSAttributedString *attrStr2 = [[NSAttributedString alloc]initWithString:_title2 attributes:@{ NSFontAttributeName: [UIFont boldSystemFontOfSize:10] }];
+            [attrStr2 drawInRect:CGRectMake(2*rectChild + 5,rectheight/2 - 5, rectChild, rectheight)];
+        }
+    }
+    if((int)_style == (int)MGCStandardScheduleThree){
+        // cot 3 duoc gap doi
+        UIBezierPath *path2 = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, rectChild, rectheight)];
+        [self.color2 setFill];
+        [path2 fill];
+        
+      
+        
+        NSAttributedString *attrStr2 = [[NSAttributedString alloc]initWithString:_title2 attributes:@{ NSFontAttributeName: [UIFont boldSystemFontOfSize:10] }];
+        [attrStr2 drawInRect:CGRectMake(0 + 5, rectheight/2 - 5, rectChild, rectheight)];
+        
+        if(_title3 != nil){
+            UIBezierPath *path3 = [UIBezierPath bezierPathWithRect:CGRectMake(rectChild,0 , rectChild*2, rectheight)];
+            [self.color3 setFill];
+            [path3 fill];
+            
+            NSAttributedString *attrStr3 = [[NSAttributedString alloc]initWithString:_title3 attributes:@{ NSFontAttributeName: [UIFont boldSystemFontOfSize:10] }];
+            [attrStr3 drawInRect:CGRectMake(rectChild + rectChild/2 + 5, rectheight/2 - 5 , rectChild, rectheight)];
+        }
+    }
+    
+    if((int)_style == (int)MGCStandardScheduleDefault){
+        if(_title1!=nil ){
+            UIBezierPath *path1 = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, rectChild, rectheight)];
+            [self.color1 setFill];
+            [path1 fill];
+            
+            NSAttributedString *attrStr1 = [[NSAttributedString alloc]initWithString:_title1 attributes:@{ NSFontAttributeName: [UIFont boldSystemFontOfSize:10] }];
+            [attrStr1 drawInRect:CGRectMake(0 + 5, rectheight/2 - 5, rectChild, rectheight)];
+        }
+        
+        if(_title2!=nil){
+            UIBezierPath *path2 = [UIBezierPath bezierPathWithRect:CGRectMake(rectChild,0 , rectChild, rectheight)];
+            [self.color2 setFill];
+            [path2 fill];
+            
+            NSAttributedString *attrStr2 = [[NSAttributedString alloc]initWithString:_title2 attributes:@{ NSFontAttributeName: [UIFont boldSystemFontOfSize:10] }];
+            [attrStr2 drawInRect:CGRectMake(rectChild + 5, rectheight/2 - 5 , rectChild, rectheight)];
+        }
+        
+        if(_title3!=nil){
+            UIBezierPath *path3 = [UIBezierPath bezierPathWithRect:CGRectMake(rectChild*2, 0, rectChild, rectheight)];
+            [self.color3 setFill];
+            [path3 fill];
+            NSAttributedString *attrStr3 = [[NSAttributedString alloc]initWithString:_title3 attributes:@{ NSFontAttributeName: [UIFont boldSystemFontOfSize:10] }];
+            [attrStr3 drawInRect:CGRectMake(2*rectChild + 5,rectheight/2 - 5, rectChild, rectheight)];
+        }
+    }
 }
 
 #pragma mark - NSCopying protocol
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	MGCStandardEventView *cell = [super copyWithZone:zone];
-	cell.title = self.title;
-	cell.subtitle = self.subtitle;
-	cell.detail = self.detail;
-	cell.color = self.color;
-	cell.style = self.style;
-	
-	return cell;
+    MGCStandardEventView *cell = [super copyWithZone:zone];
+    cell.title1 = self.title1;
+    cell.title2 = self.title2;
+    cell.title3 = self.title3;
+    cell.color1 = self.color1;
+    cell.color2 = self.color2;
+    cell.color3 = self.color3;
+    return cell;
 }
 
 @end

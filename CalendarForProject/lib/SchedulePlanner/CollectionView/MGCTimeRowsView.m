@@ -56,7 +56,10 @@
 		_timeColor = [UIColor lightGrayColor];
 		_currentTimeColor = [UIColor redColor];
 		_rounding = 15;
-		_hourRange = NSMakeRange(0, 24);
+//        _hourRange = NSMakeRange(0, 24);
+        _numColumn = 48;
+        _currentTimeColor = [UIColor yellowColor];
+        _currentIndex = 0;
 		self.showsCurrentTime = YES;
 	}
 	return self;
@@ -74,10 +77,10 @@
 	[self setNeedsDisplay];
 }
 
-- (void)setHourRange:(NSRange)hourRange
+- (void)setNumColumn:(NSInteger)numColumn
 {
 //    NSAssert(hourRange.length >= 1 && NSMaxRange(hourRange) <= 24, @"Invalid hour range %@", NSStringFromRange(hourRange));
-    _hourRange = hourRange;
+    _numColumn = numColumn;
 }
 
 - (void)setTimeMark:(NSTimeInterval)timeMark
@@ -86,16 +89,26 @@
 	[self setNeedsDisplay];
 }
 
+- (void)setCurrentTimeColor:(UIColor *)currentTimeColor{
+    _currentTimeColor = currentTimeColor;
+    [self setNeedsDisplay];
+}
+
+-(void)setCurrentIndex:(NSInteger)currentIndex{
+    _currentIndex = currentIndex;
+    [self setNeedsDisplay];
+}
+
 - (void)timeChanged:(NSDictionary*)dictionary
 {
 	[self setNeedsDisplay];
 }
 
-- (NSAttributedString*)timeRowsViewAttributedStringBagde{
+- (NSAttributedString*)timeRowsViewAttributedStringBagdeWithIndex:(NSInteger) index{
     NSAttributedString *attrStr = nil;
     
-    if ([self.delegate respondsToSelector:@selector(timeRowsViewAttributedStringBagde:)]) {
-        attrStr = [self.delegate timeRowsViewAttributedStringBagde:self];
+    if ([self.delegate respondsToSelector:@selector(timeRowsViewAttributedStringBagde:withIndex:)]) {
+        attrStr = [self.delegate timeRowsViewAttributedStringBagde:self withIndex:index];
     }
     
     if (!attrStr) {
@@ -105,11 +118,11 @@
     return attrStr;
 }
 
-- (NSAttributedString*)timeRowsViewAttributedStringMark{
+- (NSAttributedString*)timeRowsViewAttributedStringMarkWithIndex:(NSInteger) index{
     NSAttributedString *attrStr = nil;
     
-    if ([self.delegate respondsToSelector:@selector(timeRowsViewAttributedStringMark:)]) {
-       attrStr = [self.delegate timeRowsViewAttributedStringMark:self];
+    if ([self.delegate respondsToSelector:@selector(timeRowsViewAttributedStringMark:withIndex:)]) {
+        attrStr = [self.delegate timeRowsViewAttributedStringMark:self withIndex:index];
     }
     
     if (!attrStr) {
@@ -129,21 +142,30 @@
     CGSize markSizeMax = CGSizeMake(self.timeColumnWidth - 2.*kSpacing, CGFLOAT_MAX);
     
 	// draw the hour marks
-    for (NSUInteger i = self.hourRange.location; i <=  NSMaxRange(self.hourRange); i++) {
-        y = MGCAlignedFloat((i - self.hourRange.location) * self.hourSlotHeight) - lineWidth * .5;
-        
+    for (NSUInteger i = 0; i <=  self.numColumn; i++) {
+        y = MGCAlignedFloat((i - 0) * self.hourSlotHeight) - lineWidth * .5;
+        //
+        if(i == _currentIndex){
+            UIBezierPath *bezierRect = [UIBezierPath bezierPathWithRect:CGRectMake(0, y, self.timeColumnWidth, self.hourSlotHeight)];
+            [_currentTimeColor setFill];
+            [bezierRect fill];
+        }
         // draw mark
-        NSAttributedString *bagedAttrStr =[self timeRowsViewAttributedStringBagde];
+        NSAttributedString *bagedAttrStr =[self timeRowsViewAttributedStringBagdeWithIndex:i];
         CGSize badgeSize = [bagedAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+        
         UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:MGCAlignedRectMake(kSpacing, y - (self.hourSlotHeight/2 + badgeSize.height/2),  badgeSize.width + kbadgeSpacing, badgeSize.height) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(2, 2)];
-        [[UIColor redColor] setFill];
+        // NSBackgroundColorAttributeName
+        NSRange range =NSMakeRange(0,10);
+        UIColor *color = [bagedAttrStr attribute:NSBackgroundColorAttributeName atIndex:0 effectiveRange:&range];
+        [color setFill];
         [bezierPath fill];
         // draw bagger
        
         CGRect r = MGCAlignedRectMake(kSpacing + kbadgeSpacing/2, y - (self.hourSlotHeight/2 + badgeSize.height/2),  badgeSize.width, badgeSize.height);
         [bagedAttrStr drawInRect:r];
         
-        NSAttributedString *markAttrStr =[self timeRowsViewAttributedStringMark];
+        NSAttributedString *markAttrStr =[self timeRowsViewAttributedStringMarkWithIndex:i];
         CGSize markSize = [markAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
         CGRect mark = MGCAlignedRectMake(2*kSpacing + badgeSize.width + kbadgeSpacing, y - (self.hourSlotHeight/2 + markSize.height/2), markSize.width, markSize.height);
         [markAttrStr drawInRect:mark];

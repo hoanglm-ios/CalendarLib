@@ -32,13 +32,11 @@
 
 
 /*! Presentation styles for the view */
-typedef NS_OPTIONS(NSUInteger, MGCStandardEventViewStyle) {
-	MGCStandardEventViewStyleDefault = 0,		// transparent background
-	MGCStandardEventViewStylePlain	 = 1 << 0,	// plain background
-	MGCStandardEventViewStyleDot	 = 1 << 1,	// event details are preceded by a dot (e.g to indicate a timed event in the month planner view)
-	MGCStandardEventViewStyleBorder	 = 1 << 2,	// view shows a left border (e.g timed events in the day planner view)
-	MGCStandardEventViewStyleSubtitle = 1 << 3, // view shows the subtitle string
-	MGCStandardEventViewStyleDetail  = 1 << 4	// view shows the detail string
+typedef NS_OPTIONS(int, MGCStandardEventViewStyle) {
+	MGCStandardScheduleDefault = 1,		// transparent background
+	MGCStandardScheduleOne	 = 2,	// title1 + title2 have text
+	MGCStandardScheduleThree = 3, // title2 + title3 have text and range 1+2 text
+    MGCStandardScheduleAll = 4 // title 1 have text and range cell width
 };
 
 
@@ -50,21 +48,22 @@ typedef NS_OPTIONS(NSUInteger, MGCStandardEventViewStyle) {
 @interface MGCStandardEventView : MGCEventView
 
 /*! Title of the event - displayed in bold */
-@property (nonatomic, copy)	NSString *title;
+@property (nonatomic, copy)	NSString *title1;
 
-/*! Subtitle - diplayed below the title or next to it if the view is not large enough. */
-@property (nonatomic, copy)	NSString *subtitle;
+/*! Title of the event - displayed in bold */
+@property (nonatomic, copy)    NSString *title2;
 
-/*! Detail - displayed with a smaller font and right aligned. */
-@property (nonatomic, copy)	NSString *detail;
+/*! Title of the event - displayed in bold */
+@property (nonatomic, copy)    NSString *title3;
 
 /*! The color is used for background or text, depending on the style. */
-@property (nonatomic) UIColor *color;
+@property (nonatomic) UIColor *color1;
 
-/*! Style of the view. */
-@property (nonatomic) MGCStandardEventViewStyle style;
+/*! The color is used for background or text, depending on the style. */
+@property (nonatomic) UIColor *color2;
 
-/*! Font used to draw the event content. Defaults to system font. */
-@property (nonatomic) UIFont *font;
+/*! The color is used for background or text, depending on the style. */
+@property (nonatomic) UIColor *color3;
 
+@property (nonatomic) int style;
 @end
