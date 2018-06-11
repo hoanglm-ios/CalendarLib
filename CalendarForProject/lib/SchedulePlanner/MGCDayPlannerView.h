@@ -155,6 +155,12 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
  @abstract    Returns maxCell in Header Day
  */
 @property (nonatomic) NSInteger maxCellVisible;
+
+/*!
+ @abstract    Returns maxCell in Header Day
+ */
+@property (nonatomic) BOOL isLimitLoadMore;
+
 /*!
 	@abstract	Returns the color of the vertical separator lines between days.
 	@discussion The default value is light gray.
@@ -443,6 +449,10 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
  */
 - (void)changeClick:(NSInteger) currentIndex withDate:(NSDate*) date;
 
+/*
+ hide LoadMore
+ */
+-(void) hideLoadMore;
 @end
 
 

@@ -29,6 +29,8 @@
         [self addSubview:_activityIndicatorView];
         [_activityIndicatorView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
         [_activityIndicatorView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
+        [_activityIndicatorView.heightAnchor constraintEqualToConstant:40].active = YES;
+        [_activityIndicatorView.widthAnchor constraintEqualToConstant:40].active = YES;
     }
     return self;
 }

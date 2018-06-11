@@ -492,7 +492,14 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 }
 
 - (void)dayPlannerViewLoadMore:(MGCDayPlannerView*)view{
-    
+    if (@available(iOS 10.0, *)) {
+        [NSTimer scheduledTimerWithTimeInterval:2 repeats:false block:^(NSTimer * _Nonnull timer) {
+            [self.dayPlannerView hideLoadMore];
+            [self.dayPlannerView setSizeEventInSection:60];
+            [self.dayPlannerView reloadAllEvents];
+            self.dayPlannerView.isLimitLoadMore = YES;
+        }];
+    }
 }
 
 @end
