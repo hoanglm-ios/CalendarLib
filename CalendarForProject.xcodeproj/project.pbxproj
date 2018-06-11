@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E228B36620CD307E00F36B06 /* LoadMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = E228B36520CD307E00F36B06 /* LoadMoreView.m */; };
 		E2CEB31320CA8C100036C8E2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB31220CA8C100036C8E2 /* AppDelegate.m */; };
 		E2CEB31620CA8C100036C8E2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB31520CA8C100036C8E2 /* ViewController.m */; };
 		E2CEB31920CA8C100036C8E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB31720CA8C100036C8E2 /* Main.storyboard */; };
@@ -37,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E228B36420CD307E00F36B06 /* LoadMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadMoreView.h; sourceTree = "<group>"; };
+		E228B36520CD307E00F36B06 /* LoadMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadMoreView.m; sourceTree = "<group>"; };
 		E2CEB30E20CA8C100036C8E2 /* CalendarForProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarForProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CEB31120CA8C100036C8E2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E2CEB31220CA8C100036C8E2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -157,6 +160,8 @@
 				E2CEB33120CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.h */,
 				E2CEB33220CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.m */,
 				E2CEB32D20CA8CBB0036C8E2 /* SchedulePlanner */,
+				E228B36420CD307E00F36B06 /* LoadMoreView.h */,
+				E228B36520CD307E00F36B06 /* LoadMoreView.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -311,6 +316,7 @@
 				E2CEB35320CA8DBF0036C8E2 /* MGCDayColumnCell.m in Sources */,
 				E2CEB31620CA8C100036C8E2 /* ViewController.m in Sources */,
 				E2CEB37320CAB3530036C8E2 /* MGCEventKitSupport.m in Sources */,
+				E228B36620CD307E00F36B06 /* LoadMoreView.m in Sources */,
 				E2CEB36520CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m in Sources */,
 				E2CEB32120CA8C100036C8E2 /* main.m in Sources */,
 				E2CEB33920CA8D000036C8E2 /* NSAttributedString+MGCAdditions.m in Sources */,

@@ -42,7 +42,7 @@
 #import "MGCTimeRowsView.h"
 #import "MGCAlignedGeometry.h"
 #import "OSCache.h"
-
+#import "LoadMoreView.h"
 
 // used to restrict scrolling to one direction / axis
 typedef enum: NSUInteger
@@ -105,7 +105,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @property (nonatomic, readonly) UICollectionView *dayColumnsView;
 @property (nonatomic, readonly) UIScrollView *timeScrollView;
 @property (nonatomic, readonly) MGCTimeRowsView *timeRowsView;
-
+@property (nonatomic, readonly) LoadMoreView *loadMoreView;
 
 // collection view layouts
 @property (nonatomic, readonly) MGCTimedEventsViewLayout *timedEventsViewLayout;
@@ -377,9 +377,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 // public
 - (void)setSizeEventInSection:(NSUInteger)sizeEventInSection
 {
-    
-//    CGFloat yCenterOffset = self.timeScrollView.contentOffset.y + self.timeScrollView.bounds.size.height / 2.;
-//    NSTimeInterval ti = [self timeFromOffset:yCenterOffset rounding:0];
     NSTimeInterval ti = 0;
     
     [self.dimmedTimeRangesCache removeAllObjects];
@@ -861,6 +858,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	}
 	return _timeScrollView;
 }
+
 
 #pragma mark - Layouts
 
@@ -1550,18 +1548,10 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	NSAssert(self.controllingScrollView, @"Synchronizing scrolling with no controlling scroll view");
 	
 	CGPoint contentOffset = self.controllingScrollView.contentOffset;
-	
-//    if (self.controllingScrollView == self.allDayEventsView && self.scrollDirection & ScrollDirectionHorizontal) {
-//
-//        self.dayColumnsView.contentOffset = CGPointMake(contentOffset.x, 0);
-//        self.timedEventsView.contentOffset = CGPointMake(contentOffset.x, self.timedEventsView.contentOffset.y);
-//    }
-//    else
         if (self.controllingScrollView == self.timedEventsView) {
 		
 		if (self.scrollDirection & ScrollDirectionHorizontal) {
 			self.dayColumnsView.contentOffset = CGPointMake(contentOffset.x, 0);
-//            self.allDayEventsView.contentOffset = CGPointMake(contentOffset.x, self.allDayEventsView.contentOffset.y);
 		}
 		else {
 			self.timeScrollView.contentOffset = CGPointMake(0, contentOffset.y);
@@ -1693,6 +1683,13 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		MGCDayPlannerScrollType type = self.scrollDirection == ScrollDirectionHorizontal ? MGCDayPlannerScrollDate : MGCDayPlannerScrollTime;
 		[self.delegate dayPlannerView:self didScroll:type];
 	}
+    
+    if(self.scrollDirection & ScrollDirectionVertical){
+        if (scrollview.contentOffset.y == scrollview.contentSize.height - scrollview.frame.size.height) {
+            // The user did scroll to the bottom of the scroll view
+            [self.delegate dayPlannerViewLoadMore:self];
+        }
+    }
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView*)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint*)targetContentOffset

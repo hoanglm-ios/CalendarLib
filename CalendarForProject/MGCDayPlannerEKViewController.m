@@ -404,7 +404,6 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 #pragma mark - MGCDayPlannerViewDelegate
 
 - (void)dayPlannerView:(MGCDayPlannerView*)view didSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date{
-    NSLog(@"Index click: %ld date: %@",(long)index,date);
     // doi mau 2 cai kia la ok
     [self.dayPlannerView changeClick:index withDate:date];
 }
@@ -491,5 +490,10 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     
     return attrStr;
 }
+
+- (void)dayPlannerViewLoadMore:(MGCDayPlannerView*)view{
+    
+}
+
 @end
 

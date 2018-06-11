@@ -442,6 +442,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
  change current Index
  */
 - (void)changeClick:(NSInteger) currentIndex withDate:(NSDate*) date;
+
 @end
 
 
@@ -599,6 +600,6 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 
 - (NSAttributedString*)dayPlannerViewAttributedStringMark:(MGCDayPlannerView*)view withIndex:(NSInteger) index;
 
-
+- (void)dayPlannerViewLoadMore:(MGCDayPlannerView*)view;
 
 @end
