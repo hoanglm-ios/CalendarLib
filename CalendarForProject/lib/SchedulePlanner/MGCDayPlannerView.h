@@ -471,7 +471,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 	@param		date		The starting day of the event (time portion should be ignored).
 	@return		The number of events.
  */
-- (NSInteger)dayPlannerView:(MGCDayPlannerView*)view numberOfEventsOfType:(MGCEventType)type atDate:(NSDate*)date;
+//- (NSInteger)dayPlannerView:(MGCDayPlannerView*)view numberOfEventsOfType:(MGCEventType)type atDate:(NSDate*)date;
 
 /*!
 	@abstract	Asks the data source for the view that corresponds to the specified event in the collection view. (required)
@@ -481,7 +481,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 /*!
 	@abstract	Asks the data source for the date range of the specified event in the day planner view. (required)
  */
-- (MGCDateRange*)dayPlannerView:(MGCDayPlannerView*)view dateRangeForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
+//- (MGCDateRange*)dayPlannerView:(MGCDayPlannerView*)view dateRangeForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
 
 @end
 
@@ -610,6 +610,10 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 
 - (NSAttributedString*)dayPlannerViewAttributedStringMark:(MGCDayPlannerView*)view withIndex:(NSInteger) index;
 
+- (NSAttributedString*)dayPlannerViewttributedStringGuest:(MGCDayPlannerView*)view withIndex:(NSInteger) index;
+
 - (void)dayPlannerViewLoadMore:(MGCDayPlannerView*)view;
+
+- (void)dayPlannerViewClickButtonSelect;
 
 @end

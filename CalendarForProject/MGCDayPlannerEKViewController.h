@@ -35,12 +35,10 @@
 
 @property (nonatomic) NSCalendar *calendar;
 @property (nonatomic) NSSet *visibleCalendars;
-@property (nonatomic, readonly) EKEventStore *eventStore;
 /*! Returns the day planner view managed by the controller object. */
 @property(nonatomic, retain) MGCDayPlannerView *dayPlannerView;
 
 /** designated initializer */
-- (instancetype)initWithEventStore:(EKEventStore*)eventStore;
 - (void)reloadEvents;
 
 @end

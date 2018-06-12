@@ -17,6 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    ABC *a = [[ABC alloc] init];
+    a.xxx = @"123";
     // Do any additional setup after loading the view, typically from a nib.
     
     self.weekViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WeekViewController"];

@@ -131,6 +131,16 @@
     return attrStr;
 }
 
+- (NSAttributedString*)timeRowsViewAttributedStringGuestWithIndex:(NSInteger) index{
+    NSAttributedString *attrStr = nil;
+    
+    if ([self.delegate respondsToSelector:@selector(timeRowsViewAttributedStringGuest:withIndex:)]) {
+        attrStr = [self.delegate timeRowsViewAttributedStringGuest:self withIndex:index];
+    }
+    
+    return attrStr;
+}
+
 - (void)drawRect:(CGRect)rect
 {
     const CGFloat kSpacing = 2.;
@@ -150,32 +160,68 @@
             [_currentTimeColor setFill];
             [bezierRect fill];
         }
-        // draw mark
-        NSAttributedString *bagedAttrStr =[self timeRowsViewAttributedStringBagdeWithIndex:i];
-        CGSize badgeSize = [bagedAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
-        
-        UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:MGCAlignedRectMake(kSpacing, y - (self.hourSlotHeight/2 + badgeSize.height/2),  badgeSize.width + kbadgeSpacing, badgeSize.height) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(2, 2)];
-        // NSBackgroundColorAttributeName
-        NSRange range =NSMakeRange(0,10);
-        UIColor *color = [bagedAttrStr attribute:NSBackgroundColorAttributeName atIndex:0 effectiveRange:&range];
-        [color setFill];
-        [bezierPath fill];
-        // draw bagger
-       
-        CGRect r = MGCAlignedRectMake(kSpacing + kbadgeSpacing/2, y - (self.hourSlotHeight/2 + badgeSize.height/2),  badgeSize.width, badgeSize.height);
-        [bagedAttrStr drawInRect:r];
-        
-        NSAttributedString *markAttrStr =[self timeRowsViewAttributedStringMarkWithIndex:i];
-        CGSize markSize = [markAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
-        CGRect mark = MGCAlignedRectMake(2*kSpacing + badgeSize.width + kbadgeSpacing, y - (self.hourSlotHeight/2 + markSize.height/2), markSize.width, markSize.height);
-        [markAttrStr drawInRect:mark];
-        
+        NSAttributedString *guestStr = [self timeRowsViewAttributedStringGuestWithIndex:i];
+        if(guestStr){
+            // ve tam giac
+            CGFloat startYColumn = y - self.hourSlotHeight;
+            UIBezierPath* trianglePath = [UIBezierPath bezierPath];
+            [trianglePath moveToPoint:CGPointMake(2, startYColumn + 2)];
+            [trianglePath addLineToPoint:CGPointMake(8,startYColumn + 6)];
+            [trianglePath addLineToPoint:CGPointMake(2,startYColumn + 10)];
+            [[UIColor redColor] setFill];
+            [trianglePath fill];
+            // ve guest
+             CGSize guestSize = [guestStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+            CGRect r = CGRectMake(10, startYColumn + 2,  guestSize.width, guestSize.height);
+            [guestStr drawInRect:r];
+            
+            // draw mark
+            NSAttributedString *bagedAttrStr =[self timeRowsViewAttributedStringBagdeWithIndex:i];
+            CGSize badgeSize = [bagedAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+            
+            UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:MGCAlignedRectMake(kSpacing, y - (self.hourSlotHeight/2 + badgeSize.height/2 - 6),  badgeSize.width + kbadgeSpacing, badgeSize.height) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(2, 2)];
+            // NSBackgroundColorAttributeName
+            NSRange range =NSMakeRange(0,10);
+            UIColor *color = [bagedAttrStr attribute:NSBackgroundColorAttributeName atIndex:0 effectiveRange:&range];
+            [color setFill];
+            [bezierPath fill];
+            // draw bagger
+            
+            CGRect r1 = MGCAlignedRectMake(kSpacing + kbadgeSpacing/2, y - (self.hourSlotHeight/2 + badgeSize.height/2 - 6),  badgeSize.width, badgeSize.height);
+            [bagedAttrStr drawInRect:r1];
+            
+            NSAttributedString *markAttrStr =[self timeRowsViewAttributedStringMarkWithIndex:i];
+            CGSize markSize = [markAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+            CGRect mark = MGCAlignedRectMake(2*kSpacing + badgeSize.width + kbadgeSpacing, y - (self.hourSlotHeight/2 + markSize.height/2 - 6), markSize.width, markSize.height);
+            [markAttrStr drawInRect:mark];
+            
+        }else{
+            // draw mark
+            NSAttributedString *bagedAttrStr =[self timeRowsViewAttributedStringBagdeWithIndex:i];
+            CGSize badgeSize = [bagedAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+            
+            UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:MGCAlignedRectMake(kSpacing, y - (self.hourSlotHeight/2 + badgeSize.height/2),  badgeSize.width + kbadgeSpacing, badgeSize.height) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(2, 2)];
+            // NSBackgroundColorAttributeName
+            NSRange range =NSMakeRange(0,10);
+            UIColor *color = [bagedAttrStr attribute:NSBackgroundColorAttributeName atIndex:0 effectiveRange:&range];
+            [color setFill];
+            [bezierPath fill];
+            // draw bagger
+            
+            CGRect r = MGCAlignedRectMake(kSpacing + kbadgeSpacing/2, y - (self.hourSlotHeight/2 + badgeSize.height/2),  badgeSize.width, badgeSize.height);
+            [bagedAttrStr drawInRect:r];
+            
+            NSAttributedString *markAttrStr =[self timeRowsViewAttributedStringMarkWithIndex:i];
+            CGSize markSize = [markAttrStr boundingRectWithSize:markSizeMax options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+            CGRect mark = MGCAlignedRectMake(2*kSpacing + badgeSize.width + kbadgeSpacing, y - (self.hourSlotHeight/2 + markSize.height/2), markSize.width, markSize.height);
+            [markAttrStr drawInRect:mark];
+        }
         
         CGContextSetStrokeColorWithColor(context, self.timeColor.CGColor);
         CGContextSetLineWidth(context, lineWidth);
         CGContextSetLineDash(context, 0, NULL, 0);
-        CGContextMoveToPoint(context, self.timeColumnWidth, y);
-        CGContextAddLineToPoint(context, self.timeColumnWidth + rect.size.width, y);
+        CGContextMoveToPoint(context, 0, y);
+        CGContextAddLineToPoint(context, 0 + rect.size.width, y);
         CGContextStrokePath(context);
     
     }

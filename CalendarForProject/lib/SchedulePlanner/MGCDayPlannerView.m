@@ -33,7 +33,6 @@
 #import "MGCDateRange.h"
 #import "MGCReusableObjectQueue.h"
 #import "MGCTimedEventsViewLayout.h"
-#import "MGCAllDayEventsViewLayout.h"
 #import "MGCDayColumnCell.h"
 #import "MGCEventCell.h"
 #import "MGCEventView.h"
@@ -43,6 +42,7 @@
 #import "MGCAlignedGeometry.h"
 #import "OSCache.h"
 #import "LoadMoreView.h"
+#import "ButtonSelect.h"
 
 // used to restrict scrolling to one direction / axis
 typedef enum: NSUInteger
@@ -106,6 +106,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @property (nonatomic, readonly) UIScrollView *timeScrollView;
 @property (nonatomic, readonly) MGCTimeRowsView *timeRowsView;
 @property (nonatomic, readonly) LoadMoreView *loadMoreView;
+@property (nonatomic, readonly) ButtonSelect *btnSelect;
 
 // collection view layouts
 @property (nonatomic, readonly) MGCTimedEventsViewLayout *timedEventsViewLayout;
@@ -168,6 +169,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @synthesize timedEventsViewLayout = _timedEventsViewLayout;
 @synthesize startDate = _startDate;
 @synthesize loadMoreView = _loadMoreView;
+@synthesize btnSelect = _btnSelect;
 #pragma mark - Initialization
 
 - (void)setup
@@ -844,6 +846,13 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     return _loadMoreView;
 }
 
+-(ButtonSelect*) btnSelect{
+    if(!_btnSelect) {
+        _btnSelect = [[ButtonSelect alloc] initWithFrame:CGRectZero];
+    }
+    return _btnSelect;
+}
+
 - (UIScrollView*)timeScrollView
 {
 	if (!_timeScrollView) {
@@ -1150,6 +1159,13 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	if (!self.backgroundView.superview) {
 		[self addSubview:self.backgroundView];
 	}
+    //add button
+    self.btnSelect.frame = CGRectMake(0, 0, self.timeColumnWidth, self.dayHeaderHeight);
+    [self addSubview:_btnSelect];
+    __weak typeof(self) weakSelf = self;
+    self.btnSelect.sellectClick = ^{
+        [weakSelf.delegate dayPlannerViewClickButtonSelect];
+    };
 	// add speratorHozi
     UIView *speratorHoziView = [[UIView alloc] initWithFrame:CGRectMake(0, self.dayHeaderHeight, self.bounds.size.width, 1)];
     speratorHoziView.backgroundColor = [UIColor lightGrayColor];
@@ -1231,6 +1247,13 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 -(NSAttributedString*) timeRowsViewAttributedStringMark:(MGCTimeRowsView *)view withIndex:(NSInteger)index{
     if ([self.delegate respondsToSelector:@selector(dayPlannerViewAttributedStringMark:withIndex:)]) {
         return [self.delegate dayPlannerViewAttributedStringMark:self withIndex:index];
+    }
+    return nil;
+}
+
+- (NSAttributedString*) timeRowsViewAttributedStringGuest:(MGCTimeRowsView *)view withIndex:(NSInteger)index{
+    if ([self.delegate respondsToSelector:@selector(dayPlannerViewttributedStringGuest:withIndex:)]) {
+        return [self.delegate dayPlannerViewttributedStringGuest:self withIndex:index];
     }
     return nil;
 }

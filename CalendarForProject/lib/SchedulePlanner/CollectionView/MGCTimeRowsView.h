@@ -67,4 +67,6 @@
 
 - (NSAttributedString*)timeRowsViewAttributedStringMark:(MGCTimeRowsView*)view withIndex:(NSInteger) index;
 
+- (NSAttributedString*)timeRowsViewAttributedStringGuest:(MGCTimeRowsView*)view withIndex:(NSInteger) index;
+
 @end

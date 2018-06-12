@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2128EF520CE687D002B4D68 /* ShiftMonthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2128EF420CE687D002B4D68 /* ShiftMonthVC.swift */; };
+		E2128EFB20CF59E5002B4D68 /* ButtonSelect.m in Sources */ = {isa = PBXBuildFile; fileRef = E2128EFA20CF59E5002B4D68 /* ButtonSelect.m */; };
 		E228B36620CD307E00F36B06 /* LoadMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = E228B36520CD307E00F36B06 /* LoadMoreView.m */; };
+		E228B36920CE5E8800F36B06 /* ShiftPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E228B36820CE5E8800F36B06 /* ShiftPresenter.swift */; };
 		E2CEB31320CA8C100036C8E2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB31220CA8C100036C8E2 /* AppDelegate.m */; };
 		E2CEB31620CA8C100036C8E2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB31520CA8C100036C8E2 /* ViewController.m */; };
 		E2CEB31920CA8C100036C8E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB31720CA8C100036C8E2 /* Main.storyboard */; };
@@ -30,16 +33,19 @@
 		E2CEB35420CA8DBF0036C8E2 /* MGCEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35020CA8DBF0036C8E2 /* MGCEventCell.m */; };
 		E2CEB35A20CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35720CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m */; };
 		E2CEB35B20CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35920CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m */; };
-		E2CEB36520CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB36320CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m */; };
 		E2CEB36A20CA973C0036C8E2 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB36920CA973C0036C8E2 /* OrderedDictionary.m */; };
 		E2CEB36D20CA97460036C8E2 /* OSCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB36B20CA97460036C8E2 /* OSCache.m */; };
-		E2CEB37320CAB3530036C8E2 /* MGCEventKitSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB37120CAB3530036C8E2 /* MGCEventKitSupport.m */; };
 		E2CEB37820CAB4930036C8E2 /* MGCDayPlannerEKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB37520CAB4930036C8E2 /* MGCDayPlannerEKViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E2128EF420CE687D002B4D68 /* ShiftMonthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftMonthVC.swift; sourceTree = "<group>"; };
+		E2128EF920CF59E5002B4D68 /* ButtonSelect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonSelect.h; sourceTree = "<group>"; };
+		E2128EFA20CF59E5002B4D68 /* ButtonSelect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonSelect.m; sourceTree = "<group>"; };
 		E228B36420CD307E00F36B06 /* LoadMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadMoreView.h; sourceTree = "<group>"; };
 		E228B36520CD307E00F36B06 /* LoadMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadMoreView.m; sourceTree = "<group>"; };
+		E228B36720CE5E8700F36B06 /* CalendarForProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarForProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		E228B36820CE5E8800F36B06 /* ShiftPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftPresenter.swift; sourceTree = "<group>"; };
 		E2CEB30E20CA8C100036C8E2 /* CalendarForProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarForProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2CEB31120CA8C100036C8E2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E2CEB31220CA8C100036C8E2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -82,14 +88,10 @@
 		E2CEB35820CA8DF50036C8E2 /* MGCTimedEventsViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCTimedEventsViewLayout.h; sourceTree = "<group>"; };
 		E2CEB35920CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCTimedEventsViewLayout.m; sourceTree = "<group>"; };
 		E2CEB36220CA92B70036C8E2 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
-		E2CEB36320CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCAllDayEventsViewLayout.m; sourceTree = "<group>"; };
-		E2CEB36420CA96A70036C8E2 /* MGCAllDayEventsViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCAllDayEventsViewLayout.h; sourceTree = "<group>"; };
 		E2CEB36820CA973C0036C8E2 /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		E2CEB36920CA973C0036C8E2 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		E2CEB36B20CA97460036C8E2 /* OSCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCache.m; sourceTree = "<group>"; };
 		E2CEB36C20CA97460036C8E2 /* OSCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCache.h; sourceTree = "<group>"; };
-		E2CEB37120CAB3530036C8E2 /* MGCEventKitSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCEventKitSupport.m; sourceTree = "<group>"; };
-		E2CEB37220CAB3530036C8E2 /* MGCEventKitSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCEventKitSupport.h; sourceTree = "<group>"; };
 		E2CEB37420CAB4930036C8E2 /* MGCDayPlannerEKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCDayPlannerEKViewController.h; sourceTree = "<group>"; };
 		E2CEB37520CAB4930036C8E2 /* MGCDayPlannerEKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCDayPlannerEKViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,6 +107,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E2128EF820CF5950002B4D68 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E2128EF920CF59E5002B4D68 /* ButtonSelect.h */,
+				E2128EFA20CF59E5002B4D68 /* ButtonSelect.m */,
+				E228B36420CD307E00F36B06 /* LoadMoreView.h */,
+				E228B36520CD307E00F36B06 /* LoadMoreView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		E2CEB30520CA8C100036C8E2 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +151,9 @@
 				E2CEB31C20CA8C100036C8E2 /* LaunchScreen.storyboard */,
 				E2CEB31F20CA8C100036C8E2 /* Info.plist */,
 				E2CEB32020CA8C100036C8E2 /* main.m */,
+				E228B36720CE5E8700F36B06 /* CalendarForProject-Bridging-Header.h */,
+				E2128EF420CE687D002B4D68 /* ShiftMonthVC.swift */,
+				E228B36820CE5E8800F36B06 /* ShiftPresenter.swift */,
 			);
 			path = CalendarForProject;
 			sourceTree = "<group>";
@@ -145,8 +161,6 @@
 		E2CEB32720CA8C730036C8E2 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				E2CEB37220CAB3530036C8E2 /* MGCEventKitSupport.h */,
-				E2CEB37120CAB3530036C8E2 /* MGCEventKitSupport.m */,
 				E2CEB36220CA92B70036C8E2 /* Constant.h */,
 				E2CEB33E20CA8D1D0036C8E2 /* EventSchedulePlanner */,
 				E2CEB33320CA8CFF0036C8E2 /* MGCAlignedGeometry.h */,
@@ -160,8 +174,6 @@
 				E2CEB33120CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.h */,
 				E2CEB33220CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.m */,
 				E2CEB32D20CA8CBB0036C8E2 /* SchedulePlanner */,
-				E228B36420CD307E00F36B06 /* LoadMoreView.h */,
-				E228B36520CD307E00F36B06 /* LoadMoreView.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -169,10 +181,11 @@
 		E2CEB32D20CA8CBB0036C8E2 /* SchedulePlanner */ = {
 			isa = PBXGroup;
 			children = (
-				E2CEB35520CA8DE00036C8E2 /* CollectionViewLayout */,
-				E2CEB34820CA8D880036C8E2 /* CollectionView */,
 				E2CEB34520CA8D550036C8E2 /* MGCDayPlannerView.h */,
 				E2CEB34620CA8D550036C8E2 /* MGCDayPlannerView.m */,
+				E2128EF820CF5950002B4D68 /* View */,
+				E2CEB35520CA8DE00036C8E2 /* CollectionViewLayout */,
+				E2CEB34820CA8D880036C8E2 /* CollectionView */,
 			);
 			path = SchedulePlanner;
 			sourceTree = "<group>";
@@ -209,8 +222,6 @@
 		E2CEB35520CA8DE00036C8E2 /* CollectionViewLayout */ = {
 			isa = PBXGroup;
 			children = (
-				E2CEB36420CA96A70036C8E2 /* MGCAllDayEventsViewLayout.h */,
-				E2CEB36320CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m */,
 				E2CEB35620CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.h */,
 				E2CEB35720CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m */,
 				E2CEB35820CA8DF50036C8E2 /* MGCTimedEventsViewLayout.h */,
@@ -268,6 +279,7 @@
 				TargetAttributes = {
 					E2CEB30D20CA8C100036C8E2 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -315,11 +327,11 @@
 				E2CEB35420CA8DBF0036C8E2 /* MGCEventCell.m in Sources */,
 				E2CEB35320CA8DBF0036C8E2 /* MGCDayColumnCell.m in Sources */,
 				E2CEB31620CA8C100036C8E2 /* ViewController.m in Sources */,
-				E2CEB37320CAB3530036C8E2 /* MGCEventKitSupport.m in Sources */,
+				E2128EFB20CF59E5002B4D68 /* ButtonSelect.m in Sources */,
 				E228B36620CD307E00F36B06 /* LoadMoreView.m in Sources */,
-				E2CEB36520CA96A70036C8E2 /* MGCAllDayEventsViewLayout.m in Sources */,
 				E2CEB32120CA8C100036C8E2 /* main.m in Sources */,
 				E2CEB33920CA8D000036C8E2 /* NSAttributedString+MGCAdditions.m in Sources */,
+				E228B36920CE5E8800F36B06 /* ShiftPresenter.swift in Sources */,
 				E2CEB33C20CA8D000036C8E2 /* MGCDateRange.m in Sources */,
 				E2CEB37820CAB4930036C8E2 /* MGCDayPlannerEKViewController.m in Sources */,
 				E2CEB36D20CA97460036C8E2 /* OSCache.m in Sources */,
@@ -328,6 +340,7 @@
 				E2CEB34420CA8D3B0036C8E2 /* MGCEventView.m in Sources */,
 				E2CEB33A20CA8D000036C8E2 /* NSCalendar+MGCAdditions.m in Sources */,
 				E2CEB33B20CA8D000036C8E2 /* MGCAlignedGeometry.m in Sources */,
+				E2128EF520CE687D002B4D68 /* ShiftMonthVC.swift in Sources */,
 				E2CEB33D20CA8D000036C8E2 /* MGCReusableObjectQueue.m in Sources */,
 				E2CEB35220CA8DBF0036C8E2 /* MGCTimeRowsView.m in Sources */,
 				E2CEB36A20CA973C0036C8E2 /* OrderedDictionary.m in Sources */,
@@ -466,6 +479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CB7NDRZY49;
 				INFOPLIST_FILE = CalendarForProject/Info.plist;
@@ -473,6 +487,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pikalong.CalendarForProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CalendarForProject/CalendarForProject-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = XXX.h;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -481,6 +499,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CB7NDRZY49;
 				INFOPLIST_FILE = CalendarForProject/Info.plist;
@@ -488,6 +507,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pikalong.CalendarForProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CalendarForProject/CalendarForProject-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = XXX.h;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

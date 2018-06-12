@@ -33,7 +33,6 @@
 #import "NSCalendar+MGCAdditions.h"
 #import "MGCDateRange.h"
 #import "OSCache.h"
-#import "MGCEventKitSupport.h"
 
 
 typedef enum {
@@ -49,10 +48,9 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 @interface MGCDayPlannerEKViewController ()
 
-@property (nonatomic) MGCEventKitSupport *eventKitSupport;
 @property (nonatomic) dispatch_queue_t bgQueue;			// dispatch queue for loading events
 @property (nonatomic) NSMutableOrderedSet *daysToLoad;	// dates for months of which we want to load events
-@property (nonatomic) NSCache *eventsCache;
+@property (nonatomic) NSCache *eventsCache; // save events with key == date and value = ObjectEvent
 @property (nonatomic) NSUInteger createdEventType;
 @property (nonatomic, copy) NSDate *createdEventDate;
 @end
@@ -91,15 +89,6 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     self.dayPlannerView.visibleDays.start = [NSDate date];
 }
 
-
-- (instancetype)initWithEventStore:(EKEventStore*)eventStore
-{
-    if (self = [super initWithNibName:nil bundle:nil]) {
-        _eventKitSupport = [[MGCEventKitSupport alloc]initWithEventStore:eventStore];
-    }
-    return self;
-}
-
 - (void)reloadEvents
 {
     for (NSDate *date in self.daysToLoad) {
@@ -113,45 +102,18 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 }
 
 #pragma mark - UIViewController
-
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
-{
-    return [self initWithEventStore:nil];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadEvents) name:EKEventStoreChangedNotification object:self.eventStore];
-    
     self.eventsCache = [[OSCache alloc]init];
     self.eventsCache.countLimit = cacheSize;
-    //self.eventsCache.delegate = self;
     
     self.bgQueue = dispatch_queue_create("MGCDayPlannerEKViewController.bgQueue", NULL);
-    
-    [self.eventKitSupport checkEventStoreAccessForCalendar:^(BOOL granted) {
-        if (granted) {
-            NSArray *calendars = [self.eventStore calendarsForEntityType:EKEntityTypeEvent];
-            self.visibleCalendars = [NSSet setWithArray:calendars];
-            [self reloadEvents];
-        }
-    }];
-    
     
     self.dayPlannerView.calendar = self.calendar;
     [self.dayPlannerView registerClass:MGCStandardEventView.class forEventViewWithReuseIdentifier:EventCellReuseIdentifier];
 //    self.dayPlannerView.sizeEventInSection = self.arrSize;
-    // change backgroud color in header
-//    self.dayPlannerView.backgroundColor = [UIColor lightGrayColor];
-//    self.dayPlannerView.backgroundView = [UIView new];
-//    self.dayPlannerView.backgroundView.backgroundColor = [UIColor whiteColor];
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     NSDate* now = [NSDate date];
@@ -175,7 +137,6 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
             default:
                 break;
         }
-        [self fetchEventsInDate:now];
         now = [self.calendar mgc_nextStartOfDayForDate:now];
     }
     self.dayPlannerView.listHeaderCell = dic;
@@ -203,11 +164,6 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     self.dayPlannerView.calendar = calendar;
 }
 
-- (EKEventStore*)eventStore
-{
-    return self.eventKitSupport.eventStore;
-}
-
 - (void)setVisibleCalendars:(NSSet*)visibleCalendars
 {
     _visibleCalendars = visibleCalendars;
@@ -220,43 +176,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 {
     range.start = [self.calendar mgc_startOfDayForDate:range.start];
     range.end = [self.calendar mgc_nextStartOfDayForDate:range.end];
-    
-    NSMutableArray *events = [[NSMutableArray alloc] init];
-    for(int i = 1;i<=10;i++){
-        [events addObject:[NSString stringWithFormat:@"haha"]];
-    }
-    [self.eventsCache setObject:events forKey:range.start];
-    [self.eventsCache setObject:events forKey:range.end];
-//    [range enumerateDaysWithCalendar:self.calendar usingBlock:^(NSDate *date, BOOL *stop) {
-//        NSDate *dayEnd = [self.calendar mgc_nextStartOfDayForDate:date];
-//        NSArray *events = [self fetchEventsFrom:date to:dayEnd calendars:nil];
-//        [self.eventsCache setObject:events forKey:date];
-//    }];
-    
-}
-
-- (void)fetchEventsInDate:(NSDate*)range
-{
-    NSMutableArray *events = [[NSMutableArray alloc] init];
-    for(int i = 1;i<=10;i++){
-        [events addObject:[NSString stringWithFormat:@"haha"]];
-    }
-    [self.eventsCache setObject:events forKey:range];
-}
-
-- (NSArray*)fetchEventsFrom:(NSDate*)startDate to:(NSDate*)endDate calendars:(NSArray*)calendars
-{
-    NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:calendars];
-
-    if (self.eventKitSupport.accessGranted) {
-        NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
-        if (events) {
-            return [events sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
-        }
-    }
-
-   
-    return [NSArray array];
+    // duyet cac ngay trong khoang start den end => sao do day vao queue load
 }
 
 // returns the events dictionary for given date
@@ -264,77 +184,59 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 - (NSArray*)eventsForDay:(NSDate*)date
 {
     NSDate *dayStart = [self.calendar mgc_startOfDayForDate:date];
-    
+
     NSArray *events = [self.eventsCache objectForKey:dayStart];
-    
+
     if (!events) {  // cache miss: create dictionary...
         NSDate *dayEnd = [self.calendar mgc_nextStartOfDayForDate:dayStart];
-        events = [self fetchEventsFrom:dayStart to:dayEnd calendars:nil];
-        [self.eventsCache setObject:events forKey:dayStart];
+         // load api trong day
+        events = [self callApiWithStartDate:dayStart withEndDate:dayEnd];
+        if(events)
+            [self.eventsCache setObject:events forKey:dayStart];
     }
-    
+
     return events;
 }
 
-- (NSArray*)eventsOfType:(EventType)type forDay:(NSDate*)date
-{
-    NSArray *events = [self eventsForDay:date];
-    
-//    NSMutableArray *filteredEvents = [NSMutableArray new];
-//    [events enumerateObjectsUsingBlock:^(EKEvent *ev, NSUInteger idx, BOOL *stop) {
-//
-//        if ([self.visibleCalendars containsObject:ev.calendar]) {
-//            if (type & AllDayEventType && ev.isAllDay)
-//                [filteredEvents addObject:ev];
-//            else if (type & TimedEventType && !ev.isAllDay)
-//                [filteredEvents addObject:ev];
-//        }
-//    }];
-    
-    return events;
-}
-
-- (EKEvent*)eventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date
-{
-    NSArray *events = nil;
-    
-//    if (type == MGCTimedEventType) {
-//        events = [self eventsOfType:TimedEventType forDay:date];
+-(NSArray*) callApiWithStartDate:(NSDate*) startDate withEndDate:(NSDate*) endDate{
+//    if (self.eventStore && [self.eventStore respondsToSelector:@selector(fetchEventsFrom:to:)]) {
+//        return [self.eventStore fetchEventsFrom:startDate to:endDate];
 //    }
-    
-    events = [self eventsOfType:TimedEventType forDay:date];
-    
-    return [events objectAtIndex:index];
+//    //    NSLog(@"*****warning: fetchEventsFrom:to: has to implemented in MonthPlannerViewController subclasses.");
+//    return nil;
+    return nil;
 }
 
 - (void)bg_loadEventsAtDate:(NSDate*)date
 {
     //NSLog(@"bg_loadEventsAtDate: %@", date);
-    
+
     NSDate *dayStart = [self.calendar mgc_startOfDayForDate:date];
-    
-    [self eventsOfType:AnyEventType forDay:dayStart];
-    
+
+    NSArray *listDate = [self eventsForDay:date];
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.dayPlannerView reloadEventsAtDate:date];
-        [self.dayPlannerView setActivityIndicatorVisible:NO forDate:dayStart];
+        if(listDate){
+            [self.dayPlannerView reloadEventsAtDate:date];
+            [self.dayPlannerView setActivityIndicatorVisible:NO forDate:dayStart];
+        }
     });
 }
 
 - (void)bg_loadOneDay
 {
     __block NSDate *date;
-    
+
     dispatch_sync(dispatch_get_main_queue(), ^{
         if ((date = [self.daysToLoad firstObject])) {
             [self.daysToLoad removeObject:date];
         }
-        
+
         if (![self.dayPlannerView.visibleDays containsDate:date]) {
             date = nil;
         }
     });
-    
+
     if (date) {
         [self bg_loadEventsAtDate:date];
     }
@@ -343,34 +245,24 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 - (BOOL)loadEventsAtDate:(NSDate*)date
 {
     NSDate *dayStart = [self.calendar mgc_startOfDayForDate:date];
-    
+
     if (![self.eventsCache objectForKey:dayStart]) {
         [self.dayPlannerView setActivityIndicatorVisible:YES forDate:dayStart];
-        
+
         if (!self.daysToLoad) {
             self.daysToLoad = [NSMutableOrderedSet orderedSet];
         }
-        
+
         [self.daysToLoad addObject:dayStart];
-        
-        dispatch_async(self.bgQueue, ^{	[self bg_loadOneDay]; });
-        
+
+        dispatch_async(self.bgQueue, ^{    [self bg_loadOneDay]; });
+
         return YES;
     }
     return NO;
 }
 
 #pragma mark - MGCDayPlannerViewDataSource
-
-- (NSInteger)dayPlannerView:(MGCDayPlannerView*)weekView numberOfEventsOfType:(MGCEventType)type atDate:(NSDate*)date
-{
-    NSInteger count = 0;
-    
-    if (![self loadEventsAtDate:date]) {
-        count = [[self eventsOfType:TimedEventType forDay:date]count];
-    }
-    return count;
-}
 
 - (MGCEventView*)dayPlannerView:(MGCDayPlannerView*)view viewForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date
 {
@@ -386,12 +278,13 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
         case 1:
             evCell.style = MGCStandardScheduleOne;
             evCell.title1 = @"ah";
-            evCell.title2 = @"ke";
+            evCell.title2 = nil;
             break;
         case 2:
             evCell.style = MGCStandardScheduleThree;
             evCell.title2 = @"aa";
             evCell.title3 = @"kk";
+            break;
         default:
             evCell.style = MGCStandardScheduleAll;
             evCell.title1 = @"ah";
@@ -400,6 +293,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
    
     return evCell;
 }
+
 
 #pragma mark - MGCDayPlannerViewDelegate
 
@@ -410,7 +304,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 - (void)dayPlannerView:(MGCDayPlannerView*)view willDisplayDate:(NSDate*)date
 {
-    //NSLog(@"will display %@", date);
+//    NSLog(@"will display %@", date);
     BOOL loading = [self loadEventsAtDate:date];
     if (!loading) {
         [self.dayPlannerView setActivityIndicatorVisible:NO forDate:date];
@@ -419,7 +313,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 - (void)dayPlannerView:(MGCDayPlannerView*)view didEndDisplayingDate:(NSDate*)date
 {
-    //NSLog(@"did end displaying %@", date);
+//    NSLog(@"did end displaying %@", date);
     [self.daysToLoad removeObject:date];
 }
 
@@ -481,10 +375,10 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
             attrStr = [[NSAttributedString alloc]initWithString:@"AT" attributes:@{ NSFontAttributeName: font,NSBackgroundColorAttributeName:[UIColor redColor]}];
             break;
         case 1:
-             attrStr = [[NSAttributedString alloc]initWithString:@"AT" attributes:@{ NSFontAttributeName: font,NSBackgroundColorAttributeName:[UIColor greenColor]}];
+            attrStr = [[NSAttributedString alloc]initWithString:@"AT" attributes:@{ NSFontAttributeName: font,NSBackgroundColorAttributeName:[UIColor greenColor]}];
             break;
         default:
-             attrStr = [[NSAttributedString alloc]initWithString:@"AT" attributes:@{ NSFontAttributeName: font,NSBackgroundColorAttributeName:[UIColor yellowColor]}];
+            attrStr = [[NSAttributedString alloc]initWithString:@"AT" attributes:@{ NSFontAttributeName: font,NSBackgroundColorAttributeName:[UIColor yellowColor]}];
             break;
     }
     
@@ -494,6 +388,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 - (void)dayPlannerViewLoadMore:(MGCDayPlannerView*)view{
     if (@available(iOS 10.0, *)) {
         [NSTimer scheduledTimerWithTimeInterval:2 repeats:false block:^(NSTimer * _Nonnull timer) {
+            // call api self.dayPlannerView.visibleDays
             [self.dayPlannerView hideLoadMore];
             [self.dayPlannerView setSizeEventInSection:60];
             [self.dayPlannerView reloadAllEvents];
@@ -502,5 +397,18 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     }
 }
 
+- (NSAttributedString*)dayPlannerViewttributedStringGuest:(MGCDayPlannerView*)view withIndex:(NSInteger) index{
+    
+    if(index == 4){
+        UIFont *font = [UIFont fontWithName:@"Palatino-Roman" size:8.0];
+        NSAttributedString *attrStr = [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"row %ld",(long)index] attributes:@{ NSFontAttributeName: font }];
+        return attrStr;
+    }
+    return nil;
+}
+
+- (void)dayPlannerViewClickButtonSelect{
+    NSLog(@"Click ne");
+}
 @end
 
