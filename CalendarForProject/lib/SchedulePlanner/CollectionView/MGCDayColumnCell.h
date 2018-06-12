@@ -51,7 +51,9 @@ typedef enum : NSUInteger
 @property (nonatomic, readonly) UIView *viewShowClick;
 @property (nonatomic, readonly) UITableView *tableView;
 @property (nonatomic, readonly) UIStackView *stackView;
-@property (nonatomic, readonly) UILabel *dayLabel;						// label displaying dates
+@property (nonatomic, readonly) UILabel *dayLabel; // label displaying dates
+@property (nonatomic, readonly) UIView *viewContannerTableView;
+
 @property (nonatomic) MGCDayColumnCellAccessoryType accessoryTypes;		// presentation style of the view
 @property (nonatomic) UIColor *markColor;								// color of the mark around the date (default is black)								
 @property (nonatomic) UIColor *separatorColor;                          // color of the separator line (default is light gray)

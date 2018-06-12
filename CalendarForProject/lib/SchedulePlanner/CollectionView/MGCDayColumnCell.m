@@ -29,6 +29,7 @@
 //
 
 #import "MGCDayColumnCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface MGCDayColumnCell () <UITableViewDataSource>
 
@@ -65,14 +66,33 @@
 		_dayLabel.minimumScaleFactor = .7;
         _dayLabel.textColor = [UIColor redColor];
         _dayLabel.textAlignment = NSTextAlignmentCenter;
+        _dayLabel.layer.borderColor = [UIColor grayColor].CGColor;
+        
+//        CALayer* layer = [_dayLabel layer];
+//
+//        CALayer *bottomBorder = [CALayer layer];
+//        bottomBorder.borderColor = [UIColor darkGrayColor].CGColor;
+//        bottomBorder.borderWidth = 0.5;
+//        bottomBorder.frame = CGRectMake(-1, layer.frame.size.height-1, layer.frame.size.width, 1);
+//        [bottomBorder setBorderColor:[UIColor blackColor].CGColor];
+//        [layer addSublayer:bottomBorder];
+        
 		[self.contentView addSubview:_dayLabel];
+        _viewContannerTableView = [[UIView alloc] init];
         
         _tableView = [[UITableView alloc] init];
         _tableView.rowHeight = 28;
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.separatorColor = [UIColor clearColor];
-        [self.contentView addSubview:_tableView];
+        _tableView.translatesAutoresizingMaskIntoConstraints = false;
+        [_viewContannerTableView addSubview:_tableView];
+        [_tableView.centerXAnchor constraintEqualToAnchor:_viewContannerTableView.centerXAnchor].active = YES;
+        [_tableView.centerYAnchor constraintEqualToAnchor:_viewContannerTableView.centerYAnchor].active = YES;
+        
+        [self.contentView addSubview:_viewContannerTableView];
         [_tableView registerNib:[UINib nibWithNibName:@"HeaderDayColumCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+        _viewContannerTableView.layer.borderColor = [UIColor grayColor].CGColor;
+        _viewContannerTableView.layer.borderWidth = 0.5;
 		
         //create three morning, afternoon, evening
         UILabel *morning = [[UILabel alloc] init];
@@ -80,17 +100,22 @@
         [morning setFont:[UIFont systemFontOfSize:8]];
         morning.textColor = [UIColor redColor];
         morning.textAlignment = NSTextAlignmentCenter;
+        morning.layer.borderColor = [UIColor grayColor].CGColor;
+        morning.layer.borderWidth = 0.5;
         
         UILabel *afternoon = [[UILabel alloc] init];
         [afternoon setText:@"CC"];
         [afternoon setFont:[UIFont systemFontOfSize:8]];
         afternoon.textAlignment = NSTextAlignmentCenter;
-        
+        afternoon.layer.borderColor = [UIColor grayColor].CGColor;
+        afternoon.layer.borderWidth = 0.5;
         
         UILabel *evening = [[UILabel alloc] init];
         [evening setText:@"TT"];
         [evening setFont:[UIFont systemFontOfSize:8]];
         evening.textAlignment = NSTextAlignmentCenter;
+        evening.layer.borderColor = [UIColor grayColor].CGColor;
+        evening.layer.borderWidth = 0.5;
         
         if (@available(iOS 9.0, *)) {
             [morning.widthAnchor constraintEqualToConstant:self.contentView.bounds.size.width/3].active = true;
@@ -137,9 +162,7 @@
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
-	
-	static CGFloat kSpace = 2;
-
+    
 	[CATransaction begin];
 	[CATransaction setDisableActions:YES];
 
@@ -153,13 +176,16 @@
              self.viewShowClick.backgroundColor = self.normalColor;
         }
         
-		CGSize labelSize = CGSizeMake(headerSize.width, _fontSizeNameDay+2);
+		CGSize labelSize = CGSizeMake(headerSize.width, _fontSizeNameDay);
 		self.dayLabel.frame = (CGRect) { 0, 0, labelSize };
         //table view
         if(_maxCellVisible > 0){
-            CGSize tableSize = CGSizeMake(headerSize.width - 2*kSpace, _heightHeaderDayCell*_maxCellVisible);
-            self.tableView.frame = (CGRect) {2,_fontSizeNameDay+2,tableSize};
+            NSArray *arr = [_listHeaderCell objectForKey:self.currentDate];
+            [self.tableView.widthAnchor constraintEqualToConstant:headerSize.width].active = YES;
+            [self.tableView.heightAnchor constraintEqualToConstant:arr.count * _heightHeaderDayCell].active = YES;
             _tableView.dataSource = self;
+            
+             self.viewContannerTableView.frame = (CGRect) {0,_fontSizeNameDay,headerSize.width,self.headerHeight - 10};
         }
         //uiStackView
         CGSize stackSize = CGSizeMake(self.contentView.bounds.size.width, 10);
