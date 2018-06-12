@@ -1167,7 +1167,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         [weakSelf.delegate dayPlannerViewClickButtonSelect];
     };
 	// add speratorHozi
-    UIView *speratorHoziView = [[UIView alloc] initWithFrame:CGRectMake(0, self.dayHeaderHeight, self.bounds.size.width, 1)];
+    UIView *speratorHoziView = [[UIView alloc] initWithFrame:CGRectMake(0, self.dayHeaderHeight, self.timeColumnWidth, 1)];
     speratorHoziView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:speratorHoziView];
 	// add speratorVetical

@@ -117,10 +117,14 @@
         evening.layer.borderColor = [UIColor grayColor].CGColor;
         evening.layer.borderWidth = 0.5;
         
+        
+       
+        
         if (@available(iOS 9.0, *)) {
             [morning.widthAnchor constraintEqualToConstant:self.contentView.bounds.size.width/3].active = true;
             [afternoon.widthAnchor constraintEqualToConstant:self.contentView.bounds.size.width/3].active = true;
             [evening.widthAnchor constraintEqualToConstant:self.contentView.bounds.size.width/3].active = true;
+            
             _stackView = [[UIStackView alloc] init];
             [_stackView addArrangedSubview:morning];
             [_stackView addArrangedSubview:afternoon];
@@ -185,7 +189,7 @@
             [self.tableView.heightAnchor constraintEqualToConstant:arr.count * _heightHeaderDayCell].active = YES;
             _tableView.dataSource = self;
             
-             self.viewContannerTableView.frame = (CGRect) {0,_fontSizeNameDay,headerSize.width,self.headerHeight - 10};
+             self.viewContannerTableView.frame = (CGRect) {0,_fontSizeNameDay,headerSize.width,self.headerHeight - 10 - _fontSizeNameDay};
         }
         //uiStackView
         CGSize stackSize = CGSizeMake(self.contentView.bounds.size.width, 10);
