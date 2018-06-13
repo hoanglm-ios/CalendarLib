@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.898245"
+            timestampString = "550569231.419994"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "126"
@@ -36,7 +36,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.899479"
+            timestampString = "550569231.420781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
@@ -52,7 +52,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.9002171"
+            timestampString = "550569231.421214"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "153"
@@ -68,7 +68,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.900908"
+            timestampString = "550569231.421623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "154"
@@ -84,7 +84,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.901576"
+            timestampString = "550569231.422034"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "155"
@@ -100,7 +100,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.9021569"
+            timestampString = "550569231.422439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
@@ -116,7 +116,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.902745"
+            timestampString = "550569231.422851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "151"
@@ -164,7 +164,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.903332"
+            timestampString = "550569231.4232661"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "143"
@@ -180,11 +180,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.903905"
+            timestampString = "550569231.423676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
             landmarkName = "-setSizeEventInSection:"
             landmarkType = "7">
          </BreakpointContent>
@@ -212,7 +212,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/CollectionView/MGCDayColumnCell.m"
-            timestampString = "550568407.904703"
+            timestampString = "550569231.424427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "159"
@@ -228,7 +228,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/CollectionView/MGCDayColumnCell.m"
-            timestampString = "550568407.90501"
+            timestampString = "550569231.424706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "160"
@@ -324,7 +324,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.905302"
+            timestampString = "550569231.424971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "402"
@@ -340,7 +340,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.905756"
+            timestampString = "550569231.42539"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "403"
@@ -356,7 +356,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.906183"
+            timestampString = "550569231.425801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "404"
@@ -372,7 +372,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.906592"
+            timestampString = "550569231.4262201"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "405"
@@ -388,7 +388,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/MGCDayPlannerEKViewController.m"
-            timestampString = "550568407.9069951"
+            timestampString = "550569231.42662"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "400"
@@ -404,11 +404,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.907406"
+            timestampString = "550569231.4270279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1249"
-            endingLineNumber = "1249"
+            startingLineNumber = "1267"
+            endingLineNumber = "1267"
             landmarkName = "-timeRowsViewAttributedStringMark:withIndex:"
             landmarkType = "7">
          </BreakpointContent>
@@ -500,11 +500,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.908062"
+            timestampString = "550569231.427633"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1256"
-            endingLineNumber = "1256"
+            startingLineNumber = "1274"
+            endingLineNumber = "1274"
             landmarkName = "-timeRowsViewAttributedStringGuest:withIndex:"
             landmarkType = "7">
          </BreakpointContent>
@@ -516,39 +516,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.908545"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1312"
-            endingLineNumber = "1312"
-            landmarkName = "-dayColumnCellAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.9089741"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1314"
-            endingLineNumber = "1314"
-            landmarkName = "-dayColumnCellAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.909392"
+            timestampString = "550569231.428082"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1330"
@@ -563,8 +531,40 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+            filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
+            timestampString = "550569231.428481"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1332"
+            endingLineNumber = "1332"
+            landmarkName = "-dayColumnCellAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
+            timestampString = "550569231.428875"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1348"
+            endingLineNumber = "1348"
+            landmarkName = "-dayColumnCellAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/CollectionView/MGCDayColumnCell.m"
-            timestampString = "550568407.909814"
+            timestampString = "550569231.429268"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "167"
@@ -580,7 +580,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/CollectionView/MGCDayColumnCell.m"
-            timestampString = "550568407.909938"
+            timestampString = "550569231.429383"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "168"
@@ -596,7 +596,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/CollectionView/MGCDayColumnCell.m"
-            timestampString = "550568407.910063"
+            timestampString = "550569231.429493"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "158"
@@ -622,11 +622,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.910182"
+            timestampString = "550569231.429603"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1711"
-            endingLineNumber = "1711"
+            startingLineNumber = "1729"
+            endingLineNumber = "1729"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
          </BreakpointContent>
@@ -638,11 +638,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.910585"
+            timestampString = "550569231.429976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1720"
-            endingLineNumber = "1720"
+            startingLineNumber = "1738"
+            endingLineNumber = "1738"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
          </BreakpointContent>
@@ -654,11 +654,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.910983"
+            timestampString = "550569231.430346"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "454"
-            endingLineNumber = "454"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "-setMaxCellVisible:"
             landmarkType = "7">
          </BreakpointContent>
@@ -670,11 +670,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.911319"
+            timestampString = "550569231.430652"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "454"
-            endingLineNumber = "454"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "-setMaxCellVisible:"
             landmarkType = "7">
          </BreakpointContent>
@@ -686,11 +686,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.9116499"
+            timestampString = "550569231.430954"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1752"
-            endingLineNumber = "1752"
+            startingLineNumber = "1770"
+            endingLineNumber = "1770"
             landmarkName = "-showHideHeaderCell"
             landmarkType = "7">
          </BreakpointContent>
@@ -702,11 +702,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.912008"
+            timestampString = "550569231.431285"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1744"
-            endingLineNumber = "1744"
+            startingLineNumber = "1762"
+            endingLineNumber = "1762"
             landmarkName = "-showHideHeaderCell"
             landmarkType = "7">
          </BreakpointContent>
@@ -718,11 +718,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.912364"
+            timestampString = "550569231.431609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1750"
-            endingLineNumber = "1750"
+            startingLineNumber = "1768"
+            endingLineNumber = "1768"
             landmarkName = "-showHideHeaderCell"
             landmarkType = "7">
          </BreakpointContent>
@@ -734,11 +734,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.912711"
+            timestampString = "550569231.431934"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1749"
-            endingLineNumber = "1749"
+            startingLineNumber = "1767"
+            endingLineNumber = "1767"
             landmarkName = "-showHideHeaderCell"
             landmarkType = "7">
          </BreakpointContent>
@@ -750,11 +750,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.913039"
+            timestampString = "550569231.432265"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1840"
-            endingLineNumber = "1840"
+            startingLineNumber = "1858"
+            endingLineNumber = "1858"
             landmarkName = "-scrollViewDidEndScrollingAnimation:"
             landmarkType = "7">
          </BreakpointContent>
@@ -766,11 +766,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.913362"
+            timestampString = "550569231.432593"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1842"
-            endingLineNumber = "1842"
+            startingLineNumber = "1860"
+            endingLineNumber = "1860"
             landmarkName = "-scrollViewDidEndScrollingAnimation:"
             landmarkType = "7">
          </BreakpointContent>
@@ -782,11 +782,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.913685"
+            timestampString = "550569231.433007"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1795"
-            endingLineNumber = "1795"
+            startingLineNumber = "1813"
+            endingLineNumber = "1813"
             landmarkName = "-scrollViewWillEndDragging:withVelocity:targetContentOffset:"
             landmarkType = "7">
          </BreakpointContent>
@@ -798,11 +798,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.913998"
+            timestampString = "550569231.433373"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1798"
-            endingLineNumber = "1798"
+            startingLineNumber = "1816"
+            endingLineNumber = "1816"
             landmarkName = "-scrollViewWillEndDragging:withVelocity:targetContentOffset:"
             landmarkType = "7">
          </BreakpointContent>
@@ -814,43 +814,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.9143111"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1815"
-            endingLineNumber = "1815"
-            landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.914624"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1818"
-            endingLineNumber = "1818"
-            landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.914939"
+            timestampString = "550569231.433718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1833"
             endingLineNumber = "1833"
+            landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
+            timestampString = "550569231.434054"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1836"
+            endingLineNumber = "1836"
+            landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
+            timestampString = "550569231.434388"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1851"
+            endingLineNumber = "1851"
             landmarkName = "-scrollViewDidEndDecelerating:"
             landmarkType = "7">
          </BreakpointContent>
@@ -862,11 +862,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalendarForProject/lib/SchedulePlanner/MGCDayPlannerView.m"
-            timestampString = "550568407.915253"
+            timestampString = "550569231.43471"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1832"
-            endingLineNumber = "1832"
+            startingLineNumber = "1850"
+            endingLineNumber = "1850"
             landmarkName = "-scrollViewDidEndDecelerating:"
             landmarkType = "7">
          </BreakpointContent>

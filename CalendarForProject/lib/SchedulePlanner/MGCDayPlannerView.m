@@ -107,7 +107,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @property (nonatomic, readonly) MGCTimeRowsView *timeRowsView;
 @property (nonatomic, readonly) LoadMoreView *loadMoreView;
 @property (nonatomic, readonly) ButtonSelect *btnSelect;
-@property (nonatomic) UIView *speratorVeticalView;
+@property (nonatomic,readonly) UIView *speratorVeticalView;
+@property (nonatomic,readonly) UIView *speratorHoziView;
 
 // collection view layouts
 @property (nonatomic, readonly) MGCTimedEventsViewLayout *timedEventsViewLayout;
@@ -171,6 +172,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @synthesize startDate = _startDate;
 @synthesize loadMoreView = _loadMoreView;
 @synthesize btnSelect = _btnSelect;
+@synthesize speratorVeticalView = _speratorVeticalView;
+@synthesize speratorHoziView = _speratorHoziView;
 #pragma mark - Initialization
 
 - (void)setup
@@ -852,6 +855,20 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     return _btnSelect;
 }
 
+-(UIView*) speratorHoziView{
+    if(!_speratorHoziView) {
+        _speratorHoziView = [[UIView alloc] initWithFrame:CGRectZero];
+    }
+    return _speratorHoziView;
+}
+
+-(UIView*) speratorVeticalView{
+    if(!_speratorVeticalView) {
+        _speratorVeticalView = [[UIView alloc] initWithFrame:CGRectZero];
+    }
+    return _speratorVeticalView;
+}
+
 - (UIScrollView*)timeScrollView
 {
 	if (!_timeScrollView) {
@@ -1165,15 +1182,16 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     self.btnSelect.sellectClick = ^{
         [weakSelf.delegate dayPlannerViewClickButtonSelect];
     };
-	// add speratorHozi
-//    UIView *speratorHoziView = [[UIView alloc] initWithFrame:CGRectMake(0, self.dayHeaderHeight, self.timeColumnWidth, 1)];
-//    speratorHoziView.backgroundColor = [UIColor lightGrayColor];
-//    [self addSubview:speratorHoziView];
-	// add speratorVetical
-    
-    _speratorVeticalView = [[UIView alloc] initWithFrame:CGRectMake(self.timeColumnWidth, 0, 0.5, self.dayHeaderHeight)];
-    _speratorVeticalView.backgroundColor = [UIColor lightGrayColor];
-    [self addSubview:_speratorVeticalView];
+    // add speratorHozi
+    self.speratorHoziView.frame =CGRectMake(0, self.dayHeaderHeight, self.timeColumnWidth, 0.5);
+    self.speratorHoziView.backgroundColor = [UIColor lightGrayColor];
+    if(!self.speratorHoziView.superview){
+        [self addSubview:self.speratorHoziView];
+    }
+    // add speratorVetical
+    self.speratorVeticalView.frame = CGRectMake(self.timeColumnWidth, 0, 0.5, self.dayHeaderHeight);
+    self.speratorVeticalView.backgroundColor = [UIColor lightGrayColor];
+    [self addSubview:self.speratorVeticalView];
     
     self.timedEventsView.frame = CGRectMake(self.timeColumnWidth, timedEventViewTop, timedEventsViewWidth, timedEventsViewHeight);
     if (!self.timedEventsView.superview) {
