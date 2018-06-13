@@ -49,8 +49,8 @@ typedef enum : NSUInteger
 @interface MGCDayColumnCell : UICollectionViewCell
 
 @property (nonatomic, readonly) UIView *viewShowClick;
-@property (nonatomic, readonly) UITableView *tableView;
 @property (nonatomic, readonly) UIStackView *stackView;
+@property (nonatomic, readonly) UIView *stackTable;
 @property (nonatomic, readonly) UILabel *dayLabel; // label displaying dates
 @property (nonatomic, readonly) UIView *viewContannerTableView;
 

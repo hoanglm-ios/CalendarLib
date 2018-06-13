@@ -186,7 +186,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     _dayHeaderHeight = 30.;
 	_pagingEnabled = YES;
 	_allowsSelection = YES;
-    _eventCoveringType = TimedEventCoveringTypeClassic;
 	 _dimmingColor = [UIColor colorWithWhite:.9 alpha:.5];
 	_reuseQueue = [[MGCReusableObjectQueue alloc] init];
 	_loadingDays = [NSMutableOrderedSet orderedSetWithCapacity:14];
@@ -446,14 +445,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         v.backgroundColor = dimmingColor;
     }
 }
-
-// public
-- (void)setEventCoveringType:(MGCDayPlannerCoveringType)eventCoveringType {
-    _eventCoveringType = eventCoveringType;
-    self.timedEventsViewLayout.coveringType = eventCoveringType == MGCDayPlannerCoveringTypeComplex ? TimedEventCoveringTypeComplex : TimedEventCoveringTypeClassic;
-    [self.dayColumnsView setNeedsDisplay];
-}
-
 #pragma mark - Private properties
 
 // startDate is the first currently loaded day in the collection views - time is set to 00:00
@@ -885,7 +876,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		_timedEventsViewLayout = [MGCTimedEventsViewLayout new];
 		_timedEventsViewLayout.delegate = self;
 		_timedEventsViewLayout.dayColumnSize = self.dayColumnSize;
-        _timedEventsViewLayout.coveringType = self.eventCoveringType == TimedEventCoveringTypeComplex ? TimedEventCoveringTypeComplex : TimedEventCoveringTypeClassic;
+        _timedEventsViewLayout.coveringType = TimedEventCoveringTypeClassic;
 	}
 	return _timedEventsViewLayout;
 }
@@ -1302,6 +1293,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	return 1; // for dayColumnView
 }
 
+
+
 - (UICollectionViewCell*)dayColumnCellAtIndexPath:(NSIndexPath*)indexPath
 {
     MGCDayColumnCell *dayCell = [self.dayColumnsView dequeueReusableCellWithReuseIdentifier:DayColumnCellReuseIdentifier forIndexPath:indexPath];
@@ -1310,9 +1303,9 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     dayCell.heightHeaderDayCell = self.heightHeaderDayCell;
     dayCell.fontSizeNameDay = self.fontSizeNameHeaderDay;
     dayCell.maxCellVisible = self.maxCellVisible;
-    dayCell.indexDate = _indexDate;
+    dayCell.indexDate = [self.calendar mgc_startOfDayForDate:_indexDate];
     
-    NSDate *date = [self dateFromDayOffset:indexPath.section];
+    NSDate *date = [self.calendar mgc_startOfDayForDate:[self dateFromDayOffset:indexPath.section]];
     dayCell.currentDate = date;
     
     NSAttributedString *attrStr = nil;
@@ -1327,7 +1320,6 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     
     dayCell.dayLabel.attributedText = attrStr;
     dayCell.listHeaderCell = self.listHeaderCell;
-    [dayCell.tableView reloadData];
     dayCell.accessoryTypes = MGCDayColumnCellAccessoryBorder;
     return dayCell;
 }

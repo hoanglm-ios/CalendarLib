@@ -227,7 +227,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
                 `MGCDayPlannerCoveringTypeComplex` is recommended for more. The first one tries to maximize the event box sizes. The latter one maximizes the disjunct space by splitting days into columns as neccessary.
     @discussion Default value is `MGCDayPlannerCoveringTypeClassic`.
  */
-@property (nonatomic) MGCDayPlannerCoveringType eventCoveringType;
+//@property (nonatomic) MGCDayPlannerCoveringType eventCoveringType;
 
 /*!
 	@group Navigating through a day planner view

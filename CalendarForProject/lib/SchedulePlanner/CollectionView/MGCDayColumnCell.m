@@ -31,13 +31,13 @@
 #import "MGCDayColumnCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface MGCDayColumnCell () <UITableViewDataSource>
+@interface MGCDayColumnCell ()
 
 @property (nonatomic) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic) CAShapeLayer *dotLayer;
 @property (nonatomic) CALayer *leftBorder;
 @property (nonatomic) CGFloat headerHeight;                                // height of the header
-
+@property (nonatomic) NSMutableArray *arr;
 @end
 
 
@@ -56,6 +56,7 @@
         _headerHeight = _maxCellVisible*_heightHeaderDayCell + _fontSizeNameDay+2+10; // 10 is height UIStackView
         _indexColor = [UIColor greenColor];
         _normalColor = [UIColor whiteColor];
+        _arr = [[NSMutableArray alloc] init];
         
         _viewShowClick  = [[UIView alloc] init];
         [self.contentView addSubview:_viewShowClick];
@@ -68,29 +69,13 @@
         _dayLabel.textAlignment = NSTextAlignmentCenter;
         _dayLabel.layer.borderColor = [UIColor grayColor].CGColor;
         
-//        CALayer* layer = [_dayLabel layer];
-//
-//        CALayer *bottomBorder = [CALayer layer];
-//        bottomBorder.borderColor = [UIColor darkGrayColor].CGColor;
-//        bottomBorder.borderWidth = 0.5;
-//        bottomBorder.frame = CGRectMake(-1, layer.frame.size.height-1, layer.frame.size.width, 1);
-//        [bottomBorder setBorderColor:[UIColor blackColor].CGColor];
-//        [layer addSublayer:bottomBorder];
-        
 		[self.contentView addSubview:_dayLabel];
         _viewContannerTableView = [[UIView alloc] init];
         
-        _tableView = [[UITableView alloc] init];
-        _tableView.rowHeight = 28;
-        _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.separatorColor = [UIColor clearColor];
-        _tableView.translatesAutoresizingMaskIntoConstraints = false;
-        [_viewContannerTableView addSubview:_tableView];
-        [_tableView.centerXAnchor constraintEqualToAnchor:_viewContannerTableView.centerXAnchor].active = YES;
-        [_tableView.centerYAnchor constraintEqualToAnchor:_viewContannerTableView.centerYAnchor].active = YES;
+        _stackTable = [[UIView alloc] init];
+        [_viewContannerTableView addSubview:_stackTable];
         
         [self.contentView addSubview:_viewContannerTableView];
-        [_tableView registerNib:[UINib nibWithNibName:@"HeaderDayColumCell" bundle:nil] forCellReuseIdentifier:@"cell"];
         _viewContannerTableView.layer.borderColor = [UIColor grayColor].CGColor;
         _viewContannerTableView.layer.borderWidth = 0.5;
 		
@@ -116,9 +101,6 @@
         evening.textAlignment = NSTextAlignmentCenter;
         evening.layer.borderColor = [UIColor grayColor].CGColor;
         evening.layer.borderWidth = 0.5;
-        
-        
-       
         
         if (@available(iOS 9.0, *)) {
             [morning.widthAnchor constraintEqualToConstant:self.contentView.bounds.size.width/3].active = true;
@@ -179,17 +161,34 @@
         }else{
              self.viewShowClick.backgroundColor = self.normalColor;
         }
-        
+        self.arr = [_listHeaderCell objectForKey:self.currentDate];
+        if(!self.arr)
+            self.arr = [[NSMutableArray alloc] init];
 		CGSize labelSize = CGSizeMake(headerSize.width, _fontSizeNameDay);
 		self.dayLabel.frame = (CGRect) { 0, 0, labelSize };
         //table view
         if(_maxCellVisible > 0){
-            NSArray *arr = [_listHeaderCell objectForKey:self.currentDate];
-            [self.tableView.widthAnchor constraintEqualToConstant:headerSize.width].active = YES;
-            [self.tableView.heightAnchor constraintEqualToConstant:arr.count * _heightHeaderDayCell].active = YES;
-            _tableView.dataSource = self;
-            
              self.viewContannerTableView.frame = (CGRect) {0,_fontSizeNameDay,headerSize.width,self.headerHeight - 10 - _fontSizeNameDay};
+            if(_arr.count  == 1)
+                 _stackTable.frame = CGRectMake(0, _viewContannerTableView.frame.size.height/2 - _heightHeaderDayCell/2, _viewContannerTableView.frame.size.width, _viewContannerTableView.frame.size.height);
+            else
+                 _stackTable.frame = CGRectMake(0, 0, _viewContannerTableView.frame.size.width, _viewContannerTableView.frame.size.height);
+            [_stackTable.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+
+            for(int i=0;i<self.arr.count;i++){
+                NSDictionary *dic = [self.arr objectAtIndex:i];
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, i*_heightHeaderDayCell, _stackTable.frame.size.width,_heightHeaderDayCell )];
+
+                UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 3, _heightHeaderDayCell - 10, _heightHeaderDayCell - 10)];
+                [view addSubview:imgView];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(_heightHeaderDayCell - 10, 0, _stackTable.frame.size.width - _heightHeaderDayCell + 10,_heightHeaderDayCell )];
+                [view addSubview:label];
+                [label setText:[dic valueForKey:@"title"]];
+                [label setFont:[UIFont fontWithName:@"Palatino-Roman" size:10]];
+                [imgView setImage:[UIImage imageNamed:[dic valueForKey:@"image"]]];
+                [_stackTable addSubview:view];
+            }
+            
         }
         //uiStackView
         CGSize stackSize = CGSizeMake(self.contentView.bounds.size.width, 10);
@@ -212,31 +211,13 @@
 
 
     [CATransaction commit];
+    
 }
 
 - (void)setAccessoryTypes:(MGCDayColumnCellAccessoryType)accessoryTypes
 {
     _accessoryTypes = accessoryTypes;
     [self setNeedsLayout];
-}
-
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    HeaderDayColumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    NSArray *arr = [_listHeaderCell objectForKey:self.currentDate];
-    if(arr){
-        NSDictionary *dic = [arr objectAtIndex:indexPath.row];
-        cell.label.text = [dic objectForKey:@"title"];
-        cell.label.textColor = [UIColor redColor];
-        [cell.img setImage:[UIImage imageNamed:[dic objectForKey:@"image"]]];
-    }
-    return cell;
-}
-
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-     NSArray *arr = [_listHeaderCell objectForKey:self.currentDate];
-    if(arr.count>_maxCellVisible)
-        return _maxCellVisible;
-    return arr.count;
 }
 
 @end
