@@ -80,6 +80,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 	if (self = [super init]) {
 		_minimumVisibleHeight = 15.;
         _ignoreNextInvalidation = NO;
+        _heightLoadMore = 40;
 	}
 	return self;
 }
@@ -297,7 +298,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 
 - (void)expandCellsToMaxWidthInCluster:(NSMutableArray<MGCEventCellLayoutAttributes *> *)cluster
 {
-    const NSUInteger padding = 2.f;
+//    const NSUInteger padding = 2.f;
     
     // Expand the attributes to maximum possible width
     NSMutableArray<NSMutableArray<MGCEventCellLayoutAttributes *> *> *columns = [NSMutableArray new];
@@ -415,7 +416,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 
 - (CGSize)collectionViewContentSize
 {
-	return CGSizeMake(self.dayColumnSize.width * self.collectionView.numberOfSections, self.dayColumnSize.height);
+	return CGSizeMake(self.dayColumnSize.width * self.collectionView.numberOfSections, self.dayColumnSize.height + 40);
 }
 
 - (NSArray*)layoutAttributesForElementsInRect:(CGRect)rect

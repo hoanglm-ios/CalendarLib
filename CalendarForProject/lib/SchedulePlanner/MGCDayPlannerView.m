@@ -158,6 +158,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @property (nonatomic) NSDate *indexDate;
 
 @property (nonatomic) BOOL isLoadMore;
+
+@property (nonatomic) CGFloat heightLoadMore;
 @end
 
 
@@ -178,6 +180,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 - (void)setup
 {
+    _heightLoadMore = 40;
     _isLimitLoadMore = NO;
     _isLoadMore = NO;
 	_numberOfVisibleDays = 3;
@@ -279,10 +282,11 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     [self.dayColumnsView.collectionViewLayout invalidateLayout];
     
     self.timedEventsViewLayout.dayColumnSize = self.dayColumnSize;
+    self.timedEventsViewLayout.heightLoadMore = self.heightLoadMore;
     [self.timedEventsViewLayout invalidateLayout];
     
     self.timeRowsView.hourSlotHeight = _hourSlotHeight;
-    self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height+40);
+    self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height+_heightLoadMore);
     self.timeRowsView.frame = CGRectMake(0, 0, self.timeScrollView.contentSize.width, self.timeScrollView.contentSize.height);
     
     CGFloat yOffset = [self offsetFromTime:ti rounding:0] - self.timeScrollView.bounds.size.height / 2.;
@@ -391,14 +395,15 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     [self.dimmedTimeRangesCache removeAllObjects];
     
     self.timedEventsViewLayout.dayColumnSize = self.dayColumnSize;
+     self.timedEventsViewLayout.heightLoadMore = self.heightLoadMore;
     [self.timedEventsViewLayout invalidateLayout];
 
     self.timeRowsView.numColumn = self.sizeEventInSection;
-    self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height+40);
+    self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height+_heightLoadMore);
     self.timeRowsView.frame = CGRectMake(0, 0, self.timeScrollView.contentSize.width, self.timeScrollView.contentSize.height);
     
     [self.loadMoreView removeFromSuperview];
-    self.loadMoreView.frame = CGRectMake(0, self.dayColumnSize.height,self.bounds.size.width , 40);
+    self.loadMoreView.frame = CGRectMake(0, self.dayColumnSize.height,self.bounds.size.width , _heightLoadMore);
     [self.timeScrollView addSubview:_loadMoreView];
 }
 
@@ -1054,6 +1059,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     CGSize dayColumnSize = self.dayColumnSize;
     
     self.timedEventsViewLayout.dayColumnSize = dayColumnSize;
+    self.timedEventsViewLayout.heightLoadMore = self.heightLoadMore;
     
     [self.dayColumnsView reloadData];
 	[self.timedEventsView reloadData];
@@ -1198,10 +1204,10 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         [self addSubview:self.timedEventsView];
     }
 
-	self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height+40);
+	self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height+_heightLoadMore);
 	self.timeRowsView.frame = CGRectMake(0, 0, self.timeScrollView.contentSize.width, self.dayColumnSize.height);
     
-    self.loadMoreView.frame = CGRectMake(0, self.dayColumnSize.height,self.bounds.size.width , 40);
+    self.loadMoreView.frame = CGRectMake(0, self.dayColumnSize.height,self.bounds.size.width , _heightLoadMore);
     [self.timeScrollView addSubview:_loadMoreView];
 	self.timeScrollView.frame = CGRectMake(0, timedEventViewTop, self.bounds.size.width, timedEventsViewHeight);
     if (!self.timeScrollView.superview) {
@@ -1248,7 +1254,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     self.timeRowsView.insetsHeight = self.eventsViewInnerMargin;
     
     self.timedEventsViewLayout.dayColumnSize = dayColumnSize;
-//    self.allDayEventsViewLayout.eventCellHeight = self.allDayEventCellHeight;
+    self.timedEventsViewLayout.heightLoadMore = self.heightLoadMore;
     
 	[self setupSubviews];
 	[self updateVisibleDaysRange];

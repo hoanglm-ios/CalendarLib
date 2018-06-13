@@ -29,7 +29,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HeaderDayColumCell.h"
 
 typedef enum : NSUInteger
 {

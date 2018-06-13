@@ -17,8 +17,6 @@
 		E2CEB31B20CA8C100036C8E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB31A20CA8C100036C8E2 /* Assets.xcassets */; };
 		E2CEB31E20CA8C100036C8E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB31C20CA8C100036C8E2 /* LaunchScreen.storyboard */; };
 		E2CEB32120CA8C100036C8E2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB32020CA8C100036C8E2 /* main.m */; };
-		E2CEB32B20CA8CA20036C8E2 /* HeaderDayColumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2CEB32820CA8CA10036C8E2 /* HeaderDayColumCell.xib */; };
-		E2CEB32C20CA8CA20036C8E2 /* HeaderDayColumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB32920CA8CA20036C8E2 /* HeaderDayColumCell.m */; };
 		E2CEB33920CA8D000036C8E2 /* NSAttributedString+MGCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB32F20CA8CFF0036C8E2 /* NSAttributedString+MGCAdditions.m */; };
 		E2CEB33A20CA8D000036C8E2 /* NSCalendar+MGCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB33220CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.m */; };
 		E2CEB33B20CA8D000036C8E2 /* MGCAlignedGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB33420CA8CFF0036C8E2 /* MGCAlignedGeometry.m */; };
@@ -56,9 +54,6 @@
 		E2CEB31D20CA8C100036C8E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2CEB31F20CA8C100036C8E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2CEB32020CA8C100036C8E2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E2CEB32820CA8CA10036C8E2 /* HeaderDayColumCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderDayColumCell.xib; sourceTree = "<group>"; };
-		E2CEB32920CA8CA20036C8E2 /* HeaderDayColumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderDayColumCell.m; sourceTree = "<group>"; };
-		E2CEB32A20CA8CA20036C8E2 /* HeaderDayColumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderDayColumCell.h; sourceTree = "<group>"; };
 		E2CEB32F20CA8CFF0036C8E2 /* NSAttributedString+MGCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MGCAdditions.m"; sourceTree = "<group>"; };
 		E2CEB33020CA8CFF0036C8E2 /* MGCDateRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCDateRange.h; sourceTree = "<group>"; };
 		E2CEB33120CA8CFF0036C8E2 /* NSCalendar+MGCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+MGCAdditions.h"; sourceTree = "<group>"; };
@@ -212,9 +207,6 @@
 				E2CEB34B20CA8DBE0036C8E2 /* MGCInteractiveEventView.m */,
 				E2CEB34D20CA8DBF0036C8E2 /* MGCTimeRowsView.h */,
 				E2CEB34C20CA8DBE0036C8E2 /* MGCTimeRowsView.m */,
-				E2CEB32A20CA8CA20036C8E2 /* HeaderDayColumCell.h */,
-				E2CEB32920CA8CA20036C8E2 /* HeaderDayColumCell.m */,
-				E2CEB32820CA8CA10036C8E2 /* HeaderDayColumCell.xib */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -309,7 +301,6 @@
 			files = (
 				E2CEB31E20CA8C100036C8E2 /* LaunchScreen.storyboard in Resources */,
 				E2CEB31B20CA8C100036C8E2 /* Assets.xcassets in Resources */,
-				E2CEB32B20CA8CA20036C8E2 /* HeaderDayColumCell.xib in Resources */,
 				E2CEB31920CA8C100036C8E2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,7 +326,6 @@
 				E2CEB33C20CA8D000036C8E2 /* MGCDateRange.m in Sources */,
 				E2CEB37820CAB4930036C8E2 /* MGCDayPlannerEKViewController.m in Sources */,
 				E2CEB36D20CA97460036C8E2 /* OSCache.m in Sources */,
-				E2CEB32C20CA8CA20036C8E2 /* HeaderDayColumCell.m in Sources */,
 				E2CEB34720CA8D560036C8E2 /* MGCDayPlannerView.m in Sources */,
 				E2CEB34420CA8D3B0036C8E2 /* MGCEventView.m in Sources */,
 				E2CEB33A20CA8D000036C8E2 /* NSCalendar+MGCAdditions.m in Sources */,
