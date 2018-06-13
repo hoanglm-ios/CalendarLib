@@ -107,6 +107,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @property (nonatomic, readonly) MGCTimeRowsView *timeRowsView;
 @property (nonatomic, readonly) LoadMoreView *loadMoreView;
 @property (nonatomic, readonly) ButtonSelect *btnSelect;
+@property (nonatomic) UIView *speratorVeticalView;
 
 // collection view layouts
 @property (nonatomic, readonly) MGCTimedEventsViewLayout *timedEventsViewLayout;
@@ -444,6 +445,13 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     for (UIView *v in [self.timedEventsView visibleSupplementaryViewsOfKind:DimmingViewKind]) {
         v.backgroundColor = dimmingColor;
     }
+}
+
+-(void)setMaxCellVisible:(NSInteger)maxCellVisible{
+    _maxCellVisible = maxCellVisible;
+     _dayHeaderHeight = _maxCellVisible*_heightHeaderDayCell + _fontSizeNameHeaderDay+2+10;
+    [self.dayColumnsView reloadData];
+    [self reloadAllEvents];
 }
 #pragma mark - Private properties
 
@@ -1158,13 +1166,14 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         [weakSelf.delegate dayPlannerViewClickButtonSelect];
     };
 	// add speratorHozi
-    UIView *speratorHoziView = [[UIView alloc] initWithFrame:CGRectMake(0, self.dayHeaderHeight, self.timeColumnWidth, 1)];
-    speratorHoziView.backgroundColor = [UIColor lightGrayColor];
-    [self addSubview:speratorHoziView];
+//    UIView *speratorHoziView = [[UIView alloc] initWithFrame:CGRectMake(0, self.dayHeaderHeight, self.timeColumnWidth, 1)];
+//    speratorHoziView.backgroundColor = [UIColor lightGrayColor];
+//    [self addSubview:speratorHoziView];
 	// add speratorVetical
-    UIView *speratorVeticalView = [[UIView alloc] initWithFrame:CGRectMake(self.timeColumnWidth, 0, 1, self.dayHeaderHeight)];
-    speratorVeticalView.backgroundColor = [UIColor lightGrayColor];
-    [self addSubview:speratorVeticalView];
+    
+    _speratorVeticalView = [[UIView alloc] initWithFrame:CGRectMake(self.timeColumnWidth, 0, 0.5, self.dayHeaderHeight)];
+    _speratorVeticalView.backgroundColor = [UIColor lightGrayColor];
+    [self addSubview:_speratorVeticalView];
     
     self.timedEventsView.frame = CGRectMake(self.timeColumnWidth, timedEventViewTop, timedEventsViewWidth, timedEventsViewHeight);
     if (!self.timedEventsView.superview) {
@@ -1543,6 +1552,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 // returns YES if we loaded new pages, NO otherwise
 - (BOOL)recenterIfNeeded
 {
+    
 	NSAssert(self.controllingScrollView, @"Trying to recenter with no controlling scroll view");
 	
 	CGFloat xOffset = self.controllingScrollView.contentOffset.x;
@@ -1697,6 +1707,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	[self lockScrollingDirection];
 	
 	if (self.scrollDirection & ScrollDirectionHorizontal) {
+        
 		[self recenterIfNeeded];
 	}
 	
@@ -1706,7 +1717,9 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	
 	if ([self.delegate respondsToSelector:@selector(dayPlannerView:didScroll:)]) {
 		MGCDayPlannerScrollType type = self.scrollDirection == ScrollDirectionHorizontal ? MGCDayPlannerScrollDate : MGCDayPlannerScrollTime;
+      
 		[self.delegate dayPlannerView:self didScroll:type];
+       
 	}
     
     if(self.scrollDirection & ScrollDirectionVertical){
@@ -1716,6 +1729,29 @@ static const CGFloat kMaxHourSlotHeight = 150.;
             // The user did scroll to the bottom of the scroll view
             [self.delegate dayPlannerViewLoadMore:self];
         }
+    }
+}
+
+
+- (void) showHideHeaderCell{
+    MGCDateRange *range = [self visibleDays];
+    NSDate *start = [self.calendar mgc_startOfDayForDate:range.start];
+    NSDate *end = [self.calendar mgc_startOfDayForDate:range.end];
+    end = [end dateByAddingTimeInterval:-24*60*60];
+    NSInteger maxHeaderCell = 0;
+    while(true){
+        NSLog(@"Date: %@",start);
+        NSArray* arr = [self.listHeaderCell objectForKey:start];
+        if(arr){
+            if(arr.count > maxHeaderCell)
+                maxHeaderCell = arr.count;
+        }
+        start = [self.calendar mgc_nextStartOfDayForDate:start];
+        if([start isEqual:[self.calendar mgc_nextStartOfDayForDate:end]])
+            break;
+    }
+    if(self.maxCellVisible != maxHeaderCell){
+        [self setMaxCellVisible:maxHeaderCell];
     }
 }
 
@@ -1786,7 +1822,11 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
 {
-	//NSLog(@"scrollViewDidEndDecelerating");
+    NSLog(@"scrollViewDidEndDecelerating");
+    
+    if(self.scrollDirection & ScrollDirectionHorizontal){
+        [self showHideHeaderCell];
+    }
 
 	[self scrollViewDidEndScrolling:scrollView];
     
@@ -1801,6 +1841,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     
     [[UIDevice currentDevice]beginGeneratingDeviceOrientationNotifications];
 }
+
 
 
 #pragma mark - UICollectionViewDelegateFlowLayout

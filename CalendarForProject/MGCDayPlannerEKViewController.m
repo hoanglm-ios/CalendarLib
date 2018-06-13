@@ -127,12 +127,12 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
                 dicTwo = @{@"title":@"Ana",@"image":@"ic_female"};
                 [arr addObject:dicOne];
                 [arr addObject:dicTwo];
-                [dic setObject:arr forKey:now];
+                [dic setObject:arr forKey:[self.calendar mgc_startOfDayForDate:now]];
                 break;
             case 1:
                 dicOne = @{@"title":[NSString stringWithFormat:@"Ana %d",i],@"image":@"ic_female"};
                 [arr addObject:dicOne];
-                [dic setObject:arr forKey:now];
+                [dic setObject:arr forKey:[self.calendar mgc_startOfDayForDate:now]];
                 break;
             default:
                 break;

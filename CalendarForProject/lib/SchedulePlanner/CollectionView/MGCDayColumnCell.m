@@ -189,7 +189,12 @@
                 [_stackTable addSubview:view];
             }
             
+        }else{
+             [_stackTable.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+             self.viewContannerTableView.frame = CGRectZero;
+             self.stackTable.frame = CGRectZero;
         }
+        
         //uiStackView
         CGSize stackSize = CGSizeMake(self.contentView.bounds.size.width, 10);
         self.stackView.frame = (CGRect) { 0, self.headerHeight - 10, stackSize };

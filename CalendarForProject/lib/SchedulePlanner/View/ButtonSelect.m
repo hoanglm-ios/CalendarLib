@@ -36,7 +36,7 @@
         [_title setFont:[UIFont systemFontOfSize:10.0]];
         _title.translatesAutoresizingMaskIntoConstraints = false;
         [self addSubview:_title];
-        [_title.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
+        [_title.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10].active = YES;
         [_title.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = YES;
         // create UIImage
         _iv_popup = [[UIImageView alloc] init];
