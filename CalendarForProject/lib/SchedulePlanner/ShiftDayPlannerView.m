@@ -36,7 +36,7 @@
 #import "ShiftDayColumnCell.h"
 #import "MGCEventCell.h"
 #import "MGCEventView.h"
-#import "MGCStandardEventView.h"
+#import "ShiftEventView.h"
 #import "MGCInteractiveEventView.h"
 #import "ShiftTimeRowsView.h"
 #import "MGCAlignedGeometry.h"

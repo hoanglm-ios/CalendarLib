@@ -1,5 +1,5 @@
 //
-//  MGCStandardEventView.h
+//  ShiftEventView.h
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -32,7 +32,7 @@
 
 
 /*! Presentation styles for the view */
-typedef NS_OPTIONS(int, MGCStandardEventViewStyle) {
+typedef NS_OPTIONS(int, ShiftEventViewStyle) {
 	MGCStandardScheduleDefault = 1,		// transparent background
 	MGCStandardScheduleOne	 = 2,	// title1 + title2 have text
 	MGCStandardScheduleThree = 3, // title2 + title3 have text and range 1+2 text
@@ -45,7 +45,7 @@ typedef NS_OPTIONS(int, MGCStandardEventViewStyle) {
  *	in a way similar to iCal.
  *	It is the view class used by the EventKit specialized day/month planner view controllers.
  */
-@interface MGCStandardEventView : MGCEventView
+@interface ShiftEventView : MGCEventView
 
 /*! Title of the event - displayed in bold */
 @property (nonatomic, copy)	NSString *title1;

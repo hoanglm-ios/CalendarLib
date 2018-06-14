@@ -7,10 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "MGCDayPlannerEKViewController.h"
+#import "ShiftDayPlannerViewController.h"
 
 @interface ViewController ()
-@property (nonatomic) MGCDayPlannerEKViewController *weekViewController;
+@property (nonatomic) ShiftDayPlannerViewController *weekViewController;
 @end
 
 @implementation ViewController

@@ -1,5 +1,5 @@
 //
-//  MGCDayPlannerEKViewController.h
+//  ShiftDayPlannerViewController.h
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -31,7 +31,7 @@
 #import <EventKit/EventKit.h>
 #import "ShiftDayPlannerView.h"
 
-@interface MGCDayPlannerEKViewController: UIViewController <ShiftDayPlannerViewDelegate, ShiftDayPlannerViewDataSource>
+@interface ShiftDayPlannerViewController: UIViewController <ShiftDayPlannerViewDelegate, ShiftDayPlannerViewDataSource>
 
 @property (nonatomic) NSCalendar *calendar;
 @property (nonatomic) NSSet *visibleCalendars;

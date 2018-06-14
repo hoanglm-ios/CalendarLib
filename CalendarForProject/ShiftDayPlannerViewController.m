@@ -1,5 +1,5 @@
 //
-//  MGCDayPlannerEKViewController.m
+//  ShiftDayPlannerViewController.m
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -28,8 +28,8 @@
 //  SOFTWARE.
 //
 
-#import "MGCDayPlannerEKViewController.h"
-#import "MGCStandardEventView.h"
+#import "ShiftDayPlannerViewController.h"
+#import "ShiftEventView.h"
 #import "NSCalendar+MGCAdditions.h"
 #import "MGCDateRange.h"
 #import "OSCache.h"
@@ -46,7 +46,7 @@ static const NSUInteger cacheSize = 400;	// size of the cache (in days)
 static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 
-@interface MGCDayPlannerEKViewController ()
+@interface ShiftDayPlannerViewController ()
 
 @property (nonatomic) dispatch_queue_t bgQueue;			// dispatch queue for loading events
 @property (nonatomic) NSMutableOrderedSet *daysToLoad;	// dates for months of which we want to load events
@@ -56,7 +56,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 @end
 
 
-@implementation MGCDayPlannerEKViewController
+@implementation ShiftDayPlannerViewController
 
 @synthesize calendar = _calendar;
 
@@ -109,10 +109,10 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     self.eventsCache = [[OSCache alloc]init];
     self.eventsCache.countLimit = cacheSize;
     
-    self.bgQueue = dispatch_queue_create("MGCDayPlannerEKViewController.bgQueue", NULL);
+    self.bgQueue = dispatch_queue_create("ShiftDayPlannerViewController.bgQueue", NULL);
     
     self.dayPlannerView.calendar = self.calendar;
-    [self.dayPlannerView registerClass:MGCStandardEventView.class forEventViewWithReuseIdentifier:EventCellReuseIdentifier];
+    [self.dayPlannerView registerClass:ShiftEventView.class forEventViewWithReuseIdentifier:EventCellReuseIdentifier];
 //    self.dayPlannerView.sizeEventInSection = self.arrSize;
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -266,7 +266,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 - (MGCEventView*)dayPlannerView:(ShiftDayPlannerView*)view viewForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date
 {
-    MGCStandardEventView *evCell = (MGCStandardEventView*)[view dequeueReusableViewWithIdentifier:EventCellReuseIdentifier forEventOfType:type atIndex:index date:date];
+    ShiftEventView *evCell = (ShiftEventView*)[view dequeueReusableViewWithIdentifier:EventCellReuseIdentifier forEventOfType:type atIndex:index date:date];
     evCell.backgroundColor = [UIColor whiteColor];
     switch (index%4) {
         case 0:

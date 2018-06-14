@@ -35,7 +35,7 @@
 
 /*! 
  *  MGCEventView is used by ShiftDayPlannerView and MGCMonthPlannerView to present the content of single events.
- *	You can subclass this class or use the already existing subclass MGCStandardEventView, which supports the
+ *	You can subclass this class or use the already existing subclass ShiftEventView, which supports the
  *	display of basic event properties such as title and location.
  *	You must register your custom class(es) with the day/month planner view object and when needed
  *  call dequeueReusableViewWithIdentifier:forEvent... methods to retrieve an instance of the appropriate class, 

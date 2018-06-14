@@ -1,5 +1,5 @@
 //
-//  MGCStandardEventView.m
+//  ShiftEventView.m
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -28,11 +28,11 @@
 //  SOFTWARE.
 //
 
-#import "MGCStandardEventView.h"
+#import "ShiftEventView.h"
 
 static CGFloat kSpace = 2;
 
-@interface MGCStandardEventView ()
+@interface ShiftEventView ()
 
 @property (nonatomic) UIView *leftBorderView;
 @property (nonatomic) NSMutableAttributedString *attrString;
@@ -40,7 +40,7 @@ static CGFloat kSpace = 2;
 @end
 
 
-@implementation MGCStandardEventView
+@implementation ShiftEventView
 
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -186,7 +186,7 @@ static CGFloat kSpace = 2;
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    MGCStandardEventView *cell = [super copyWithZone:zone];
+    ShiftEventView *cell = [super copyWithZone:zone];
     cell.title1 = self.title1;
     cell.title2 = self.title2;
     cell.title3 = self.title3;

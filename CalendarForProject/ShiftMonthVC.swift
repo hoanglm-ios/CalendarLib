@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShiftMonthVC: MGCDayPlannerEKViewController {
+class ShiftMonthVC: ShiftDayPlannerViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
