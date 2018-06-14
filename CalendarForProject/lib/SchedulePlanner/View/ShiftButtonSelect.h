@@ -1,5 +1,5 @@
 //
-//  ButtonSelect.h
+//  ShiftButtonSelect.h
 //  CalendarForProject
 //
 //  Created by LEMINHO on 6/12/18.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ButtonSelect : UIView
+@interface ShiftButtonSelect : UIView
 
 @property (nonatomic, readonly) UIButton *button;
 @property (nonatomic,readonly) UIImageView *iv_popup;

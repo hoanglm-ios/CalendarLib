@@ -60,12 +60,12 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 @synthesize calendar = _calendar;
 
-- (MGCDayPlannerView*)dayPlannerView
+- (ShiftDayPlannerView*)dayPlannerView
 {
-    return (MGCDayPlannerView*)self.view;
+    return (ShiftDayPlannerView*)self.view;
 }
 
-- (void)setDayPlannerView:(MGCDayPlannerView*)dayPlannerView
+- (void)setDayPlannerView:(ShiftDayPlannerView*)dayPlannerView
 {
     [super setView:dayPlannerView];
     
@@ -78,7 +78,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 
 - (void)loadView
 {
-    MGCDayPlannerView *dayPlannerView = [[MGCDayPlannerView alloc]initWithFrame:CGRectZero];
+    ShiftDayPlannerView *dayPlannerView = [[ShiftDayPlannerView alloc]initWithFrame:CGRectZero];
     dayPlannerView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.dayPlannerView = dayPlannerView;
     self.dayPlannerView.autoresizesSubviews = YES;
@@ -262,9 +262,9 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     return NO;
 }
 
-#pragma mark - MGCDayPlannerViewDataSource
+#pragma mark - ShiftDayPlannerViewDataSource
 
-- (MGCEventView*)dayPlannerView:(MGCDayPlannerView*)view viewForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date
+- (MGCEventView*)dayPlannerView:(ShiftDayPlannerView*)view viewForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date
 {
     MGCStandardEventView *evCell = (MGCStandardEventView*)[view dequeueReusableViewWithIdentifier:EventCellReuseIdentifier forEventOfType:type atIndex:index date:date];
     evCell.backgroundColor = [UIColor whiteColor];
@@ -295,14 +295,14 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
 }
 
 
-#pragma mark - MGCDayPlannerViewDelegate
+#pragma mark - ShiftDayPlannerViewDelegate
 
-- (void)dayPlannerView:(MGCDayPlannerView*)view didSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date{
+- (void)dayPlannerView:(ShiftDayPlannerView*)view didSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date{
     // doi mau 2 cai kia la ok
     [self.dayPlannerView changeClick:index withDate:date];
 }
 
-- (void)dayPlannerView:(MGCDayPlannerView*)view willDisplayDate:(NSDate*)date
+- (void)dayPlannerView:(ShiftDayPlannerView*)view willDisplayDate:(NSDate*)date
 {
 //    NSLog(@"will display %@", date);
     BOOL loading = [self loadEventsAtDate:date];
@@ -311,13 +311,13 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     }
 }
 
-- (void)dayPlannerView:(MGCDayPlannerView*)view didEndDisplayingDate:(NSDate*)date
+- (void)dayPlannerView:(ShiftDayPlannerView*)view didEndDisplayingDate:(NSDate*)date
 {
 //    NSLog(@"did end displaying %@", date);
     [self.daysToLoad removeObject:date];
 }
 
-- (NSAttributedString*)dayPlannerView:(MGCDayPlannerView *)view attributedStringForDayHeaderAtDate:(NSDate *)date
+- (NSAttributedString*)dayPlannerView:(ShiftDayPlannerView *)view attributedStringForDayHeaderAtDate:(NSDate *)date
 {
     
     static NSDateFormatter *dateFormatter = nil;
@@ -338,11 +338,11 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     return attrStr;
 }
 
-- (NSInteger)dayPlannerView:(MGCDayPlannerView *)view numberOfDimmedTimeRangesAtDate:(NSDate *)date{
+- (NSInteger)dayPlannerView:(ShiftDayPlannerView *)view numberOfDimmedTimeRangesAtDate:(NSDate *)date{
     return [self.calendar isDateInWeekend:date] ? 1 : 2;
 }
 
-- (MGCDateRange*)dayPlannerView:(MGCDayPlannerView *)view dimmedTimeRangeAtIndex:(NSUInteger)index date:(NSDate *)date
+- (MGCDateRange*)dayPlannerView:(ShiftDayPlannerView *)view dimmedTimeRangeAtIndex:(NSUInteger)index date:(NSDate *)date
 {
     NSDate *start, *end;
     
@@ -362,12 +362,12 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     return [MGCDateRange dateRangeWithStart:start end:end];
 }
 
--(NSAttributedString*) dayPlannerViewAttributedStringMark:(MGCDayPlannerView *)view withIndex:(NSInteger)index{
+-(NSAttributedString*) dayPlannerViewAttributedStringMark:(ShiftDayPlannerView *)view withIndex:(NSInteger)index{
     UIFont *font = [UIFont fontWithName:@"Palatino-Roman" size:12.0];
     NSAttributedString *attrStr = [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"row %ld",(long)index] attributes:@{ NSFontAttributeName: font }];
     return attrStr;
 }
--(NSAttributedString*) dayPlannerViewAttribuedStringBagde:(MGCDayPlannerView *)view withIndex:(NSInteger)index{
+-(NSAttributedString*) dayPlannerViewAttribuedStringBagde:(ShiftDayPlannerView *)view withIndex:(NSInteger)index{
     UIFont *font = [UIFont fontWithName:@"Palatino-Roman" size:8.0];
     NSAttributedString *attrStr = nil;
     switch (index%3) {
@@ -385,7 +385,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     return attrStr;
 }
 
-- (void)dayPlannerViewLoadMore:(MGCDayPlannerView*)view{
+- (void)dayPlannerViewLoadMore:(ShiftDayPlannerView*)view{
     if (@available(iOS 10.0, *)) {
         [NSTimer scheduledTimerWithTimeInterval:2 repeats:false block:^(NSTimer * _Nonnull timer) {
             // call api self.dayPlannerView.visibleDays
@@ -397,7 +397,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     }
 }
 
-- (NSAttributedString*)dayPlannerViewttributedStringGuest:(MGCDayPlannerView*)view withIndex:(NSInteger) index{
+- (NSAttributedString*)dayPlannerViewttributedStringGuest:(ShiftDayPlannerView*)view withIndex:(NSInteger) index{
     
     if(index == 4){
         UIFont *font = [UIFont fontWithName:@"Palatino-Roman" size:8.0];
@@ -407,7 +407,7 @@ static NSString* const EventCellReuseIdentifier = @"EventCellReuseIdentifier";
     return nil;
 }
 
-- (void)dayPlannerViewClickButtonSelect{
+- (void)dayPlannerViewClickShiftButtonSelect{
     NSLog(@"Click ne");
 }
 @end

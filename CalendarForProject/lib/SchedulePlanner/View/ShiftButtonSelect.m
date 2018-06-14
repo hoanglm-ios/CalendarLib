@@ -1,15 +1,15 @@
 //
-//  ButtonSelect.m
+//  ShiftButtonSelect.m
 //  CalendarForProject
 //
 //  Created by LEMINHO on 6/12/18.
 //  Copyright © 2018 LEMINHO. All rights reserved.
 //
 
-#import "ButtonSelect.h"
+#import "ShiftButtonSelect.h"
 
 
-@implementation ButtonSelect
+@implementation ShiftButtonSelect
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E2128EF520CE687D002B4D68 /* ShiftMonthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2128EF420CE687D002B4D68 /* ShiftMonthVC.swift */; };
-		E2128EFB20CF59E5002B4D68 /* ButtonSelect.m in Sources */ = {isa = PBXBuildFile; fileRef = E2128EFA20CF59E5002B4D68 /* ButtonSelect.m */; };
-		E228B36620CD307E00F36B06 /* LoadMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = E228B36520CD307E00F36B06 /* LoadMoreView.m */; };
+		E2128EFB20CF59E5002B4D68 /* ShiftButtonSelect.m in Sources */ = {isa = PBXBuildFile; fileRef = E2128EFA20CF59E5002B4D68 /* ShiftButtonSelect.m */; };
+		E228B36620CD307E00F36B06 /* ShiftLoadMoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = E228B36520CD307E00F36B06 /* ShiftLoadMoreView.m */; };
 		E228B36920CE5E8800F36B06 /* ShiftPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E228B36820CE5E8800F36B06 /* ShiftPresenter.swift */; };
 		E2CEB31320CA8C100036C8E2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB31220CA8C100036C8E2 /* AppDelegate.m */; };
 		E2CEB31620CA8C100036C8E2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB31520CA8C100036C8E2 /* ViewController.m */; };
@@ -24,13 +24,13 @@
 		E2CEB33D20CA8D000036C8E2 /* MGCReusableObjectQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB33820CA8D000036C8E2 /* MGCReusableObjectQueue.m */; };
 		E2CEB34320CA8D3B0036C8E2 /* MGCStandardEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34020CA8D3B0036C8E2 /* MGCStandardEventView.m */; };
 		E2CEB34420CA8D3B0036C8E2 /* MGCEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34120CA8D3B0036C8E2 /* MGCEventView.m */; };
-		E2CEB34720CA8D560036C8E2 /* MGCDayPlannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34620CA8D550036C8E2 /* MGCDayPlannerView.m */; };
+		E2CEB34720CA8D560036C8E2 /* ShiftDayPlannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34620CA8D550036C8E2 /* ShiftDayPlannerView.m */; };
 		E2CEB35120CA8DBF0036C8E2 /* MGCInteractiveEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34B20CA8DBE0036C8E2 /* MGCInteractiveEventView.m */; };
-		E2CEB35220CA8DBF0036C8E2 /* MGCTimeRowsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34C20CA8DBE0036C8E2 /* MGCTimeRowsView.m */; };
-		E2CEB35320CA8DBF0036C8E2 /* MGCDayColumnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34E20CA8DBF0036C8E2 /* MGCDayColumnCell.m */; };
+		E2CEB35220CA8DBF0036C8E2 /* ShiftTimeRowsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34C20CA8DBE0036C8E2 /* ShiftTimeRowsView.m */; };
+		E2CEB35320CA8DBF0036C8E2 /* ShiftDayColumnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB34E20CA8DBF0036C8E2 /* ShiftDayColumnCell.m */; };
 		E2CEB35420CA8DBF0036C8E2 /* MGCEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35020CA8DBF0036C8E2 /* MGCEventCell.m */; };
 		E2CEB35A20CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35720CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m */; };
-		E2CEB35B20CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35920CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m */; };
+		E2CEB35B20CA8DF50036C8E2 /* ShiftTimedEventsViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB35920CA8DF50036C8E2 /* ShiftTimedEventsViewLayout.m */; };
 		E2CEB36A20CA973C0036C8E2 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB36920CA973C0036C8E2 /* OrderedDictionary.m */; };
 		E2CEB36D20CA97460036C8E2 /* OSCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB36B20CA97460036C8E2 /* OSCache.m */; };
 		E2CEB37820CAB4930036C8E2 /* MGCDayPlannerEKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CEB37520CAB4930036C8E2 /* MGCDayPlannerEKViewController.m */; };
@@ -38,10 +38,10 @@
 
 /* Begin PBXFileReference section */
 		E2128EF420CE687D002B4D68 /* ShiftMonthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftMonthVC.swift; sourceTree = "<group>"; };
-		E2128EF920CF59E5002B4D68 /* ButtonSelect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonSelect.h; sourceTree = "<group>"; };
-		E2128EFA20CF59E5002B4D68 /* ButtonSelect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonSelect.m; sourceTree = "<group>"; };
-		E228B36420CD307E00F36B06 /* LoadMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadMoreView.h; sourceTree = "<group>"; };
-		E228B36520CD307E00F36B06 /* LoadMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadMoreView.m; sourceTree = "<group>"; };
+		E2128EF920CF59E5002B4D68 /* ShiftButtonSelect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShiftButtonSelect.h; sourceTree = "<group>"; };
+		E2128EFA20CF59E5002B4D68 /* ShiftButtonSelect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShiftButtonSelect.m; sourceTree = "<group>"; };
+		E228B36420CD307E00F36B06 /* ShiftLoadMoreView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShiftLoadMoreView.h; sourceTree = "<group>"; };
+		E228B36520CD307E00F36B06 /* ShiftLoadMoreView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShiftLoadMoreView.m; sourceTree = "<group>"; };
 		E228B36720CE5E8700F36B06 /* CalendarForProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarForProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		E228B36820CE5E8800F36B06 /* ShiftPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftPresenter.swift; sourceTree = "<group>"; };
 		E2CEB30E20CA8C100036C8E2 /* CalendarForProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarForProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,20 +68,20 @@
 		E2CEB34020CA8D3B0036C8E2 /* MGCStandardEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCStandardEventView.m; sourceTree = "<group>"; };
 		E2CEB34120CA8D3B0036C8E2 /* MGCEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCEventView.m; sourceTree = "<group>"; };
 		E2CEB34220CA8D3B0036C8E2 /* MGCStandardEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCStandardEventView.h; sourceTree = "<group>"; };
-		E2CEB34520CA8D550036C8E2 /* MGCDayPlannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCDayPlannerView.h; sourceTree = "<group>"; };
-		E2CEB34620CA8D550036C8E2 /* MGCDayPlannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCDayPlannerView.m; sourceTree = "<group>"; };
-		E2CEB34920CA8DBE0036C8E2 /* MGCDayColumnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCDayColumnCell.h; sourceTree = "<group>"; };
+		E2CEB34520CA8D550036C8E2 /* ShiftDayPlannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftDayPlannerView.h; sourceTree = "<group>"; };
+		E2CEB34620CA8D550036C8E2 /* ShiftDayPlannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiftDayPlannerView.m; sourceTree = "<group>"; };
+		E2CEB34920CA8DBE0036C8E2 /* ShiftDayColumnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftDayColumnCell.h; sourceTree = "<group>"; };
 		E2CEB34A20CA8DBE0036C8E2 /* MGCEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCEventCell.h; sourceTree = "<group>"; };
 		E2CEB34B20CA8DBE0036C8E2 /* MGCInteractiveEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCInteractiveEventView.m; sourceTree = "<group>"; };
-		E2CEB34C20CA8DBE0036C8E2 /* MGCTimeRowsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCTimeRowsView.m; sourceTree = "<group>"; };
-		E2CEB34D20CA8DBF0036C8E2 /* MGCTimeRowsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCTimeRowsView.h; sourceTree = "<group>"; };
-		E2CEB34E20CA8DBF0036C8E2 /* MGCDayColumnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCDayColumnCell.m; sourceTree = "<group>"; };
+		E2CEB34C20CA8DBE0036C8E2 /* ShiftTimeRowsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiftTimeRowsView.m; sourceTree = "<group>"; };
+		E2CEB34D20CA8DBF0036C8E2 /* ShiftTimeRowsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftTimeRowsView.h; sourceTree = "<group>"; };
+		E2CEB34E20CA8DBF0036C8E2 /* ShiftDayColumnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiftDayColumnCell.m; sourceTree = "<group>"; };
 		E2CEB34F20CA8DBF0036C8E2 /* MGCInteractiveEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCInteractiveEventView.h; sourceTree = "<group>"; };
 		E2CEB35020CA8DBF0036C8E2 /* MGCEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCEventCell.m; sourceTree = "<group>"; };
 		E2CEB35620CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCEventCellLayoutAttributes.h; sourceTree = "<group>"; };
 		E2CEB35720CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCEventCellLayoutAttributes.m; sourceTree = "<group>"; };
-		E2CEB35820CA8DF50036C8E2 /* MGCTimedEventsViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGCTimedEventsViewLayout.h; sourceTree = "<group>"; };
-		E2CEB35920CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGCTimedEventsViewLayout.m; sourceTree = "<group>"; };
+		E2CEB35820CA8DF50036C8E2 /* ShiftTimedEventsViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftTimedEventsViewLayout.h; sourceTree = "<group>"; };
+		E2CEB35920CA8DF50036C8E2 /* ShiftTimedEventsViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiftTimedEventsViewLayout.m; sourceTree = "<group>"; };
 		E2CEB36220CA92B70036C8E2 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		E2CEB36820CA973C0036C8E2 /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		E2CEB36920CA973C0036C8E2 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
@@ -105,10 +105,10 @@
 		E2128EF820CF5950002B4D68 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E2128EF920CF59E5002B4D68 /* ButtonSelect.h */,
-				E2128EFA20CF59E5002B4D68 /* ButtonSelect.m */,
-				E228B36420CD307E00F36B06 /* LoadMoreView.h */,
-				E228B36520CD307E00F36B06 /* LoadMoreView.m */,
+				E2128EF920CF59E5002B4D68 /* ShiftButtonSelect.h */,
+				E2128EFA20CF59E5002B4D68 /* ShiftButtonSelect.m */,
+				E228B36420CD307E00F36B06 /* ShiftLoadMoreView.h */,
+				E228B36520CD307E00F36B06 /* ShiftLoadMoreView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -176,8 +176,8 @@
 		E2CEB32D20CA8CBB0036C8E2 /* SchedulePlanner */ = {
 			isa = PBXGroup;
 			children = (
-				E2CEB34520CA8D550036C8E2 /* MGCDayPlannerView.h */,
-				E2CEB34620CA8D550036C8E2 /* MGCDayPlannerView.m */,
+				E2CEB34520CA8D550036C8E2 /* ShiftDayPlannerView.h */,
+				E2CEB34620CA8D550036C8E2 /* ShiftDayPlannerView.m */,
 				E2128EF820CF5950002B4D68 /* View */,
 				E2CEB35520CA8DE00036C8E2 /* CollectionViewLayout */,
 				E2CEB34820CA8D880036C8E2 /* CollectionView */,
@@ -199,14 +199,14 @@
 		E2CEB34820CA8D880036C8E2 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				E2CEB34920CA8DBE0036C8E2 /* MGCDayColumnCell.h */,
-				E2CEB34E20CA8DBF0036C8E2 /* MGCDayColumnCell.m */,
+				E2CEB34920CA8DBE0036C8E2 /* ShiftDayColumnCell.h */,
+				E2CEB34E20CA8DBF0036C8E2 /* ShiftDayColumnCell.m */,
 				E2CEB34A20CA8DBE0036C8E2 /* MGCEventCell.h */,
 				E2CEB35020CA8DBF0036C8E2 /* MGCEventCell.m */,
 				E2CEB34F20CA8DBF0036C8E2 /* MGCInteractiveEventView.h */,
 				E2CEB34B20CA8DBE0036C8E2 /* MGCInteractiveEventView.m */,
-				E2CEB34D20CA8DBF0036C8E2 /* MGCTimeRowsView.h */,
-				E2CEB34C20CA8DBE0036C8E2 /* MGCTimeRowsView.m */,
+				E2CEB34D20CA8DBF0036C8E2 /* ShiftTimeRowsView.h */,
+				E2CEB34C20CA8DBE0036C8E2 /* ShiftTimeRowsView.m */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -216,8 +216,8 @@
 			children = (
 				E2CEB35620CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.h */,
 				E2CEB35720CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m */,
-				E2CEB35820CA8DF50036C8E2 /* MGCTimedEventsViewLayout.h */,
-				E2CEB35920CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m */,
+				E2CEB35820CA8DF50036C8E2 /* ShiftTimedEventsViewLayout.h */,
+				E2CEB35920CA8DF50036C8E2 /* ShiftTimedEventsViewLayout.m */,
 			);
 			path = CollectionViewLayout;
 			sourceTree = "<group>";
@@ -313,26 +313,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2CEB35120CA8DBF0036C8E2 /* MGCInteractiveEventView.m in Sources */,
-				E2CEB35B20CA8DF50036C8E2 /* MGCTimedEventsViewLayout.m in Sources */,
+				E2CEB35B20CA8DF50036C8E2 /* ShiftTimedEventsViewLayout.m in Sources */,
 				E2CEB34320CA8D3B0036C8E2 /* MGCStandardEventView.m in Sources */,
 				E2CEB35420CA8DBF0036C8E2 /* MGCEventCell.m in Sources */,
-				E2CEB35320CA8DBF0036C8E2 /* MGCDayColumnCell.m in Sources */,
+				E2CEB35320CA8DBF0036C8E2 /* ShiftDayColumnCell.m in Sources */,
 				E2CEB31620CA8C100036C8E2 /* ViewController.m in Sources */,
-				E2128EFB20CF59E5002B4D68 /* ButtonSelect.m in Sources */,
-				E228B36620CD307E00F36B06 /* LoadMoreView.m in Sources */,
+				E2128EFB20CF59E5002B4D68 /* ShiftButtonSelect.m in Sources */,
+				E228B36620CD307E00F36B06 /* ShiftLoadMoreView.m in Sources */,
 				E2CEB32120CA8C100036C8E2 /* main.m in Sources */,
 				E2CEB33920CA8D000036C8E2 /* NSAttributedString+MGCAdditions.m in Sources */,
 				E228B36920CE5E8800F36B06 /* ShiftPresenter.swift in Sources */,
 				E2CEB33C20CA8D000036C8E2 /* MGCDateRange.m in Sources */,
 				E2CEB37820CAB4930036C8E2 /* MGCDayPlannerEKViewController.m in Sources */,
 				E2CEB36D20CA97460036C8E2 /* OSCache.m in Sources */,
-				E2CEB34720CA8D560036C8E2 /* MGCDayPlannerView.m in Sources */,
+				E2CEB34720CA8D560036C8E2 /* ShiftDayPlannerView.m in Sources */,
 				E2CEB34420CA8D3B0036C8E2 /* MGCEventView.m in Sources */,
 				E2CEB33A20CA8D000036C8E2 /* NSCalendar+MGCAdditions.m in Sources */,
 				E2CEB33B20CA8D000036C8E2 /* MGCAlignedGeometry.m in Sources */,
 				E2128EF520CE687D002B4D68 /* ShiftMonthVC.swift in Sources */,
 				E2CEB33D20CA8D000036C8E2 /* MGCReusableObjectQueue.m in Sources */,
-				E2CEB35220CA8DBF0036C8E2 /* MGCTimeRowsView.m in Sources */,
+				E2CEB35220CA8DBF0036C8E2 /* ShiftTimeRowsView.m in Sources */,
 				E2CEB36A20CA973C0036C8E2 /* OrderedDictionary.m in Sources */,
 				E2CEB35A20CA8DF50036C8E2 /* MGCEventCellLayoutAttributes.m in Sources */,
 				E2CEB31320CA8C100036C8E2 /* AppDelegate.m in Sources */,

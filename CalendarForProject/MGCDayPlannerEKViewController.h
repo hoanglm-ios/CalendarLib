@@ -29,14 +29,14 @@
 //
 
 #import <EventKit/EventKit.h>
-#import "MGCDayPlannerView.h"
+#import "ShiftDayPlannerView.h"
 
-@interface MGCDayPlannerEKViewController: UIViewController <MGCDayPlannerViewDelegate, MGCDayPlannerViewDataSource>
+@interface MGCDayPlannerEKViewController: UIViewController <ShiftDayPlannerViewDelegate, ShiftDayPlannerViewDataSource>
 
 @property (nonatomic) NSCalendar *calendar;
 @property (nonatomic) NSSet *visibleCalendars;
 /*! Returns the day planner view managed by the controller object. */
-@property(nonatomic, retain) MGCDayPlannerView *dayPlannerView;
+@property(nonatomic, retain) ShiftDayPlannerView *dayPlannerView;
 
 /** designated initializer */
 - (void)reloadEvents;

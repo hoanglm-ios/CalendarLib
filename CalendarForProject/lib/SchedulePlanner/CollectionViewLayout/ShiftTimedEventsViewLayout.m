@@ -1,5 +1,5 @@
 //
-//  MGCTimedEventsViewLayout.m
+//  ShiftTimedEventsViewLayout.m
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -28,7 +28,7 @@
 //  SOFTWARE.
 //
 
-#import "MGCTimedEventsViewLayout.h"
+#import "ShiftTimedEventsViewLayout.h"
 #import "MGCEventCellLayoutAttributes.h"
 #import "MGCAlignedGeometry.h"
 
@@ -49,7 +49,7 @@ static NSString* const DimmingViewsKey = @"DimmingViewsKey";
 static NSString* const EventCellsKey = @"EventCellsKey";
 
 
-@implementation MGCTimedEventsViewLayoutInvalidationContext
+@implementation ShiftTimedEventsViewLayoutInvalidationContext
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -62,7 +62,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 @end
 
 
-@interface MGCTimedEventsViewLayout()
+@interface ShiftTimedEventsViewLayout()
 
 @property (nonatomic) NSMutableDictionary *layoutInfo;
 
@@ -74,7 +74,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 @end
 
 
-@implementation MGCTimedEventsViewLayout
+@implementation ShiftTimedEventsViewLayout
 
 - (instancetype)init {
 	if (self = [super init]) {
@@ -356,7 +356,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 
 + (Class)invalidationContextClass
 {
-    return [MGCTimedEventsViewLayoutInvalidationContext class];
+    return [ShiftTimedEventsViewLayoutInvalidationContext class];
 }
 
 - (MGCEventCellLayoutAttributes*)layoutAttributesForItemAtIndexPath:(NSIndexPath*)indexPath
@@ -380,7 +380,7 @@ static NSString* const EventCellsKey = @"EventCellsKey";
 	[super prepareForCollectionViewUpdates:updateItems];
 }
 
-- (void)invalidateLayoutWithContext:(MGCTimedEventsViewLayoutInvalidationContext *)context
+- (void)invalidateLayoutWithContext:(ShiftTimedEventsViewLayoutInvalidationContext *)context
 {
     //NSLog(@"invalidateLayoutWithContext");
     

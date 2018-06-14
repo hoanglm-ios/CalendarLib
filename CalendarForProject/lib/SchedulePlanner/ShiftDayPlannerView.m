@@ -1,5 +1,5 @@
 //
-//  MGCDayPlannerView.m
+//  ShiftDayPlannerView.m
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -28,21 +28,21 @@
 //  SOFTWARE.
 //
 
-#import "MGCDayPlannerView.h"
+#import "ShiftDayPlannerView.h"
 #import "NSCalendar+MGCAdditions.h"
 #import "MGCDateRange.h"
 #import "MGCReusableObjectQueue.h"
-#import "MGCTimedEventsViewLayout.h"
-#import "MGCDayColumnCell.h"
+#import "ShiftTimedEventsViewLayout.h"
+#import "ShiftDayColumnCell.h"
 #import "MGCEventCell.h"
 #import "MGCEventView.h"
 #import "MGCStandardEventView.h"
 #import "MGCInteractiveEventView.h"
-#import "MGCTimeRowsView.h"
+#import "ShiftTimeRowsView.h"
 #import "MGCAlignedGeometry.h"
 #import "OSCache.h"
-#import "LoadMoreView.h"
-#import "ButtonSelect.h"
+#import "ShiftLoadMoreView.h"
+#import "ShiftButtonSelect.h"
 
 // used to restrict scrolling to one direction / axis
 typedef enum: NSUInteger
@@ -98,20 +98,20 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @end
 
 
-@interface MGCDayPlannerView () <UICollectionViewDataSource, MGCTimedEventsViewLayoutDelegate,  UICollectionViewDelegateFlowLayout, MGCTimeRowsViewDelegate>
+@interface ShiftDayPlannerView () <UICollectionViewDataSource, ShiftTimedEventsViewLayoutDelegate,  UICollectionViewDelegateFlowLayout, ShiftTimeRowsViewDelegate>
 
 // subviews
 @property (nonatomic, readonly) UICollectionView *timedEventsView;
 @property (nonatomic, readonly) UICollectionView *dayColumnsView;
 @property (nonatomic, readonly) UIScrollView *timeScrollView;
-@property (nonatomic, readonly) MGCTimeRowsView *timeRowsView;
-@property (nonatomic, readonly) LoadMoreView *loadMoreView;
-@property (nonatomic, readonly) ButtonSelect *btnSelect;
+@property (nonatomic, readonly) ShiftTimeRowsView *timeRowsView;
+@property (nonatomic, readonly) ShiftLoadMoreView *ShiftLoadMoreView;
+@property (nonatomic, readonly) ShiftButtonSelect *btnSelect;
 @property (nonatomic,readonly) UIView *speratorVeticalView;
 @property (nonatomic,readonly) UIView *speratorHoziView;
 
 // collection view layouts
-@property (nonatomic, readonly) MGCTimedEventsViewLayout *timedEventsViewLayout;
+@property (nonatomic, readonly) ShiftTimedEventsViewLayout *timedEventsViewLayout;
 
 @property (nonatomic) MGCReusableObjectQueue *reuseQueue;		// reuse queue for event views (MGCEventView)
 
@@ -163,7 +163,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @end
 
 
-@implementation MGCDayPlannerView
+@implementation ShiftDayPlannerView
 
 // readonly properties whose getter's defined are not auto-synthesized
 @synthesize timedEventsView = _timedEventsView;
@@ -172,7 +172,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 @synthesize timeScrollView = _timeScrollView;
 @synthesize timedEventsViewLayout = _timedEventsViewLayout;
 @synthesize startDate = _startDate;
-@synthesize loadMoreView = _loadMoreView;
+@synthesize ShiftLoadMoreView = _ShiftLoadMoreView;
 @synthesize btnSelect = _btnSelect;
 @synthesize speratorVeticalView = _speratorVeticalView;
 @synthesize speratorHoziView = _speratorHoziView;
@@ -402,9 +402,9 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height+_heightLoadMore);
     self.timeRowsView.frame = CGRectMake(0, 0, self.timeScrollView.contentSize.width, self.timeScrollView.contentSize.height);
     
-    [self.loadMoreView removeFromSuperview];
-    self.loadMoreView.frame = CGRectMake(0, self.dayColumnSize.height,self.bounds.size.width , _heightLoadMore);
-    [self.timeScrollView addSubview:_loadMoreView];
+    [self.ShiftLoadMoreView removeFromSuperview];
+    self.ShiftLoadMoreView.frame = CGRectMake(0, self.dayColumnSize.height,self.bounds.size.width , _heightLoadMore);
+    [self.timeScrollView addSubview:_ShiftLoadMoreView];
 }
 
 // public
@@ -680,7 +680,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 	CGPoint offset = self.timedEventsView.contentOffset;
 
-	MGCDayPlannerView * __weak weakSelf = self;
+	ShiftDayPlannerView * __weak weakSelf = self;
 	dispatch_block_t completion = ^{
 		weakSelf.userInteractionEnabled = YES;
 		if (!animated && [weakSelf.delegate respondsToSelector:@selector(dayPlannerView:didScroll:)]) {
@@ -841,21 +841,21 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		_dayColumnsView.scrollEnabled = NO;
 		_dayColumnsView.allowsSelection = NO;
 		
-		[_dayColumnsView registerClass:MGCDayColumnCell.class forCellWithReuseIdentifier:DayColumnCellReuseIdentifier];
+		[_dayColumnsView registerClass:ShiftDayColumnCell.class forCellWithReuseIdentifier:DayColumnCellReuseIdentifier];
 	}
 	return _dayColumnsView;
 }
 
--(LoadMoreView*) loadMoreView{
-    if(!_loadMoreView) {
-        _loadMoreView = [[LoadMoreView alloc] initWithFrame:CGRectZero];
+-(ShiftLoadMoreView*) ShiftLoadMoreView{
+    if(!_ShiftLoadMoreView) {
+        _ShiftLoadMoreView = [[ShiftLoadMoreView alloc] initWithFrame:CGRectZero];
     }
-    return _loadMoreView;
+    return _ShiftLoadMoreView;
 }
 
--(ButtonSelect*) btnSelect{
+-(ShiftButtonSelect*) btnSelect{
     if(!_btnSelect) {
-        _btnSelect = [[ButtonSelect alloc] initWithFrame:CGRectZero];
+        _btnSelect = [[ShiftButtonSelect alloc] initWithFrame:CGRectZero];
     }
     return _btnSelect;
 }
@@ -884,7 +884,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 		_timeScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
 		_timeScrollView.scrollEnabled = NO;
 		
-		_timeRowsView = [[MGCTimeRowsView alloc]initWithFrame:CGRectZero];
+		_timeRowsView = [[ShiftTimeRowsView alloc]initWithFrame:CGRectZero];
         _timeRowsView.delegate = self;
         _timeRowsView.timeColor = self.timeSeparatorsColor;
         _timeRowsView.currentTimeColor = self.currentTimeColor;
@@ -900,10 +900,10 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 #pragma mark - Layouts
 
-- (MGCTimedEventsViewLayout*)timedEventsViewLayout
+- (ShiftTimedEventsViewLayout*)timedEventsViewLayout
 {
 	if (!_timedEventsViewLayout) {
-		_timedEventsViewLayout = [MGCTimedEventsViewLayout new];
+		_timedEventsViewLayout = [ShiftTimedEventsViewLayout new];
 		_timedEventsViewLayout.delegate = self;
 		_timedEventsViewLayout.dayColumnSize = self.dayColumnSize;
         _timedEventsViewLayout.coveringType = TimedEventCoveringTypeClassic;
@@ -1090,14 +1090,14 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 {
 	NSInteger section = [self dayOffsetFromDate:date];
 	NSIndexPath *path = [NSIndexPath indexPathForItem:0 inSection:section];
-	MGCDayColumnCell *cell = (MGCDayColumnCell*)[self.dayColumnsView cellForItemAtIndexPath:path];
+	ShiftDayColumnCell *cell = (ShiftDayColumnCell*)[self.dayColumnsView cellForItemAtIndexPath:path];
 	if (cell) {
 		NSUInteger count = [self numberOfTimedEventsAtDate:date];
 		if (count > 0) {
-			cell.accessoryTypes |= MGCDayColumnCellAccessoryDot;
+			cell.accessoryTypes |= ShiftDayColumnCellAccessoryDot;
 		}
 		else {
-			cell.accessoryTypes &= ~MGCDayColumnCellAccessoryDot;
+			cell.accessoryTypes &= ~ShiftDayColumnCellAccessoryDot;
 		}
 	}
 }
@@ -1120,7 +1120,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
         self.timedEventsViewLayout.ignoreNextInvalidation = YES; 
         [self.timedEventsView reloadData];
 		
-        MGCTimedEventsViewLayoutInvalidationContext *context = [MGCTimedEventsViewLayoutInvalidationContext new];
+        ShiftTimedEventsViewLayoutInvalidationContext *context = [ShiftTimedEventsViewLayoutInvalidationContext new];
         context.invalidatedSections = [NSIndexSet indexSetWithIndex:section];
         [self.timedEventsView.collectionViewLayout invalidateLayoutWithContext:context];
 
@@ -1133,7 +1133,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 {
     [self.dimmedTimeRangesCache removeAllObjects];
     
-    MGCTimedEventsViewLayoutInvalidationContext *context = [MGCTimedEventsViewLayoutInvalidationContext new];
+    ShiftTimedEventsViewLayoutInvalidationContext *context = [ShiftTimedEventsViewLayoutInvalidationContext new];
     context.invalidatedSections = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.numberOfLoadedDays)];
     context.invalidateEventCells = NO;
     context.invalidateDimmingViews = YES;
@@ -1153,7 +1153,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	
 	if ([self.loadedDaysRange containsDate:date]) {
 		NSIndexPath *path = [NSIndexPath indexPathForItem:0 inSection:[self dayOffsetFromDate:date]];
-		MGCDayColumnCell *cell = (MGCDayColumnCell*)[self.dayColumnsView cellForItemAtIndexPath:path];
+		ShiftDayColumnCell *cell = (ShiftDayColumnCell*)[self.dayColumnsView cellForItemAtIndexPath:path];
 		if (cell) {
 			[cell setActivityIndicatorVisible:visible];
 			return YES;
@@ -1186,7 +1186,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     [self addSubview:_btnSelect];
     __weak typeof(self) weakSelf = self;
     self.btnSelect.sellectClick = ^{
-        [weakSelf.delegate dayPlannerViewClickButtonSelect];
+        [weakSelf.delegate dayPlannerViewClickShiftButtonSelect];
     };
     // add speratorHozi
     self.speratorHoziView.frame =CGRectMake(0, self.dayHeaderHeight, self.timeColumnWidth, 0.5);
@@ -1207,8 +1207,8 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	self.timeScrollView.contentSize = CGSizeMake(self.bounds.size.width, self.dayColumnSize.height+_heightLoadMore);
 	self.timeRowsView.frame = CGRectMake(0, 0, self.timeScrollView.contentSize.width, self.dayColumnSize.height);
     
-    self.loadMoreView.frame = CGRectMake(0, self.dayColumnSize.height,self.bounds.size.width , _heightLoadMore);
-    [self.timeScrollView addSubview:_loadMoreView];
+    self.ShiftLoadMoreView.frame = CGRectMake(0, self.dayColumnSize.height,self.bounds.size.width , _heightLoadMore);
+    [self.timeScrollView addSubview:_ShiftLoadMoreView];
 	self.timeScrollView.frame = CGRectMake(0, timedEventViewTop, self.bounds.size.width, timedEventsViewHeight);
     if (!self.timeScrollView.superview) {
         [self addSubview:self.timeScrollView];
@@ -1260,22 +1260,22 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 	[self updateVisibleDaysRange];
 }
 
-#pragma mark - MGCTimeRowsViewDelegate
-- (NSAttributedString*) timeRowsViewAttributedStringBagde:(MGCTimeRowsView *)view withIndex:(NSInteger)index{
+#pragma mark - ShiftTimeRowsViewDelegate
+- (NSAttributedString*) timeRowsViewAttributedStringBagde:(ShiftTimeRowsView *)view withIndex:(NSInteger)index{
     if ([self.delegate respondsToSelector:@selector(dayPlannerViewAttribuedStringBagde:withIndex:)]) {
         return [self.delegate dayPlannerViewAttribuedStringBagde:self withIndex:index ];
     }
     return nil;
 }
 
--(NSAttributedString*) timeRowsViewAttributedStringMark:(MGCTimeRowsView *)view withIndex:(NSInteger)index{
+-(NSAttributedString*) timeRowsViewAttributedStringMark:(ShiftTimeRowsView *)view withIndex:(NSInteger)index{
     if ([self.delegate respondsToSelector:@selector(dayPlannerViewAttributedStringMark:withIndex:)]) {
         return [self.delegate dayPlannerViewAttributedStringMark:self withIndex:index];
     }
     return nil;
 }
 
-- (NSAttributedString*) timeRowsViewAttributedStringGuest:(MGCTimeRowsView *)view withIndex:(NSInteger)index{
+- (NSAttributedString*) timeRowsViewAttributedStringGuest:(ShiftTimeRowsView *)view withIndex:(NSInteger)index{
     if ([self.delegate respondsToSelector:@selector(dayPlannerViewttributedStringGuest:withIndex:)]) {
         return [self.delegate dayPlannerViewttributedStringGuest:self withIndex:index];
     }
@@ -1330,7 +1330,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 - (UICollectionViewCell*)dayColumnCellAtIndexPath:(NSIndexPath*)indexPath
 {
-    MGCDayColumnCell *dayCell = [self.dayColumnsView dequeueReusableCellWithReuseIdentifier:DayColumnCellReuseIdentifier forIndexPath:indexPath];
+    ShiftDayColumnCell *dayCell = [self.dayColumnsView dequeueReusableCellWithReuseIdentifier:DayColumnCellReuseIdentifier forIndexPath:indexPath];
     // set up arr
     dayCell.separatorColor = self.daySeparatorsColor;
     dayCell.heightHeaderDayCell = self.heightHeaderDayCell;
@@ -1353,7 +1353,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     
     dayCell.dayLabel.attributedText = attrStr;
     dayCell.listHeaderCell = self.listHeaderCell;
-    dayCell.accessoryTypes = MGCDayColumnCellAccessoryBorder;
+    dayCell.accessoryTypes = ShiftDayColumnCellAccessoryBorder;
     return dayCell;
 }
 
@@ -1398,9 +1398,9 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     return nil;
 }
 
-#pragma mark - MGCTimedEventsViewLayoutDelegate
+#pragma mark - ShiftTimedEventsViewLayoutDelegate
 
-- (CGRect)collectionView:(UICollectionView *)collectionView layout:(MGCTimedEventsViewLayout *)layout rectForEventAtIndexPath:(NSIndexPath *)indexPath{
+- (CGRect)collectionView:(UICollectionView *)collectionView layout:(ShiftTimedEventsViewLayout *)layout rectForEventAtIndexPath:(NSIndexPath *)indexPath{
     CGFloat y1 = MGCAlignedFloat(indexPath.item*self.hourSlotHeight);
     CGFloat y2 = MGCAlignedFloat((indexPath.item + 1)*self.hourSlotHeight);
     return CGRectMake(0, y1, 0, y2 - y1);
@@ -1430,7 +1430,7 @@ static const CGFloat kMaxHourSlotHeight = 150.;
     return ranges;
 }
 
-- (NSArray*)collectionView:(UICollectionView *)collectionView layout:(MGCTimedEventsViewLayout *)layout dimmingRectsForSection:(NSUInteger)section
+- (NSArray*)collectionView:(UICollectionView *)collectionView layout:(ShiftTimedEventsViewLayout *)layout dimmingRectsForSection:(NSUInteger)section
 {
     NSDate *date = [self dateFromDayOffset:section];
 
@@ -1781,12 +1781,12 @@ static const CGFloat kMaxHourSlotHeight = 150.;
 
 -(void) showLoadMore{
     _isLoadMore = YES;
-      [self.loadMoreView setHidden:false];
+      [self.ShiftLoadMoreView setHidden:false];
 }
 
 -(void) hideLoadMore{
     _isLoadMore = NO;
-    [self.loadMoreView setHidden:true];
+    [self.ShiftLoadMoreView setHidden:true];
 }
 
 

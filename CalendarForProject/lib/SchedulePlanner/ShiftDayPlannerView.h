@@ -1,5 +1,5 @@
 //
-//  MGCDayPlannerView.h
+//  ShiftDayPlannerView.h
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -33,8 +33,8 @@
 @class MGCEventView;
 @class MGCDateRange;
 
-@protocol MGCDayPlannerViewDataSource;
-@protocol MGCDayPlannerViewDelegate;
+@protocol ShiftDayPlannerViewDataSource;
+@protocol ShiftDayPlannerViewDelegate;
 
 
 typedef NS_ENUM(NSUInteger, MGCEventType) {
@@ -63,7 +63,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 
 
 /*!
- * You can use an instance of MGCDayPlannerView to display events as a schedule.
+ * You can use an instance of ShiftDayPlannerView to display events as a schedule.
  *
  * This view displays a grid with days as columns and time slots as rows.
  * User can scroll infinitely through days or swipe through pages of several days.
@@ -72,7 +72,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
  * 
  * The view also displays a bar at the top with full-day events.
  */
-@interface MGCDayPlannerView : UIView
+@interface ShiftDayPlannerView : UIView
 
 /*! 
 	@group Configuring a day planner view
@@ -208,18 +208,18 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 @property (nonatomic, copy) MGCDateRange *dateRange;
 /*!
 	@abstract	The object that acts as the delegate of the day planner view.
-	@discussion The delegate must adopt the `MGCDayPlannerViewDelegate` protocol.
+	@discussion The delegate must adopt the `ShiftDayPlannerViewDelegate` protocol.
 				The day planner view view maintains a weak reference to the delegate object.
 				The delegate object is responsible for managing selection behavior and interactions with events cells.
  */
-@property (nonatomic, weak) id<MGCDayPlannerViewDelegate> delegate;
+@property (nonatomic, weak) id<ShiftDayPlannerViewDelegate> delegate;
 
 /*!
 	@abstract	The object that provides the data for the day planner view
-	@discussion The data source must adopt the `MGCDayPlannerViewDataSource` protocol.
+	@discussion The data source must adopt the `ShiftDayPlannerViewDataSource` protocol.
 				The day planner view view maintains a weak reference to the data source object.
  */
-@property (nonatomic, weak) id<MGCDayPlannerViewDataSource> dataSource;
+@property (nonatomic, weak) id<ShiftDayPlannerViewDataSource> dataSource;
 
 /*!
     @abstract   How to handle multiple overlapping events at displaying.
@@ -385,7 +385,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 	@abstract	Determines whether users can select events in the day planner view.
 	@discussion The default value is YES.
 				For more control over the selection of items, you can provide a delegate object and implement the
-				dayPlannerView:shouldSelectEventOfType:atIndex:date: methods of the MGCDayPlannerViewDelegate protocol.
+				dayPlannerView:shouldSelectEventOfType:atIndex:date: methods of the ShiftDayPlannerViewDelegate protocol.
  */
 @property (nonatomic) BOOL allowsSelection;
 
@@ -457,10 +457,10 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 
 
 /*!
- * An object that adopts the MGCDayPlannerViewDataSource protocol is responsible for providing the data and views
+ * An object that adopts the ShiftDayPlannerViewDataSource protocol is responsible for providing the data and views
  * required by a day planner view. 
  */
-@protocol MGCDayPlannerViewDataSource<NSObject>
+@protocol ShiftDayPlannerViewDataSource<NSObject>
 
 @required
 
@@ -471,27 +471,27 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 	@param		date		The starting day of the event (time portion should be ignored).
 	@return		The number of events.
  */
-//- (NSInteger)dayPlannerView:(MGCDayPlannerView*)view numberOfEventsOfType:(MGCEventType)type atDate:(NSDate*)date;
+//- (NSInteger)dayPlannerView:(ShiftDayPlannerView*)view numberOfEventsOfType:(MGCEventType)type atDate:(NSDate*)date;
 
 /*!
 	@abstract	Asks the data source for the view that corresponds to the specified event in the collection view. (required)
  */
-- (MGCEventView*)dayPlannerView:(MGCDayPlannerView*)view viewForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
+- (MGCEventView*)dayPlannerView:(ShiftDayPlannerView*)view viewForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
 	@abstract	Asks the data source for the date range of the specified event in the day planner view. (required)
  */
-//- (MGCDateRange*)dayPlannerView:(MGCDayPlannerView*)view dateRangeForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
+//- (MGCDateRange*)dayPlannerView:(ShiftDayPlannerView*)view dateRangeForEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
 
 @end
 
 
 /*!
- * The MGCDayPlannerViewDelegate protocol defines methods that allow you to manage the selection of events in
+ * The ShiftDayPlannerViewDelegate protocol defines methods that allow you to manage the selection of events in
  * a day planner view and respond to operations like scrolling and changes in the display.
  * The methods of this protocol are all optional.
  */
-@protocol MGCDayPlannerViewDelegate<NSObject>
+@protocol ShiftDayPlannerViewDelegate<NSObject>
 
 @optional
 
@@ -506,17 +506,17 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 	@return     The attributed string to draw.
     @discussion If nil is returned or the method is not implemented, a default string is drawn using dateFormat property.
  */
-- (NSAttributedString*)dayPlannerView:(MGCDayPlannerView*)view attributedStringForDayHeaderAtDate:(NSDate*)date;
+- (NSAttributedString*)dayPlannerView:(ShiftDayPlannerView*)view attributedStringForDayHeaderAtDate:(NSDate*)date;
 
 /*!
 	@abstract   Asks the delegate for the number of dimmed timed ranges at given date.
  */
-- (NSInteger)dayPlannerView:(MGCDayPlannerView*)view numberOfDimmedTimeRangesAtDate:(NSDate*)date;
+- (NSInteger)dayPlannerView:(ShiftDayPlannerView*)view numberOfDimmedTimeRangesAtDate:(NSDate*)date;
 
 /*!
 	@abstract   Asks the delegate for the dimmed time range at given date and index.
  */
-- (MGCDateRange*)dayPlannerView:(MGCDayPlannerView*)view dimmedTimeRangeAtIndex:(NSUInteger)index date:(NSDate*)date;
+- (MGCDateRange*)dayPlannerView:(ShiftDayPlannerView*)view dimmedTimeRangeAtIndex:(NSUInteger)index date:(NSDate*)date;
 
 
 /*!
@@ -532,7 +532,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 	@see		visibleDays
 	@see		firstVisibleTime
  */
-- (void)dayPlannerView:(MGCDayPlannerView*)view didScroll:(MGCDayPlannerScrollType)scrollType;
+- (void)dayPlannerView:(ShiftDayPlannerView*)view didScroll:(MGCDayPlannerScrollType)scrollType;
 
 /*!
 	@abstract	Tells the delegate when a scrolling operation on the day planner view concludes.
@@ -541,27 +541,27 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 	@discussion The method is only called when the view is scrolled horizontally.
 				It is called after user interaction and when the view is scrolled programmatically.
  */
-- (void)dayPlannerView:(MGCDayPlannerView*)view didEndScrolling:(MGCDayPlannerScrollType)scrollType;
+- (void)dayPlannerView:(ShiftDayPlannerView*)view didEndScrolling:(MGCDayPlannerScrollType)scrollType;
 
 /*!
 	@abstract	Tells the delegate that the specified day is about to be displayed in the day planner view.
 	@param		view		The day planner view object notifying about the display change.
 	@param		date		The day about to be displayed.
  */
-- (void)dayPlannerView:(MGCDayPlannerView*)view willDisplayDate:(NSDate*)date;
+- (void)dayPlannerView:(ShiftDayPlannerView*)view willDisplayDate:(NSDate*)date;
 
 /*!
 	@abstract	Tells the delegate that the specified day is not displayed anymore in the day planner view.
 	@param		view		The day planner view object notifying about the display change.
 	@param		date		The day about to be displayed.
  */
-- (void)dayPlannerView:(MGCDayPlannerView*)view didEndDisplayingDate:(NSDate*)date;
+- (void)dayPlannerView:(ShiftDayPlannerView*)view didEndDisplayingDate:(NSDate*)date;
 
 /*!
 	@abstract	Tells the delegate that the day planner view was zoomed in or out, increasing or decreasing the hour slot height.
 	@param		view		The day planner view object notifying about the display change.
  */
-- (void)dayPlannerViewDidZoom:(MGCDayPlannerView*)view;
+- (void)dayPlannerViewDidZoom:(ShiftDayPlannerView*)view;
 
 /*!
 	@group Managing the selection of events
@@ -578,7 +578,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 				you programmatically set the selection.
 	@discussion	If you do not implement this method, the default return value is YES.
  */
-- (BOOL)dayPlannerView:(MGCDayPlannerView*)view shouldSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
+- (BOOL)dayPlannerView:(ShiftDayPlannerView*)view shouldSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
 	@abstract	Tells the delegate that the specified event was selected.
@@ -590,7 +590,7 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 	@discussion	The day planner view calls this method when the user successfully selects an event. It does not call this method when
 				you programmatically set the selection.
  */
-- (void)dayPlannerView:(MGCDayPlannerView*)view didSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
+- (void)dayPlannerView:(ShiftDayPlannerView*)view didSelectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
 
 /*!
 	@abstract	Tells the delegate that the specified event was deselected.
@@ -602,18 +602,18 @@ typedef NS_ENUM(NSUInteger, MGCDayPlannerCoveringType) {
 	@discussion	The day planner view calls this method when the user successfully deselects an event. It does not call this method when
 				you programmatically deselect the event.
  */
-- (void)dayPlannerView:(MGCDayPlannerView*)view didDeselectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
+- (void)dayPlannerView:(ShiftDayPlannerView*)view didDeselectEventOfType:(MGCEventType)type atIndex:(NSUInteger)index date:(NSDate*)date;
 
 
-- (NSAttributedString*)dayPlannerViewAttribuedStringBagde:(MGCDayPlannerView*)view withIndex:(NSInteger) index;
+- (NSAttributedString*)dayPlannerViewAttribuedStringBagde:(ShiftDayPlannerView*)view withIndex:(NSInteger) index;
 
 
-- (NSAttributedString*)dayPlannerViewAttributedStringMark:(MGCDayPlannerView*)view withIndex:(NSInteger) index;
+- (NSAttributedString*)dayPlannerViewAttributedStringMark:(ShiftDayPlannerView*)view withIndex:(NSInteger) index;
 
-- (NSAttributedString*)dayPlannerViewttributedStringGuest:(MGCDayPlannerView*)view withIndex:(NSInteger) index;
+- (NSAttributedString*)dayPlannerViewttributedStringGuest:(ShiftDayPlannerView*)view withIndex:(NSInteger) index;
 
-- (void)dayPlannerViewLoadMore:(MGCDayPlannerView*)view;
+- (void)dayPlannerViewLoadMore:(ShiftDayPlannerView*)view;
 
-- (void)dayPlannerViewClickButtonSelect;
+- (void)dayPlannerViewClickShiftButtonSelect;
 
 @end

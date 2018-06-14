@@ -1,5 +1,5 @@
 //
-//  MGCTimeRowsView.h
+//  ShiftTimeRowsView.h
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -29,15 +29,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MGCDayPlannerView.h"   // for MGCDayPlannerTimeMark enum
+#import "ShiftDayPlannerView.h"   // for MGCDayPlannerTimeMark enum
 
 
-@protocol MGCTimeRowsViewDelegate;
+@protocol ShiftTimeRowsViewDelegate;
 
 
 // This view is used by the day planner view to draw the time lines.
 // It is contained in a scrollview, which itself is a subview of the day planner view.
-@interface MGCTimeRowsView : UIView
+@interface ShiftTimeRowsView : UIView
 
 @property (nonatomic) NSCalendar *calendar;				// used to calculate current time
 @property (nonatomic) CGFloat hourSlotHeight;			// height of a one-hour slot (default is 65)
@@ -53,20 +53,20 @@
 @property (nonatomic) UIColor *currentTimeColor;// color used for current time mark and line
 @property (nonatomic) NSInteger numColumn;
 @property (nonatomic) NSInteger currentIndex;
-@property (nonatomic, weak) id<MGCTimeRowsViewDelegate> delegate;
+@property (nonatomic, weak) id<ShiftTimeRowsViewDelegate> delegate;
 @end
 
 
-@protocol MGCTimeRowsViewDelegate<NSObject>
+@protocol ShiftTimeRowsViewDelegate<NSObject>
 
 @optional
 
-- (NSAttributedString*)timeRowsView:(MGCTimeRowsView*)view attributedStringForTimeMark:(MGCDayPlannerTimeMark)mark time:(NSTimeInterval)ti;
+- (NSAttributedString*)timeRowsView:(ShiftTimeRowsView*)view attributedStringForTimeMark:(MGCDayPlannerTimeMark)mark time:(NSTimeInterval)ti;
 
-- (NSAttributedString*)timeRowsViewAttributedStringBagde:(MGCTimeRowsView*)view withIndex:(NSInteger) index;
+- (NSAttributedString*)timeRowsViewAttributedStringBagde:(ShiftTimeRowsView*)view withIndex:(NSInteger) index;
 
-- (NSAttributedString*)timeRowsViewAttributedStringMark:(MGCTimeRowsView*)view withIndex:(NSInteger) index;
+- (NSAttributedString*)timeRowsViewAttributedStringMark:(ShiftTimeRowsView*)view withIndex:(NSInteger) index;
 
-- (NSAttributedString*)timeRowsViewAttributedStringGuest:(MGCTimeRowsView*)view withIndex:(NSInteger) index;
+- (NSAttributedString*)timeRowsViewAttributedStringGuest:(ShiftTimeRowsView*)view withIndex:(NSInteger) index;
 
 @end

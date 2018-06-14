@@ -1,5 +1,5 @@
 //
-//  MGCTimedEventsViewLayout.h
+//  ShiftTimedEventsViewLayout.h
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -39,12 +39,12 @@ typedef enum : NSUInteger
 } TimedEventCoveringType;
 
 
-@protocol MGCTimedEventsViewLayoutDelegate;
+@protocol ShiftTimedEventsViewLayoutDelegate;
 @class MGCEventCellLayoutAttributes;
 
 
-// Custom invalidation context for MGCTimedEventsViewLayout
-@interface MGCTimedEventsViewLayoutInvalidationContext: UICollectionViewLayoutInvalidationContext
+// Custom invalidation context for ShiftTimedEventsViewLayout
+@interface ShiftTimedEventsViewLayoutInvalidationContext: UICollectionViewLayoutInvalidationContext
 
 @property (nonatomic) BOOL invalidateDimmingViews;  // set to true if layout attributes of dimming views must be recomputed
 @property (nonatomic) BOOL invalidateEventCells;  // set to true if layout attributes of event cells must be recomputed
@@ -55,9 +55,9 @@ typedef enum : NSUInteger
 
 // This collection view layout is responsible for the layout of event views in the timed-events part
 // of the day planner view.
-@interface MGCTimedEventsViewLayout : UICollectionViewLayout
+@interface ShiftTimedEventsViewLayout : UICollectionViewLayout
 
-@property (nonatomic, weak) id<MGCTimedEventsViewLayoutDelegate> delegate;
+@property (nonatomic, weak) id<ShiftTimedEventsViewLayoutDelegate> delegate;
 @property (nonatomic) CGSize dayColumnSize;
 @property (nonatomic) CGFloat minimumVisibleHeight;  // if 2 cells overlap, and the height of the uncovered part of the upper cell is less than this value, the column is split
 @property (nonatomic) CGFloat heightLoadMore;
@@ -67,10 +67,10 @@ typedef enum : NSUInteger
 @end
 
 
-@protocol MGCTimedEventsViewLayoutDelegate <UICollectionViewDelegate>
+@protocol ShiftTimedEventsViewLayoutDelegate <UICollectionViewDelegate>
 
 // x and width of returned rect are ignored
-- (CGRect)collectionView:(UICollectionView*)collectionView layout:(MGCTimedEventsViewLayout*)layout rectForEventAtIndexPath:(NSIndexPath*)indexPath;
-- (NSArray*)collectionView:(UICollectionView*)collectionView layout:(MGCTimedEventsViewLayout*)layout dimmingRectsForSection:(NSUInteger)section;
+- (CGRect)collectionView:(UICollectionView*)collectionView layout:(ShiftTimedEventsViewLayout*)layout rectForEventAtIndexPath:(NSIndexPath*)indexPath;
+- (NSArray*)collectionView:(UICollectionView*)collectionView layout:(ShiftTimedEventsViewLayout*)layout dimmingRectsForSection:(NSUInteger)section;
 
 @end

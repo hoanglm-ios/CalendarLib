@@ -1,5 +1,5 @@
 //
-//  MGCTimeRowsView.m
+//  ShiftTimeRowsView.m
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -28,12 +28,12 @@
 //  SOFTWARE.
 //
 
-#import "MGCTimeRowsView.h"
+#import "ShiftTimeRowsView.h"
 #import "NSCalendar+MGCAdditions.h"
 #import "MGCAlignedGeometry.h"
 
 
-@interface MGCTimeRowsView()
+@interface ShiftTimeRowsView()
 
 @property (nonatomic) NSTimer *timer;
 @property (nonatomic) NSUInteger rounding;
@@ -41,7 +41,7 @@
 @end
 
 
-@implementation MGCTimeRowsView
+@implementation ShiftTimeRowsView
 
 - (id)initWithFrame:(CGRect)frame
 {

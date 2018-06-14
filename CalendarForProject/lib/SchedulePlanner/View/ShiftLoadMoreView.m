@@ -1,14 +1,14 @@
 //
-//  LoadMoreView.m
+//  ShiftLoadMoreView.m
 //  CalendarForProject
 //
 //  Created by LEMINHO on 6/10/18.
 //  Copyright © 2018 LEMINHO. All rights reserved.
 //
 
-#import "LoadMoreView.h"
+#import "ShiftLoadMoreView.h"
 
-@implementation LoadMoreView
+@implementation ShiftLoadMoreView
 
 /*
 // Only override drawRect: if you perform custom drawing.

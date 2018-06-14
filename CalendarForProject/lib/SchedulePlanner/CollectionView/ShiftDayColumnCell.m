@@ -1,5 +1,5 @@
 //
-//  MGCDayColumnCell.m
+//  ShiftDayColumnCell.m
 //  Graphical Calendars Library for iOS
 //
 //  Distributed under the MIT License
@@ -28,10 +28,10 @@
 //  SOFTWARE.
 //
 
-#import "MGCDayColumnCell.h"
+#import "ShiftDayColumnCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface MGCDayColumnCell ()
+@interface ShiftDayColumnCell ()
 
 @property (nonatomic) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic) CAShapeLayer *dotLayer;
@@ -41,7 +41,7 @@
 @end
 
 
-@implementation MGCDayColumnCell
+@implementation ShiftDayColumnCell
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -140,7 +140,7 @@
 {
     [super prepareForReuse];
     
-    self.accessoryTypes = MGCDayColumnCellAccessoryNone;
+    self.accessoryTypes = ShiftDayColumnCellAccessoryNone;
     self.markColor = [UIColor blackColor];
     [self setActivityIndicatorVisible:NO];
 }
@@ -203,10 +203,10 @@
 
     // border
     CGRect borderFrame = CGRectZero;
-    if (self.accessoryTypes & MGCDayColumnCellAccessoryBorder) {
+    if (self.accessoryTypes & ShiftDayColumnCellAccessoryBorder) {
         borderFrame = CGRectMake(0, self.headerHeight, 1./[UIScreen mainScreen].scale, self.contentView.bounds.size.height-self.headerHeight);
     }
-    else if (self.accessoryTypes & MGCDayColumnCellAccessorySeparator) {
+    else if (self.accessoryTypes & ShiftDayColumnCellAccessorySeparator) {
         borderFrame = CGRectMake(0, 0, 2./[UIScreen mainScreen].scale, self.contentView.bounds.size.height);
     }
 
@@ -219,7 +219,7 @@
     
 }
 
-- (void)setAccessoryTypes:(MGCDayColumnCellAccessoryType)accessoryTypes
+- (void)setAccessoryTypes:(ShiftDayColumnCellAccessoryType)accessoryTypes
 {
     _accessoryTypes = accessoryTypes;
     [self setNeedsLayout];

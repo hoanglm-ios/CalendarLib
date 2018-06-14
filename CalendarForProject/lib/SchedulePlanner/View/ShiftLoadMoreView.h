@@ -1,5 +1,5 @@
 //
-//  LoadMoreView.h
+//  ShiftLoadMoreView.h
 //  CalendarForProject
 //
 //  Created by LEMINHO on 6/10/18.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoadMoreView : UIView
+@interface ShiftLoadMoreView : UIView
 @property (nonatomic, readonly) UIActivityIndicatorView *activityIndicatorView;
 @end
